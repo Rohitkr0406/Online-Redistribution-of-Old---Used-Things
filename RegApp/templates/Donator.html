@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Donator Registration</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <style>
+        body {
+            background-color: lightseagreen;
+            font-family: "";
+        }
+        fieldset {
+            background-color: lightyellow;
+            width: 70%;
+            margin-left: 15%;
+            margin-top: 2%;
+            text-align: center;
+            border-radius: 8%;
+        }
+        legend {
+            text-align: left;
+        }
+        h2 {
+            text-decoration-line: underline;
+            font-family: 'Alberta';
+        }
+        table {
+            text-align: left;
+        }
+        input {
+            border-radius: 5px;
+            height: 15pt;
+            padding-left: 4pt;
+        }
+        input[type='submit'], input[type='reset'] {
+            width: 20%;
+            height: unset;
+            background-color: darkred;
+            color: white;
+            font-family: 'Cambria';
+            font-size: 12pt;
+            padding: 4px;
+        }
+        select {
+            border-radius: 5px;
+            height: 15pt;
+            width: 98%;
+        }
+        textarea {
+            border-radius: 5px;
+            padding: 4pt;
+        }
+        a {
+            margin: 10px;
+        }
+    </style>
+    <script>
+        var x = "{{ msg }}";
+        if (x != "" && x != "pp") {
+            alert(x);
+        }
+    </script>
+</head>
+<body>
+    <a href="/">Back</a>
+    <form method="post">{% csrf_token %}
+        <fieldset style="border: none">
+            <h2>Donator Registration</h2>
+            <hr>
+            <span>
+                <select name="CmbBox" style="width: 15%; height: 20%; padding: 4px">
+                    <option>-Select-</option>
+                    {% for foo in record1 %}
+                        <option value="{{ foo.0 }}">Serial -{{ foo.0 }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" id="sub" style="width: 8%; padding: 3px" formaction="{% url 'DonatorSearch1' %}">
+            </span>
+            <fieldset>
+                <legend>UserID</legend>
+                <table>
+                    <tr>
+                        <td>Serial No.</td>
+                        <td>:</td>
+                        <td><input type="text" name="Slno" value="{{ record.0 }}"></td>
+                        <td>Donator Name</td>
+                        <td>:</td>
+                        <td><input type="text" name="Dname" value="{{ record.1 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Donor/User Id</td>
+                        <td>:</td>
+                        <td><input type="text" name="Donorid" value="{{ record.2 }}"></td>
+                        <td>Password</td>
+                        <td>:</td>
+                        <td><input type="password" name="Dpsd" value="{{ record.3 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Confirm Password</td>
+                        <td>:</td>
+                        <td><input type="password" name="Dcpsd" value="{{ record.4 }}"></td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend>Personal Details</legend>
+                <table>
+                    <tr>
+                        <td>Date of Birth</td>
+                        <td>:</td>
+                        <td><input type="date" name="Dob" value="{{ record.5 }}"></td>
+                        <td>Gender</td>
+                        <td>:</td>
+                        <td>
+                            <select name="Gen" id="">
+                                <option value="">-Select-</option>
+                                <option value="Male" {% if record.6 == 'Male' %}selected{% endif %}>Male</option>
+                                <option value="Female" {% if record.6 == 'Female' %}selected{% endif %}>Female</option>
+                                <option value="Transgender" {% if record.6 == 'Transgender' %}selected{% endif %}>Transgender</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mobile No.</td>
+                        <td>:</td>
+                        <td><input type="text" name="Dmob" maxlength="10" value="{{ record.7 }}"></td>
+                        <td>Email-Id</td>
+                        <td>:</td>
+                        <td><input type="email" name="Demail" value="{{ record.8 }}"></td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend>Address Details</legend>
+                <table>
+                    <tr>
+                        <td>Address 1</td>
+                        <td>:</td>
+                        <td><input type="text" name="Add1" maxlength="100" value="{{ record.9 }}"></td>
+                        <td>Address 2</td>
+                        <td>:</td>
+                        <td><input type="text" name="Add2" maxlength="100" value="{{ record.10 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>State</td>
+                        <td>:</td>
+                        <td>
+                            <select name="State" id="">
+                                <option value="">-Select-</option>
+                                <option value="Bihar" {% if record.11 == 'Bihar' %}selected{% endif %}>Bihar</option>
+                                <option value="Maharastra" {% if record.11 == 'Maharastra' %}selected{% endif %}>Maharastra</option>
+                                <option value="WestBangal" {% if record.11 == 'WestBangal' %}selected{% endif %}>Westbangal</option>
+                                <option value="Jharkhand" {% if record.11 == 'Jharkhand' %}selected{% endif %}>Jharkhand</option>
+                            </select>
+                        </td>
+                        <td>City</td>
+                        <td>:</td>
+                        <td>
+                            <select name="City" id="">
+                                <option value="">-Select-</option>
+                                <option value="Patna" {% if record.12 == 'Patna' %}selected{% endif %}>Patna</option>
+                                <option value="Ranchi" {% if record.12 == 'Ranchi' %}selected{% endif %}>Ranchi</option>
+                                <option value="Mumbai" {% if record.12 == 'Mumbai' %}selected{% endif %}>Mumbai</option>
+                                <option value="Kolkata" {% if record.12 == 'Kolkata' %}selected{% endif %}>Kolkata</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Pin Code</td>
+                        <td>:</td>
+                        <td><input type="text" name="Pin" maxlength="6" value="{{ record.13 }}"></td>
+                    </tr>
+                    <tr>
+                        <td>Remarks</td>
+                        <td>:</td>
+                        <td colspan="4"><textarea name="Remarks" id="" cols="40" rows="4" maxlength="200">{{ record.14 }}</textarea></td>
+                    </tr>
+                </table>
+            </fieldset>
+            <div style="margin-left: 50%; margin-top: 2%">
+                <input type="submit" value="Save" formaction="{% url 'DonatorSave1' %}">
+                <input type="reset" value="Reset">
+                <input type="submit" value="Delete" formaction="{% url 'DonatorDelete1' %}">
+                <input type="submit" value="Update" formaction="{% url 'DonatorUpdate1' %}">
+            </div>
+        </fieldset>
+    </form>
+</body>
+</html>

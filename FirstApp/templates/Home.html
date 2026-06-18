@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+    <style>
+        body {
+            background-color: aliceblue;
+            text-align: center;
+            margin: 0;
+        }
+        img {
+            height: 30%;
+            width: 20%;
+        }
+        marquee {
+            color: red;
+            font-family: 'Monotype Corsiva';
+            font-size: 20pt;
+            font-weight: bolder;
+        }
+        #field1 {
+            background-color: red;
+            color: white;
+            margin: 0;
+            border: none;
+        }
+        #welcome {
+            width: 20%;
+            float: left;
+        }
+        #sp1 {
+            font-family: Vivaldi;
+            font-weight: bolder;
+            font-size: 35pt;
+        }
+        #sp2 {
+            font-family: Cambria;
+            font-weight: bolder;
+            font-size: 12pt;
+        }
+        #menu {
+            width: 100%;
+        }
+        #menu ul {
+            list-style: none;
+        }
+        #menu li {
+            background-color: red;
+            border: 1px solid white;
+            width: 140px;
+            height: 35px;
+            text-align: center;
+            line-height: 35px;
+            margin-left: 6px;
+            float: left;
+            position: relative;
+        }
+        #menu ul li a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            font-family: "Monotype Corsiva";
+            font-weight: bolder;
+        }
+        #menu ul li a:hover {
+            background-color: green;
+            color: white;
+        }
+        #menu ul li ul {
+            padding-top: 0;
+            margin-left: -47px;
+        }
+        #menu ul ul {
+            display: none;
+            position: absolute;
+        }
+        #menu ul li:hover > ul {
+            display: block;
+            z-index: 1000;
+        }
+        .slideshow {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .middle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+        }
+        .bar {
+            width: 50px;
+            height: 10px;
+            border: 2px solid #cccccc;
+            margin: 6px;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+        .bar:hover {
+            background-color: #cccccc;
+        }
+        input[name="r"] {
+            position: absolute;
+            visibility: hidden;
+        }
+        .slides {
+            width: 400%;
+            height: 100%;
+            display: flex;
+        }
+        .slides-caption {
+            position: absolute;
+            right: 15%;
+            bottom: 20px;
+            left: 15%;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+        .slide {
+            width: 25%;
+            transition: 0.6s;
+        }
+        .slide img {
+            margin-top: 10px;
+            width: 98%;
+            height: 96%;
+        }
+        #r1:checked ~ .s1 {
+            margin-left: 0;
+        }
+        #r2:checked ~ .s1 {
+            margin-left: -25%;
+        }
+        #r3:checked ~ .s1 {
+            margin-left: -50%;
+        }
+        #r4:checked ~ .s1 {
+            margin-left: -75%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div>
+            <marquee behavior="alternate" scrollamount="10" direction="" onmouseout="this.start()" onmouseover="this.stop()">
+                Online Redistribution of Old & Used Things for the Needy
+            </marquee>
+        </div>
+        <fieldset id="field1">
+            <div id="welcome">
+                <span id="sp1">Welcome</span>
+                <span id="sp2"><br>Contact No: 9393434322</span>
+            </div>
+            <div id="menu">
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Registration</a>
+                        <ul>
+                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
+                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
+                            <li><a href="/FirstApp/Login">LogIn</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="">Details</a>
+                        <ul>
+                            <li><a href="/DetailApp/Collection">Collection Details</a></li>
+                            <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
+                            <li><a href="/DetailApp/Stock">Stock Details</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/ComApp/Complaint">Complaint</a></li>
+                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
+                    <li><a href="/ReportApp/">Report</a></li>
+                </ul>
+            </div>
+        </fieldset>
+    </div>
+    <div class="slideshow middle" style="margin-top: 9%; background-color: #34495e">
+        <div class="slides">
+            <input type="radio" name="r" id="r1" checked>
+            <input type="radio" name="r" id="r2">
+            <input type="radio" name="r" id="r3">
+            <input type="radio" name="r" id="r4">
+            <div class="slide s1">
+                <img src="{% static 'images/pic1.jpg' %}" alt="pic1">
+                <div class="slides-caption">
+                    <h1><strong>Home Waste</strong></h1>
+                    <p>We can reuse the home waste</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/pic2.jpg' %}" alt="pic2">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/pic3.jpg' %}" alt="pic3">
+            </div>
+            <div class="slide">
+                <img src="{% static 'images/pic4.jpg' %}" alt="pic4">
+            </div>
+        </div>
+        <div class="navigation">
+            <label for="r1" class="bar"></label>
+            <label for="r2" class="bar"></label>
+            <label for="r3" class="bar"></label>
+            <label for="r4" class="bar"></label>
+        </div>
+    </div>
+    <div style="margin-top: 50%">
+        <h1>This is home page of 'Share of Unused Things at Doorstep'</h1>
+        <br>
+        <img src="{% static 'images/SUTD LOGO.png' %}" alt="SUTD Logo">
+    </div>
+    <div>
+        <fieldset class="rightsfieldset" style="margin: 0">
+            <center>
+                <span class='rightreserve'>All rights reserved to &copy; Online Redistribution of Old & Used Things for the Needy Designed By: <b>ROHIT KUMAR</b> <br>Guided by: <b>Prof. R.K. MAHTO</b></span>
+            </center>
+        </fieldset>
+    </div>
+</body>
+</html>
