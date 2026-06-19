@@ -1,0 +1,110 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+share/python-wheels/
+
+# Virtual environments
+myenv/
+venv/
+ENV/
+.env/
+.venv/
+env/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+*.tox/
+*.cover
+coverage/
+.coverage
+.pytest_cache/
+.cache/
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+media/*
+staticfiles/
+# FinalProject/settings.py is tracked; ensure it reads secrets from env vars
+
+# Sensitive files
+.env
+.env.*
+secrets.json
+credentials.json
+aws_credentials
+.aws/
+id_rsa
+id_rsa.pub
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.log.*
+*.sql
+*.sqlite
+*.db
+
+# Python virtualenv and cache
+*.py[cod]
+*$py.class
+# Cython debug symbols
+cython_debug/
+
+# JetBrains
+.idea/
+
+# Node
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Ignore any accidental compiled commit messages
+.git/COMMIT_EDITMSG

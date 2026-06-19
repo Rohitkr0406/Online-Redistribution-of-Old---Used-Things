@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Us</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+    <style>
+        .contact-card {
+            max-width: 750px;
+            margin: 15px auto;
+            padding: 15px 25px;
+        }
+        .contact-card h2 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .contact-card hr {
+            margin: 5px 0 15px 0;
+        }
+        .contact-card .form-grid {
+            gap: 10px 20px;
+        }
+        .contact-card input[type="text"],
+        .contact-card input[type="email"],
+        .contact-card textarea {
+            padding: 6px 12px;
+            margin-bottom: 4px;
+        }
+        .contact-card label {
+            margin-bottom: 1px;
+            font-size: 12px;
+        }
+        .contact-card .btn-group {
+            margin-top: 10px;
+        }
+        .contact-card .btn {
+            padding: 8px 18px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body class="teal-bg">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        Welcome! For Queries, Contact No: +91 7992241733
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header>
+        <div class="header-container">
+            <a href="/" class="brand-logo">
+                <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
+                <span>Share & Care</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/FirstApp/Demo">About</a></li>
+                    <li>
+                        <a href="#">Registration ▾</a>
+                        <ul>
+                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
+                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
+                            <li><a href="/FirstApp/Login">LogIn</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Details ▾</a>
+                        <ul>
+                            <li><a href="/DetailApp/Collection">Collection Details</a></li>
+                            <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
+                            <li><a href="/DetailApp/Stock">Stock Details</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/ComApp/Complaint">Complaint</a></li>
+                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
+                    <li><a href="/ReportApp/">Report</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="card-container contact-card">
+        <form method="post" action="{% url 'ContactSave1' %}">
+            {% csrf_token %}
+            <fieldset>
+                <h2>Contact Us</h2>
+                {% if msg and msg != "pp" and msg != "None" and msg != "" %}
+                    <div class="alert-banner {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
+                        {{ msg }}
+                    </div>
+                {% endif %}
+                <hr>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Serial No.</label>
+                        <input type="text" name="Slno" required class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <label>Admin Id</label>
+                        <input type="text" name="Admid" required class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <label>Company Name</label>
+                        <input type="text" name="ComName" class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <label>Email Id</label>
+                        <input type="email" name="ComEmail" class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <label>Company Mobile No.</label>
+                        <input type="text" name="ComMob" class="form-control">
+                    </div>
+                    <div class="form-field">
+                        <label>Company Address</label>
+                        <textarea name="ComAdd" rows="2" class="form-control"></textarea>
+                    </div>
+                    <div class="form-field full-width">
+                        <label>Remarks</label>
+                        <textarea name="Remarks" rows="2" class="form-control"></textarea>
+                    </div>
+                </div>
+                
+                <div class="btn-group" style="margin-top: 15px;">
+                    <input type="submit" value="Save" class="btn btn-primary">
+                    <input type="reset" value="Reset" class="btn btn-reset">
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

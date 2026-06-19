@@ -17,3 +17,12 @@ def ConnecivityPage(request):
         msg = f"Database Connection Failed: {str(e)}"
     
     return render(request, 'Connectivity.html', {'msg': msg})
+
+
+def Login(request):
+    return render(request, 'LogIn.html')
+
+
+def Demo(request):
+    return render(request, 'demo.html')
+

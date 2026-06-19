@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Unused Things Registration</title>
+    <title>Stock Details</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
     <link rel="stylesheet" href="{% static 'images/style.css' %}">
-
 </head>
 <body class="teal-bg">
     <!-- Announcement Bar -->
@@ -48,10 +47,9 @@
             </nav>
         </div>
     </header>
-
     <div class="card-container large-card">
         <fieldset>
-            <h2>Unused Things Registration</h2>
+            <h2>Stock Details</h2>
             {% if msg and msg != "pp" and msg != "None" and msg != "" %}
                 <div class="alert-banner {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
                     {{ msg }}
@@ -60,7 +58,7 @@
             <hr>
             
             <!-- Search Section -->
-            <form method="post" action="{% url 'UnusedSearch1' %}" class="search-form">
+            <form method="post" action="{% url 'StockSearch1' %}" class="search-form">
                 {% csrf_token %}
                 <span class="search-container">
                     <select name="CmbBox" class="form-control select-search">
@@ -73,75 +71,64 @@
                 </span>
             </form>
             
-            <!-- Main Registration Form -->
+            <!-- Main Details Form -->
             <form method="post">
                 {% csrf_token %}
-                
-                <h3 class="section-title">Product Details</h3>
                 <div class="form-grid">
                     <div class="form-field">
                         <label>Serial No.</label>
                         <input type="text" name="Slno" value="{{ record.0|default:'' }}" required class="form-control">
                     </div>
                     <div class="form-field">
-                        <label>Product ID</label>
-                        <input type="text" name="Proid" value="{{ record.1|default:'' }}" required class="form-control">
+                        <label>Product Id</label>
+                        <select name="Proid" class="form-control">
+                            <option value="">-Select-</option>
+                            {% for val1 in val %}
+                                {% for v1 in val1 %}
+                                    <option value="{{ v1 }}" {% if record.1 == v1 %}selected{% endif %}>{{ v1 }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-field">
                         <label>Product Name</label>
-                        <input type="text" name="ProName" value="{{ record.2|default:'' }}" class="form-control">
+                        <input type="text" name="Pname" value="{{ record.2|default:'' }}" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Category</label>
-                        <select name="ProCate" class="form-control">
-                            <option value="">-Select-</option>
-                            <option value="Electronics" {% if record.3 == 'Electronics' %}selected{% endif %}>Electronics</option>
-                            <option value="Clothing" {% if record.3 == 'Clothing' %}selected{% endif %}>Clothing</option>
-                            <option value="Furniture" {% if record.3 == 'Furniture' %}selected{% endif %}>Furniture</option>
-                            <option value="Books" {% if record.3 == 'Books' %}selected{% endif %}>Books</option>
-                            <option value="Other" {% if record.3 == 'Other' %}selected{% endif %}>Other</option>
-                        </select>
+                        <input type="text" name="cate" value="{{ record.3|default:'' }}" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Sub-Category</label>
-                        <input type="text" name="ProSubCate" value="{{ record.4|default:'' }}" class="form-control">
+                        <input type="text" name="SubCate" value="{{ record.4|default:'' }}" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Product Serial no.</label>
-                        <input type="text" name="ProSerial" value="{{ record.5|default:'' }}" class="form-control">
+                        <input type="text" name="ProSlno" value="{{ record.5|default:'' }}" class="form-control">
                     </div>
-                </div>
-                
-                <h3 class="section-title" style="margin-top: 25px;">Stock Details</h3>
-                <div class="form-grid">
                     <div class="form-field">
                         <label>Batch Number</label>
-                        <input type="text" name="ProBatchno" value="{{ record.6|default:'' }}" class="form-control">
+                        <input type="text" name="BatchNo" value="{{ record.6|default:'' }}" class="form-control">
                     </div>
                     <div class="form-field">
-                        <label>Purchase Date</label>
-                        <input type="date" name="PurchDate" value="{{ record.7|default:'' }}" class="form-control">
+                        <label>Distribution Amount</label>
+                        <input type="text" name="DisAmt" value="{{ record.7|default:'' }}" class="form-control">
                     </div>
                     <div class="form-field">
-                        <label>Status</label>
-                        <select name="Status" class="form-control">
-                            <option value="">-Select-</option>
-                            <option value="Available" {% if record.8 == 'Available' %}selected{% endif %}>Available</option>
-                            <option value="Donated" {% if record.8 == 'Donated' %}selected{% endif %}>Donated</option>
-                            <option value="Distributed" {% if record.8 == 'Distributed' %}selected{% endif %}>Distributed</option>
-                        </select>
+                        <label>Stock Amount</label>
+                        <input type="text" name="StockAmt" value="{{ record.8|default:'' }}" class="form-control">
                     </div>
                     <div class="form-field full-width">
                         <label>Remarks</label>
-                        <textarea name="Remarks" rows="3" class="form-control">{{ record.9|default:'' }}</textarea>
+                        <textarea name="Remarks" rows="2" class="form-control">{{ record.9|default:'' }}</textarea>
                     </div>
                 </div>
                 
                 <div class="btn-group">
-                    <input type="submit" value="Save" formaction="{% url 'UnusedSave1' %}" class="btn btn-primary">
+                    <input type="submit" value="Save" formaction="{% url 'StockSave1' %}" class="btn btn-primary">
                     <input type="reset" value="Reset" class="btn btn-reset">
-                    <input type="submit" value="Delete" formaction="{% url 'UnusedDelete1' %}" class="btn btn-delete">
-                    <input type="submit" value="Update" formaction="{% url 'UnusedUpdate1' %}" class="btn btn-update">
+                    <input type="submit" value="Delete" formaction="{% url 'StockDelete1' %}" class="btn btn-delete">
+                    <input type="submit" value="Update" formaction="{% url 'StockUpdate1' %}" class="btn btn-update">
                 </div>
             </form>
         </fieldset>

@@ -2,181 +2,347 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Redistribution of Old & Used Things for the Needy</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
     <link rel="stylesheet" href="{% static 'images/style.css' %}">
     <style>
+        /* Home Page Custom Styles */
         body {
-            background-color: aliceblue;
-            text-align: center;
+            background-color: #f0fdf4;
+            font-family: 'Inter', sans-serif;
             margin: 0;
+            padding: 0;
+            color: #1e293b;
         }
-        img {
-            height: 30%;
-            width: 20%;
-        }
-        marquee {
-            color: red;
-            font-family: 'Monotype Corsiva';
-            font-size: 20pt;
-            font-weight: bolder;
-        }
-        #field1 {
-            background-color: red;
-            color: white;
-            margin: 0;
-            border: none;
-        }
-        #welcome {
-            width: 20%;
-            float: left;
-        }
-        #sp1 {
-            font-family: Vivaldi;
-            font-weight: bolder;
-            font-size: 35pt;
-        }
-        #sp2 {
-            font-family: Cambria;
-            font-weight: bolder;
-            font-size: 12pt;
-        }
-        #menu {
-            width: 100%;
-        }
-        #menu ul {
-            list-style: none;
-        }
-        #menu li {
-            background-color: red;
-            border: 1px solid white;
-            width: 140px;
-            height: 35px;
+
+        /* Announcement Bar */
+        .announcement-bar {
+            background: linear-gradient(90deg, #11998e, #38ef7d);
+            color: #ffffff;
+            padding: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
             text-align: center;
-            line-height: 35px;
-            margin-left: 6px;
-            float: left;
-            position: relative;
         }
-        #menu ul li a {
-            text-decoration: none;
-            color: white;
-            display: block;
-            font-family: "Monotype Corsiva";
-            font-weight: bolder;
-        }
-        #menu ul li a:hover {
-            background-color: green;
-            color: white;
-        }
-        #menu ul li ul {
-            padding-top: 0;
-            margin-left: -47px;
-        }
-        #menu ul ul {
-            display: none;
-            position: absolute;
-        }
-        #menu ul li:hover > ul {
-            display: block;
+
+        /* Header & Navbar */
+        header {
+            background: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
             z-index: 1000;
         }
-        .slideshow {
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .brand-logo span {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: #11998e;
+        }
+
+        /* Navigation Menu */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #475569;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        nav a:hover, nav li:hover > a {
+            color: #11998e;
+            background-color: #f0fdf4;
+        }
+
+        /* Dropdowns */
+        nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            min-width: 200px;
+            padding: 8px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        nav ul ul li {
+            width: 100%;
+        }
+
+        nav ul ul a {
+            padding: 10px 20px;
+            border-radius: 0;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        nav ul ul a:hover {
+            background-color: #f0fdf4;
+            color: #11998e;
+        }
+
+        nav li:hover > ul {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        @media (max-width: 992px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        .hero-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #0f172a;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: #11998e;
+            background: linear-gradient(90deg, #11998e, #20b2aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 16px;
+            color: #475569;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-start;
+        }
+
+        @media (max-width: 992px) {
+            .hero-buttons {
+                justify-content: center;
+            }
+        }
+
+        /* Slider */
+        .slider-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .slides {
             width: 100%;
             height: 100%;
-            overflow: hidden;
+            position: relative;
         }
-        .middle {
+
+        .slide {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .navigation {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-        }
-        .bar {
-            width: 50px;
-            height: 10px;
-            border: 2px solid #cccccc;
-            margin: 6px;
-            cursor: pointer;
-            transition: 0.4s;
-        }
-        .bar:hover {
-            background-color: #cccccc;
-        }
-        input[name="r"] {
-            position: absolute;
-            visibility: hidden;
-        }
-        .slides {
-            width: 400%;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .slides-caption {
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-caption {
             position: absolute;
-            right: 15%;
-            bottom: 20px;
-            left: 15%;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            color: #fff;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: #ffffff;
+            padding: 30px 20px;
             text-align: center;
         }
-        .slide {
-            width: 25%;
-            transition: 0.6s;
+
+        .slide-caption h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            text-align: center;
         }
-        .slide img {
-            margin-top: 10px;
-            width: 98%;
-            height: 96%;
+
+        .slide-caption p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 0;
         }
-        #r1:checked ~ .s1 {
-            margin-left: 0;
+
+        /* Brand Welcome Section */
+        .welcome-section {
+            background: #ffffff;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid #f1f5f9;
         }
-        #r2:checked ~ .s1 {
-            margin-left: -25%;
+
+        .welcome-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        #r3:checked ~ .s1 {
-            margin-left: -50%;
+
+        .welcome-logo {
+            height: 100px;
+            width: auto;
+            margin-bottom: 25px;
         }
-        #r4:checked ~ .s1 {
-            margin-left: -75%;
+
+        .welcome-section h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            color: #0f172a;
+            margin-bottom: 15px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .welcome-section p {
+            font-size: 16px;
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 14px;
+            border-top: 1px solid #1e293b;
+        }
+
+        footer b {
+            color: #f8fafc;
+        }
+
+        footer hr {
+            border-color: #1e293b;
+            margin: 20px 0;
+        }
+
+        .footer-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #38ef7d;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <div>
-        <div>
-            <marquee behavior="alternate" scrollamount="10" direction="" onmouseout="this.start()" onmouseover="this.stop()">
-                Online Redistribution of Old & Used Things for the Needy
-            </marquee>
-        </div>
-        <fieldset id="field1">
-            <div id="welcome">
-                <span id="sp1">Welcome</span>
-                <span id="sp2"><br>Contact No: 9393434322</span>
-            </div>
-            <div id="menu">
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        Welcome! For Queries, Contact No: +91 7992241733
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header>
+        <div class="header-container">
+            <a href="/" class="brand-logo">
+                <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
+                <span>Share & Care</span>
+            </a>
+            <nav>
                 <ul>
-                    <li><a href="">Home</a></li>
-                    <li><a href="">About</a></li>
-                    <li><a href="">Registration</a>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/FirstApp/Demo">About</a></li>
+                    <li>
+                        <a href="#">Registration ▾</a>
                         <ul>
                             <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
                             <li><a href="/RegApp/Donator">Donator Reg</a></li>
                             <li><a href="/FirstApp/Login">LogIn</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Details</a>
+                    <li>
+                        <a href="#">Details ▾</a>
                         <ul>
                             <li><a href="/DetailApp/Collection">Collection Details</a></li>
                             <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
@@ -187,50 +353,87 @@
                     <li><a href="/ComApp/Contactus">Contact Us</a></li>
                     <li><a href="/ReportApp/">Report</a></li>
                 </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Showcase Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Online Redistribution of <span>Old & Used Things</span> for the Needy</h1>
+            <p>Bridging the gap between waste and need. Donate your unused clothes, books, utensils, furniture, or gadgets, and help us deliver hope and basic necessities directly to the underprivileged.</p>
+            <div class="hero-buttons">
+                <a href="/RegApp/Donator" class="btn btn-primary" style="background: linear-gradient(90deg, #11998e, #38ef7d);">Start Donating</a>
+                <a href="/FirstApp/Demo" class="btn btn-reset">Learn More</a>
             </div>
-        </fieldset>
-    </div>
-    <div class="slideshow middle" style="margin-top: 9%; background-color: #34495e">
-        <div class="slides">
-            <input type="radio" name="r" id="r1" checked>
-            <input type="radio" name="r" id="r2">
-            <input type="radio" name="r" id="r3">
-            <input type="radio" name="r" id="r4">
-            <div class="slide s1">
-                <img src="{% static 'images/pic1.jpg' %}" alt="pic1">
-                <div class="slides-caption">
-                    <h1><strong>Home Waste</strong></h1>
-                    <p>We can reuse the home waste</p>
+        </div>
+        
+        <!-- Interactive Slideshow -->
+        <div class="slider-container">
+            <div class="slides">
+                <div class="slide active">
+                    <img src="{% static 'images/pic1.jpg' %}" alt="Home Waste">
+                    <div class="slide-caption">
+                        <h2>Reduce Household Waste</h2>
+                        <p>Sort out items you no longer use and give them a second life.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/pic2.jpg' %}" alt="Clothes Donation">
+                    <div class="slide-caption">
+                        <h2>Donate Clothes</h2>
+                        <p>Help keep families warm and dressed with dignity.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/pic3.jpg' %}" alt="Books & Stationary">
+                    <div class="slide-caption">
+                        <h2>Spread Knowledge</h2>
+                        <p>Donate old books and school stationeries to empower education.</p>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="{% static 'images/pic4.jpg' %}" alt="Happy People">
+                    <div class="slide-caption">
+                        <h2>Support the Community</h2>
+                        <p>Volunteers and donors working together to make a social difference.</p>
+                    </div>
                 </div>
             </div>
-            <div class="slide">
-                <img src="{% static 'images/pic2.jpg' %}" alt="pic2">
-            </div>
-            <div class="slide">
-                <img src="{% static 'images/pic3.jpg' %}" alt="pic3">
-            </div>
-            <div class="slide">
-                <img src="{% static 'images/pic4.jpg' %}" alt="pic4">
-            </div>
-        </div>
-        <div class="navigation">
-            <label for="r1" class="bar"></label>
-            <label for="r2" class="bar"></label>
-            <label for="r3" class="bar"></label>
-            <label for="r4" class="bar"></label>
         </div>
     </div>
-    <div style="margin-top: 50%">
-        <h1>This is home page of 'Share of Unused Things at Doorstep'</h1>
-        <br>
-        <img src="{% static 'images/SUTD LOGO.png' %}" alt="SUTD Logo">
+
+    <!-- Welcome Description -->
+    <div class="welcome-section">
+        <div class="welcome-container">
+            <img src="{% static 'images/SUTD LOGO.png' %}" alt="SUTD Logo" class="welcome-logo">
+            <h2>Share of Unused Things at Doorstep</h2>
+            <p>Our platform operates on a structured collection, stock verification, and regional distribution workflow. We match donor items directly with needy beneficiaries, ensuring absolute transparency and efficiency in every donation loop.</p>
+        </div>
     </div>
-    <div>
-        <fieldset class="rightsfieldset" style="margin: 0">
-            <center>
-                <span class='rightreserve'>All rights reserved to &copy; Online Redistribution of Old & Used Things for the Needy Designed By: <b>ROHIT KUMAR</b> <br>Guided by: <b>Prof. R.K. MAHTO</b></span>
-            </center>
-        </fieldset>
-    </div>
+
+    <!-- Footer Copyright -->
+    <footer>
+        <div class="footer-logo">Share & Care</div>
+        <p>Online Redistribution of Old & Used Things for the Needy</p>
+        <hr>
+        <p>All rights reserved &copy; 2026. Designed By: <b>ROHIT KUMAR</b> | Guided by: <b>Prof. R.K. MAHTO</b></p>
+    </footer>
+
+    <!-- Slideshow Javascript Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let slides = document.querySelectorAll(".slide");
+            let currentSlide = 0;
+            
+            function nextSlide() {
+                slides[currentSlide].classList.remove("active");
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add("active");
+            }
+            
+            setInterval(nextSlide, 5000); // Change image every 5 seconds
+        });
+    </script>
 </body>
 </html>

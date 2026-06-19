@@ -9,7 +9,7 @@ def Donator(request):
     record = None
     
     try:
-        mycursor.execute("""SELECT Slno FROM donorreg""")
+        mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
         record1 = mycursor.fetchall()
     except Exception as e:
         msg = "Wrong Data Entry..!!"
@@ -55,7 +55,7 @@ def DonatorSave(request):
         msg = f"Wrong Data Entry: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno FROM donorreg""")
+        mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()
@@ -77,7 +77,7 @@ def DonatorDelete(request):
         msg = f"Record Not Found: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno FROM donorreg""")
+        mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()
@@ -95,7 +95,7 @@ def DonatorSearch(request):
         record = None
         msg = "Data Not found.....!!"
         try:
-            mycursor.execute("""SELECT Slno FROM donorreg""")
+            mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
             record1 = mycursor.fetchall()
         except Exception as e:
             msg = "Wrong Data Entry..!!"
@@ -118,7 +118,7 @@ def DonatorSearch(request):
             msg = f"Data Not found: {str(e)}"
             record = None
         finally:
-            mycursor.execute("""SELECT Slno FROM donorreg""")
+            mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
             record1 = mycursor.fetchall()
             mycursor.close()
             conn.close()
@@ -156,7 +156,7 @@ def DonatorUpdate(request):
         msg = f"Update Failed: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno FROM donorreg""")
+        mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()
@@ -171,7 +171,7 @@ def Unused(request):
     record = None
     
     try:
-        mycursor.execute("""SELECT Slno FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
         record1 = mycursor.fetchall()
     except Exception as e:
         msg = "Wrong Data Entry..!!"
@@ -212,7 +212,7 @@ def UnusedSave(request):
         msg = f"Wrong Data Entry: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()
@@ -234,7 +234,7 @@ def UnusedDelete(request):
         msg = f"Record Not Found: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()
@@ -252,7 +252,7 @@ def UnusedSearch(request):
         record = None
         msg = "Data Not found.....!!"
         try:
-            mycursor.execute("""SELECT Slno FROM unusedthing""")
+            mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
             record1 = mycursor.fetchall()
         except Exception as e:
             msg = "Wrong Data Entry..!!"
@@ -275,7 +275,7 @@ def UnusedSearch(request):
             msg = f"Data Not found: {str(e)}"
             record = None
         finally:
-            mycursor.execute("""SELECT Slno FROM unusedthing""")
+            mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
             record1 = mycursor.fetchall()
             mycursor.close()
             conn.close()
@@ -308,7 +308,7 @@ def UnusedUpdate(request):
         msg = f"Update Failed: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()

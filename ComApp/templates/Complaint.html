@@ -2,28 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Connectivity Status</title>
+    <title>Suggestion & Complaint</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
     <link rel="stylesheet" href="{% static 'images/style.css' %}">
-    <style>
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-    </style>
 </head>
 <body class="teal-bg">
     <!-- Announcement Bar -->
@@ -65,15 +47,43 @@
             </nav>
         </div>
     </header>
-
     <div class="card-container">
-        <fieldset>
-            <h2>Database Connection Status</h2>
-            <hr>
-            <div class="{% if 'Successfully' in msg %}success{% else %}error{% endif %}">
-                {{ msg }}
-            </div>
-        </fieldset>
+        <form method="post" action="{% url 'CompSave1' %}">
+            {% csrf_token %}
+            <fieldset>
+                <h2>Suggestion & Complaint</h2>
+                {% if msg and msg != "pp" and msg != "None" and msg != "" %}
+                    <div class="alert-banner {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
+                        {{ msg }}
+                    </div>
+                {% endif %}
+                <hr>
+                <div class="form-group">
+                    <label>Serial No.</label>
+                    <input type="text" name="Slno" required class="form-control">
+                    
+                    <label>Donor/Receiver Id</label>
+                    <input type="text" name="Did" required class="form-control">
+                    
+                    <label>Complaint Date</label>
+                    <input type="date" name="CompDate" class="form-control">
+                    
+                    <label>Issue Type</label>
+                    <input type="text" name="IssuType" class="form-control">
+                    
+                    <label>Complaint Details</label>
+                    <textarea name="CompDetails" rows="4" class="form-control"></textarea>
+                    
+                    <label>Remarks</label>
+                    <textarea name="Remarks" rows="2" class="form-control"></textarea>
+                    
+                    <div class="btn-group">
+                        <input type="submit" value="Save" class="btn btn-primary">
+                        <input type="reset" value="Reset" class="btn btn-reset">
+                    </div>
+                </div>
+            </fieldset>
+        </form>
     </div>
 </body>
 </html>

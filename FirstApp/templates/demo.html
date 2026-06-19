@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - Share & Care</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+    <style>
+        .about-card {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+        }
+        .about-section {
+            margin-bottom: 35px;
+        }
+        .about-section h3 {
+            color: #8b0000; /* Rich Dark Red */
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border-left: 4px solid #11998e;
+            padding-left: 12px;
+        }
+        .about-section p {
+            font-size: 14.5px;
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        .feature-box {
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .feature-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border-color: #11998e;
+        }
+        .feature-box .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 12px;
+        }
+        .feature-box h4 {
+            color: #0f172a;
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .feature-box p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+        .tech-pills {
+            margin-top: 10px;
+        }
+        .tech-pill {
+            display: inline-block;
+            background-color: #f0fdf4;
+            color: #11998e;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 6px;
+            border: 1px solid #bbf7d0;
+            transition: all 0.2s ease;
+        }
+        .tech-pill:hover {
+            background-color: #11998e;
+            color: #ffffff;
+            border-color: #11998e;
+        }
+    </style>
+</head>
+<body class="teal-bg">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        Welcome! For Queries, Contact No: +91 7992241733
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header>
+        <div class="header-container">
+            <a href="/" class="brand-logo">
+                <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
+                <span>Share & Care</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/FirstApp/Demo">About</a></li>
+                    <li>
+                        <a href="#">Registration ▾</a>
+                        <ul>
+                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
+                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
+                            <li><a href="/FirstApp/Login">LogIn</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Details ▾</a>
+                        <ul>
+                            <li><a href="/DetailApp/Collection">Collection Details</a></li>
+                            <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
+                            <li><a href="/DetailApp/Stock">Stock Details</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/ComApp/Complaint">Complaint</a></li>
+                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
+                    <li><a href="/ReportApp/">Report</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="card-container about-card">
+        <fieldset>
+            <h2>About SUTD System</h2>
+            <hr>
+            
+            <div class="about-section">
+                <h3>Introduction</h3>
+                <p>
+                    In today's fast-paced world, technology serves as a powerful instrument for social betterment. Many households contain unused items—clothes, books, utensils, furniture, or electronic gadgets—lying neglected. Concurrently, underprivileged communities face severe daily struggles without access to basic necessities. 
+                </p>
+                <p>
+                    <strong>Share of Unused Things at Doorstep (SUTD)</strong>, under the banner of <strong>Share & Care</strong>, bridges the gap between waste and need. We provide a structured, transparent, and digital channel to collect these idle materials directly from donors' homes and redistribute them to the right beneficiaries.
+                </p>
+            </div>
+            
+            <div class="about-section">
+                <h3>Core Objectives</h3>
+                <div class="grid-3">
+                    <div class="feature-box">
+                        <span class="icon">🤝</span>
+                        <h4>Social Bridge</h4>
+                        <p>Connecting generous donors directly with verified regional beneficiaries and local shelter homes.</p>
+                    </div>
+                    <div class="feature-box">
+                        <span class="icon">♻️</span>
+                        <h4>Eco Sustainability</h4>
+                        <p>Reducing household waste and promoting environmental sustainability by giving useful things a second life.</p>
+                    </div>
+                    <div class="feature-box">
+                        <span class="icon">📊</span>
+                        <h4>Transparent Tracking</h4>
+                        <p>Maintaining clear records of collection, stock checks, and deliveries to ensure integrity.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-section">
+                <h3>How It Works</h3>
+                <p>
+                    The platform runs on a streamlined 3-step operational workflow:
+                </p>
+                <p>
+                    1. <strong>Register & List:</strong> Donors sign up and list their items by category (Electronics, Clothing, Furniture, Books) along with status and batch details.
+                </p>
+                <p>
+                    2. <strong>Collection & Inspection:</strong> Verified working members schedule doorstep pick-ups and log incoming collection items into the central stock database.
+                </p>
+                <p>
+                    3. <strong>Redistribution:</strong> Administrators and volunteers coordinate distribution schedules to dispatch materials directly to regional underprivileged families and partner NGOs.
+                </p>
+            </div>
+
+            <div class="about-section">
+                <h3>Technical Infrastructure</h3>
+                <p>
+                    SUTD is developed on a robust client-server architecture model structured over three cohesive logical layers:
+                </p>
+                <div class="tech-pills">
+                    <span class="tech-pill">Python 3.14</span>
+                    <span class="tech-pill">Django 6.0</span>
+                    <span class="tech-pill">MySQL RDBMS</span>
+                    <span class="tech-pill">3-Tier Architecture</span>
+                    <span class="tech-pill">HTML5 & CSS3</span>
+                    <span class="tech-pill">Responsive Design</span>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</body>
+</html>

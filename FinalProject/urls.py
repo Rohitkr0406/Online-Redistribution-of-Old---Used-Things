@@ -23,5 +23,8 @@ urlpatterns = [
     path('', firstapp_views.Home),
     path('FirstApp/', include('FirstApp.urls')),
     path('RegApp/', include('RegApp.urls')),
+    path('DetailApp/', include('DetailApp.urls')),
+    path('ComApp/', include('ComApp.urls')),
+    path('ReportApp/', include('ReportApp.urls')),
 ]
 

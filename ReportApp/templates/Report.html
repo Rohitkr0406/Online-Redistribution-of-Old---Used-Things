@@ -2,28 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Connectivity Status</title>
+    <title>Reports Dashboard</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
     <link rel="stylesheet" href="{% static 'images/style.css' %}">
-    <style>
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-    </style>
 </head>
 <body class="teal-bg">
     <!-- Announcement Bar -->
@@ -65,13 +47,39 @@
             </nav>
         </div>
     </header>
-
-    <div class="card-container">
+    <div class="card-container large-card">
         <fieldset>
-            <h2>Database Connection Status</h2>
+            <h2>Reports Dashboard</h2>
             <hr>
-            <div class="{% if 'Successfully' in msg %}success{% else %}error{% endif %}">
-                {{ msg }}
+            <div class="report-grid">
+                <a href="/ReportApp/DonorReport" class="report-card">
+                    <h3>Donor Registration Report</h3>
+                    <p>View registered donors and their details.</p>
+                </a>
+                <a href="/ReportApp/UnusedReport" class="report-card">
+                    <h3>Unused Things Report</h3>
+                    <p>View and manage unused items registered by donors.</p>
+                </a>
+                <a href="/ReportApp/CollectionReport" class="report-card">
+                    <h3>Collection Details Report</h3>
+                    <p>View items received and collected by working members.</p>
+                </a>
+                <a href="/ReportApp/StockReport" class="report-card">
+                    <h3>Stock Details Report</h3>
+                    <p>Monitor current stock levels and inventory values.</p>
+                </a>
+                <a href="/ReportApp/DistributionReport" class="report-card">
+                    <h3>Distribution Details Report</h3>
+                    <p>Track materials distributed to beneficiaries.</p>
+                </a>
+                <a href="/ReportApp/ComplaintReport" class="report-card">
+                    <h3>Complaint Report</h3>
+                    <p>Review suggestions and complaint tickets.</p>
+                </a>
+                <a href="/ReportApp/ContactUsReport" class="report-card">
+                    <h3>Contact Us Report</h3>
+                    <p>View corporate contacts and inquiries.</p>
+                </a>
             </div>
         </fieldset>
     </div>
