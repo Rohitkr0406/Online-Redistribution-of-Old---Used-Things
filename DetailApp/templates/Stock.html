@@ -2,84 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Stock Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Details - Share & Care</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
 </head>
-<body class="teal-bg">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
+<body>
+    <!-- Sidebar Navigation -->
+    {% include 'AdminMenu.html' %}
 
-    <!-- Main Navigation Header -->
-    <header>
-        <div class="header-container">
-            <a href="/" class="brand-logo">
-                <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
-                <span>Share & Care</span>
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/FirstApp/Demo">About</a></li>
-                    <li>
-                        <a href="#">Registration ▾</a>
-                        <ul>
-                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
-                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
-                            <li><a href="/FirstApp/Login">LogIn</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Details ▾</a>
-                        <ul>
-                            <li><a href="/DetailApp/Collection">Collection Details</a></li>
-                            <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
-                            <li><a href="/DetailApp/Stock">Stock Details</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/ComApp/Complaint">Complaint</a></li>
-                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
-                    <li><a href="/ReportApp/">Report</a></li>
-                </ul>
-            </nav>
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="header-banner">
+            <div>
+                <h1>Stock Details</h1>
+                <p style="color: var(--text-muted); margin: 4px 0 0 0;">Manage warehouse inventory and stock levels.</p>
+            </div>
         </div>
-    </header>
-    <div class="card-container large-card">
-        <fieldset>
-            <h2>Stock Details</h2>
-            {% if msg and msg != "pp" and msg != "None" and msg != "" %}
-                <div class="alert-banner {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
-                    {{ msg }}
-                </div>
-            {% endif %}
-            <hr>
-            
-            <!-- Search Section -->
-            <form method="post" action="{% url 'StockSearch1' %}" class="search-form">
+
+        {% if msg and msg != "pp" and msg != "None" and msg != "" %}
+            <div class="alert {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}alert-success{% else %}alert-error{% endif %}">
+                {{ msg }}
+            </div>
+        {% endif %}
+
+        <!-- Search Section -->
+        <div class="form-box" style="margin-bottom: 32px;">
+            <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Search Stock Record</h3>
+            <form method="post" action="{% url 'StockSearch1' %}">
                 {% csrf_token %}
-                <span class="search-container">
-                    <select name="CmbBox" class="form-control select-search">
+                <div class="search-container" style="margin-bottom: 0;">
+                    <select name="CmbBox" class="form-control" style="flex-grow: 1;">
                         <option value="">-Select Serial-</option>
                         {% for foo in record1 %}
                             <option value="{{ foo.0 }}">{{ foo.2 }} (ID: {{ foo.1 }})</option>
                         {% endfor %}
                     </select>
-                    <input type="submit" value="Search" class="btn btn-search">
-                </span>
+                    <button type="submit" class="btn-primary">Search</button>
+                </div>
             </form>
-            
-            <!-- Main Details Form -->
+        </div>
+
+        <!-- Details Form -->
+        <div class="form-box">
+            <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Record Stock Details</h3>
             <form method="post">
                 {% csrf_token %}
-                <div class="form-grid">
-                    <div class="form-field">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 28px;">
+                    <div class="form-group">
                         <label>Serial No.</label>
                         <input type="text" name="Slno" value="{{ record.0|default:'' }}" required class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Product Id</label>
                         <select name="Proid" class="form-control">
                             <option value="">-Select-</option>
@@ -90,48 +65,48 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Product Name</label>
                         <input type="text" name="Pname" value="{{ record.2|default:'' }}" class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Category</label>
                         <input type="text" name="cate" value="{{ record.3|default:'' }}" class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Sub-Category</label>
                         <input type="text" name="SubCate" value="{{ record.4|default:'' }}" class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Product Serial no.</label>
                         <input type="text" name="ProSlno" value="{{ record.5|default:'' }}" class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Batch Number</label>
                         <input type="text" name="BatchNo" value="{{ record.6|default:'' }}" class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Distribution Amount</label>
                         <input type="text" name="DisAmt" value="{{ record.7|default:'' }}" class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-group">
                         <label>Stock Amount</label>
                         <input type="text" name="StockAmt" value="{{ record.8|default:'' }}" class="form-control">
                     </div>
-                    <div class="form-field full-width">
+                    <div class="form-group" style="grid-column: 1 / -1;">
                         <label>Remarks</label>
                         <textarea name="Remarks" rows="2" class="form-control">{{ record.9|default:'' }}</textarea>
                     </div>
                 </div>
-                
-                <div class="btn-group">
-                    <input type="submit" value="Save" formaction="{% url 'StockSave1' %}" class="btn btn-primary">
-                    <input type="reset" value="Reset" class="btn btn-reset">
-                    <input type="submit" value="Delete" formaction="{% url 'StockDelete1' %}" class="btn btn-delete">
-                    <input type="submit" value="Update" formaction="{% url 'StockUpdate1' %}" class="btn btn-update">
+
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <button type="submit" formaction="{% url 'StockSave1' %}" class="btn-primary">Save</button>
+                    <button type="reset" class="btn-primary" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main);">Reset</button>
+                    <button type="submit" formaction="{% url 'StockDelete1' %}" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-rose), #e11d48);">Delete</button>
+                    <button type="submit" formaction="{% url 'StockUpdate1' %}" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));">Update</button>
                 </div>
             </form>
-        </fieldset>
+        </div>
     </div>
 </body>
 </html>

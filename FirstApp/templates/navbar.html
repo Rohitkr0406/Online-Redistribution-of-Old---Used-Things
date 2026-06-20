@@ -1,0 +1,68 @@
+{% load static %}
+<!-- Main Navigation Header -->
+<header>
+    <div class="header-container">
+        <a href="/" class="brand-logo">
+            <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
+            <span>Share & Care</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                {% if request.session.donor_id %}
+                    <li><a href="/RegApp/Unused">Donate Items</a></li>
+                    <li><a href="/ComApp/Complaint">Register Complaint</a></li>
+                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
+                {% else %}
+                    <li><a href="/FirstApp/Demo">About</a></li>
+                    <li>
+                        <a href="#">Registration ▾</a>
+                        <ul>
+                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
+                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
+                            <li><a href="/FirstApp/Login">LogIn</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/ComApp/Complaint">Complaint</a></li>
+                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Alert & Message Banner -->
+{% if messages %}
+<div style="max-width: 1200px; margin: 15px auto; padding: 0 20px;">
+    {% for message in messages %}
+    <div style="padding: 12px 18px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; font-family: 'Inter', sans-serif;
+                {% if message.tags == 'success' %}background-color: rgba(13,148,136,0.15); color: #0d9488; border: 1px solid #0d9488;
+                {% else %}background-color: rgba(244,63,94,0.15); color: #f43f5e; border: 1px solid #f43f5e;{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Login Status Banner -->
+{% if request.session.admin_name or request.session.donor_name %}
+<div style="background-color: #e2f2f0; padding: 12px 20px; border-bottom: 1px solid #c3e6e2; font-family: 'Outfit', sans-serif; font-size: 0.95rem;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: #334155;">
+            Logged in as: <strong>
+                {% if request.session.admin_id %}
+                    Administrator ({{ request.session.admin_name }})
+                {% else %}
+                    Donor ({{ request.session.donor_name }})
+                {% endif %}
+            </strong>
+        </span>
+        <span>
+            {% if request.session.admin_id %}
+                <a href="/admin/dashboard/" style="color: #11998e; text-decoration: none; font-weight: 700; margin-right: 15px;">Admin Dashboard</a>
+            {% endif %}
+            <a href="{% if request.session.admin_id %}/admin/logout/{% else %}/FirstApp/Logout{% endif %}" style="color: #f43f5e; text-decoration: none; font-weight: 700;">Logout</a>
+        </span>
+    </div>
+</div>
+{% endif %}

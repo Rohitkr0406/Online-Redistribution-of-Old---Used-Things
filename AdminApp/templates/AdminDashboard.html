@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Dashboard - Share & Care</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    {% include 'AdminMenu.html' %}
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="header-banner">
+            <div>
+                <h1>Dashboard Overview</h1>
+                <p style="color: var(--text-muted); margin: 4px 0 0 0;">Welcome, {{ admin_name }}! Here is the latest system activity.</p>
+            </div>
+            <div class="date-badge" id="current-date">
+                Loading Date...
+            </div>
+        </div>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="alert alert-{% if message.tags == 'error' %}error{% else %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <!-- Statistics Cards Grid -->
+        <div class="stats-grid">
+            <!-- Card 1: Donors -->
+            <div class="stat-card">
+                <div class="card-header">
+                    <span>TOTAL DONORS</span>
+                    <span class="card-icon color-teal">👥</span>
+                </div>
+                <div class="card-value">{{ stats.total_donors }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted)">Registered contributors</div>
+            </div>
+
+            <!-- Card 2: Items Donated -->
+            <div class="stat-card">
+                <div class="card-header">
+                    <span>ITEMS DONATED</span>
+                    <span class="card-icon color-cyan">📦</span>
+                </div>
+                <div class="card-value">{{ stats.total_items }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted)">Total items registered</div>
+            </div>
+
+            <!-- Card 3: Requests Received -->
+            <div class="stat-card">
+                <div class="card-header">
+                    <span>REQUESTS RECEIVED</span>
+                    <span class="card-icon color-indigo">📥</span>
+                </div>
+                <div class="card-value">{{ stats.total_requests }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted)">Distribution transactions</div>
+            </div>
+
+            <!-- Card 4: Items in Stock -->
+            <div class="stat-card">
+                <div class="card-header">
+                    <span>ITEMS IN STOCK</span>
+                    <span class="card-icon color-amber">🏢</span>
+                </div>
+                <div class="card-value">{{ stats.items_in_stock }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted)">Available for distribution</div>
+            </div>
+
+            <!-- Card 5: Items Distributed -->
+            <div class="stat-card">
+                <div class="card-header">
+                    <span>ITEMS DISTRIBUTED</span>
+                    <span class="card-icon color-rose">🚚</span>
+                </div>
+                <div class="card-value">{{ stats.items_distributed }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted)">Delivered to beneficiaries</div>
+            </div>
+
+            <!-- Card 6: Pending Distributions -->
+            <div class="stat-card">
+                <div class="card-header">
+                    <span>PENDING ITEMS</span>
+                    <span class="card-icon color-amber">⏳</span>
+                </div>
+                <div class="card-value">{{ stats.pending_distributions }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted)">Items awaiting delivery</div>
+            </div>
+
+            <!-- Card 7: Total Complaints -->
+            <div class="stat-card">
+                <div class="card-header">
+                    <span>COMPLAINTS</span>
+                    <span class="card-icon color-rose">⚠️</span>
+                </div>
+                <div class="card-value">{{ stats.total_complaints }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted)">Reported issues</div>
+            </div>
+        </div>
+
+        <!-- Recent Activities Sections -->
+        <div class="activities-grid">
+            
+            <!-- Row 1: Donations and Distributions -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <!-- Recent Donations -->
+                <div class="activity-card">
+                    <h3>Recent Donated Items</h3>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Item Name</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in recent.recent_donations %}
+                                <tr>
+                                    <td>{{ item.1 }}</td>
+                                    <td><strong>{{ item.2 }}</strong></td>
+                                    <td>{{ item.3 }}</td>
+                                    <td><span class="badge badge-{% if item.4 == 'Available' %}available{% else %}inactive{% endif %}">{{ item.4 }}</span></td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted);">No recent donations.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Distributions -->
+                <div class="activity-card">
+                    <h3>Recent Distributions</h3>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Item ID</th>
+                                    <th>Qty</th>
+                                    <th>Receiver</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dist in recent.recent_distributions %}
+                                <tr>
+                                    <td>{{ dist.1 }}</td>
+                                    <td><strong>{{ dist.2 }}</strong></td>
+                                    <td>{{ dist.4 }}</td>
+                                    <td>{{ dist.3 }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted);">No recent distributions.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2: Complaints and Feedbacks -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <!-- Recent Complaints -->
+                <div class="activity-card">
+                    <h3>Recent Complaints</h3>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Donor ID</th>
+                                    <th>Issue Type</th>
+                                    <th>Details</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for comp in recent.recent_complaints %}
+                                <tr>
+                                    <td>{{ comp.1 }}</td>
+                                    <td><strong class="color-rose">{{ comp.3 }}</strong></td>
+                                    <td>{{ comp.4|truncatechars:40 }}</td>
+                                    <td>{{ comp.2 }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--text-muted);">No recent complaints.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Feedback -->
+                <div class="activity-card">
+                    <h3>Recent Feedbacks & Contact Us</h3>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for fb in recent.recent_feedbacks %}
+                                <tr>
+                                    <td><strong>{{ fb.1 }}</strong></td>
+                                    <td>{{ fb.2 }}</td>
+                                    <td>{{ fb.4|truncatechars:40 }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" style="text-align: center; color: var(--text-muted);">No recent feedback.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Update date badge with current date
+        const dateElem = document.getElementById('current-date');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateElem.textContent = new Date().toLocaleDateString('en-US', options);
+    </script>
+</body>
+</html>

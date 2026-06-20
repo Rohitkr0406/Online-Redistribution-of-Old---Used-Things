@@ -1,13 +1,16 @@
 import pymysql
 from django.shortcuts import render
+from auth_system.decorators import admin_required
 
 def get_db_connection():
     return pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
 
+@admin_required
 def ReportHome(request):
     return render(request, 'Report.html')
 
 # --- DONOR REPORT ---
+@admin_required
 def DonorReport(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -17,6 +20,7 @@ def DonorReport(request):
     conn.close()
     return render(request, 'DonorReport.html', {'record1': record1, 'record2': None})
 
+@admin_required
 def DonorReportSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -36,6 +40,7 @@ def DonorReportSearch(request):
     return render(request, 'DonorReport.html', {'record1': record1, 'record2': record2})
 
 # --- UNUSED REPORT ---
+@admin_required
 def UnusedReport(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -45,6 +50,7 @@ def UnusedReport(request):
     conn.close()
     return render(request, 'UnUsedReport.html', {'record1': record1, 'record2': None})
 
+@admin_required
 def UnusedReportSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -64,6 +70,7 @@ def UnusedReportSearch(request):
     return render(request, 'UnUsedReport.html', {'record1': record1, 'record2': record2})
 
 # --- COLLECTION REPORT ---
+@admin_required
 def CollectionReport(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -73,6 +80,7 @@ def CollectionReport(request):
     conn.close()
     return render(request, 'CollectionReport.html', {'record1': record1, 'record2': None, 'record3': None})
 
+@admin_required
 def CollectionReportSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -104,6 +112,7 @@ def CollectionReportSearch(request):
     return render(request, 'CollectionReport.html', {'record1': record1, 'record2': record2})
 
 # --- STOCK REPORT ---
+@admin_required
 def StockReport(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -113,6 +122,7 @@ def StockReport(request):
     conn.close()
     return render(request, 'StockReport.html', {'record1': record1, 'record2': None})
 
+@admin_required
 def StockReportSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -132,6 +142,7 @@ def StockReportSearch(request):
     return render(request, 'StockReport.html', {'record1': record1, 'record2': record2})
 
 # --- DISTRIBUTION REPORT ---
+@admin_required
 def DistributionReport(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -141,6 +152,7 @@ def DistributionReport(request):
     conn.close()
     return render(request, 'DistributionReport.html', {'record1': record1, 'record2': None})
 
+@admin_required
 def DistributionReportSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -173,6 +185,7 @@ def DistributionReportSearch(request):
     return render(request, 'DistributionReport.html', {'record1': record1, 'record2': record2})
 
 # --- COMPLAINT REPORT ---
+@admin_required
 def ComplaintReport(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -182,6 +195,7 @@ def ComplaintReport(request):
     conn.close()
     return render(request, 'ComplaintReport.html', {'record1': record1, 'record2': None})
 
+@admin_required
 def ComplaintReportSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -201,6 +215,7 @@ def ComplaintReportSearch(request):
     return render(request, 'ComplaintReport.html', {'record1': record1, 'record2': record2})
 
 # --- CONTACT US REPORT ---
+@admin_required
 def ContactUsReport(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -210,6 +225,7 @@ def ContactUsReport(request):
     conn.close()
     return render(request, 'ContactUsReport.html', {'record1': record1, 'record2': None})
 
+@admin_required
 def ConReportSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()

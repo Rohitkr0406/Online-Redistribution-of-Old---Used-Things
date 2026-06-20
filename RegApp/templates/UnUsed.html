@@ -14,40 +14,8 @@
         Welcome! For Queries, Contact No: +91 7992241733
     </div>
 
-    <!-- Main Navigation Header -->
-    <header>
-        <div class="header-container">
-            <a href="/" class="brand-logo">
-                <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
-                <span>Share & Care</span>
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/FirstApp/Demo">About</a></li>
-                    <li>
-                        <a href="#">Registration ▾</a>
-                        <ul>
-                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
-                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
-                            <li><a href="/FirstApp/Login">LogIn</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Details ▾</a>
-                        <ul>
-                            <li><a href="/DetailApp/Collection">Collection Details</a></li>
-                            <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
-                            <li><a href="/DetailApp/Stock">Stock Details</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/ComApp/Complaint">Complaint</a></li>
-                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
-                    <li><a href="/ReportApp/">Report</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- Main Navigation Header & Banners -->
+    {% include 'navbar.html' %}
 
     <div class="card-container large-card">
         <fieldset>

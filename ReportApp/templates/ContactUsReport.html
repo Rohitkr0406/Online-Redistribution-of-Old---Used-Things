@@ -2,74 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contact Us Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us Report - Share & Care</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
 </head>
-<body class="teal-bg">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
+<body>
+    <!-- Sidebar Navigation -->
+    {% include 'AdminMenu.html' %}
 
-    <!-- Main Navigation Header -->
-    <header>
-        <div class="header-container">
-            <a href="/" class="brand-logo">
-                <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
-                <span>Share & Care</span>
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/FirstApp/Demo">About</a></li>
-                    <li>
-                        <a href="#">Registration ▾</a>
-                        <ul>
-                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
-                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
-                            <li><a href="/FirstApp/Login">LogIn</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Details ▾</a>
-                        <ul>
-                            <li><a href="/DetailApp/Collection">Collection Details</a></li>
-                            <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
-                            <li><a href="/DetailApp/Stock">Stock Details</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/ComApp/Complaint">Complaint</a></li>
-                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
-                    <li><a href="/ReportApp/">Report</a></li>
-                </ul>
-            </nav>
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="header-banner">
+            <div>
+                <h1>Contact Us Report</h1>
+                <p style="color: var(--text-muted); margin: 4px 0 0 0;">Inspect corporate and public contact inquiries.</p>
+            </div>
+            <a href="/ReportApp/" class="btn-primary" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 600;">Back to Reports</a>
         </div>
-    </header>
-    <div class="card-container wide-card">
-        <fieldset>
-            <h2>Contact Us Report</h2>
-            <hr>
-            
-            <form method="post" action="{% url 'ConReportSearch1' %}" class="search-form">
+
+        <!-- Search Form -->
+        <div class="activity-card" style="margin-bottom: 32px;">
+            <h3>Filter Contact Us Report</h3>
+            <form method="post" action="{% url 'ConReportSearch1' %}">
                 {% csrf_token %}
-                <span class="search-container">
-                    <select name="CmbBox" class="form-control select-search">
+                <div class="search-container" style="margin-bottom: 0;">
+                    <select name="CmbBox" class="form-control" style="flex-grow: 1;">
                         <option value="">-Select Serial-</option>
                         <option value="All">All</option>
                         {% for foo in record1 %}
                             <option value="{{ foo.0 }}">{{ foo.2 }} (Admin ID: {{ foo.1 }})</option>
                         {% endfor %}
                     </select>
-                    <input type="submit" value="Search" class="btn btn-search">
-                </span>
+                    <button type="submit" class="btn-primary">Search</button>
+                </div>
             </form>
-            
+        </div>
+
+        <!-- Table Card -->
+        <div class="activity-card">
+            <h3>Report Records</h3>
             <div class="table-responsive">
-                <table id="alltable" class="report-table">
+                <table class="admin-table">
                     <thead>
-                        <tr id="TitleTr">
+                        <tr>
                             <th>Serial No.</th>
                             <th>Admin Id</th>
                             <th>Company Name</th>
@@ -81,7 +58,7 @@
                     </thead>
                     <tbody>
                         {% for r in record2 %}
-                            <tr id="BodyTr">
+                            <tr>
                                 <td>{{ r.0 }}</td>
                                 <td>{{ r.1 }}</td>
                                 <td>{{ r.2 }}</td>
@@ -92,13 +69,13 @@
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="7" class="empty-msg">No records found. Please select search filters.</td>
+                                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No records found. Please select search filters.</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-        </fieldset>
+        </div>
     </div>
 </body>
 </html>

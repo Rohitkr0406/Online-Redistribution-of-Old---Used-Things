@@ -12,17 +12,28 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 from pathlib import Path
-try:
-    from dotenv import load_dotenv
-except Exception:
-    load_dotenv = None
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load .env from project root when python-dotenv is available
-if load_dotenv:
-    load_dotenv(dotenv_path=str(BASE_DIR / '.env'))
+# Load .env from project root
+dotenv_path = BASE_DIR / '.env'
+try:
+    from dotenv import load_dotenv
+    load_dotenv(dotenv_path=str(dotenv_path))
+except Exception:
+    # Manual fallback loader in case python-dotenv is not installed in the active environment
+    if dotenv_path.exists():
+        with open(dotenv_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    parts = line.split('=', 1)
+                    if len(parts) == 2:
+                        key, val = parts[0].strip(), parts[1].strip()
+                        if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
+                            val = val[1:-1]
+                        os.environ[key] = val
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -56,6 +67,7 @@ INSTALLED_APPS = [
     'DetailApp',
     'ComApp',
     'ReportApp',
+    'AdminApp',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'auth_system.middleware.AdminSessionMiddleware',
 ]
 
 ROOT_URLCONF = 'FinalProject.urls'
@@ -96,7 +109,7 @@ DATABASES = {
         'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
         'NAME': os.getenv('DB_NAME', 'stud'),
         'USER': os.getenv('DB_USER', 'root'),
-        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'destroyer3607'),
         'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', '3306'),
     }

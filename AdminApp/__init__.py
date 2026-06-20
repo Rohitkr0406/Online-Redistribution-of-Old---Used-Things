@@ -1,0 +1,1 @@
+# AdminApp initialization file

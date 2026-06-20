@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Management - Share & Care</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    {% include 'AdminMenu.html' %}
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="header-banner">
+            <div>
+                <h1>Donor Management</h1>
+                <p style="color: var(--text-muted); margin: 4px 0 0 0;">View, search, and manage registered donors.</p>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <!-- Search bar -->
+            <form method="get" action="{% url 'admin_donors' %}">
+                <div class="search-container">
+                    <input type="text" name="search" class="form-control" placeholder="Search by name, ID, email, or city..." value="{{ search_query }}">
+                    <button type="submit" class="btn-primary">Search</button>
+                    {% if search_query %}
+                    <a href="{% url 'admin_donors' %}" class="btn-primary" style="background: var(--bg-primary); border: 1px solid var(--border-color); text-align: center; text-decoration: none; line-height: 20px;">Clear</a>
+                    {% endif %}
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Donor ID</th>
+                            <th>Donor Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for donor in donors %}
+                        <tr>
+                            <td>{{ donor.0 }}</td>
+                            <td><strong>{{ donor.1 }}</strong></td>
+                            <td>{{ donor.2 }}</td>
+                            <td>{{ donor.3 }}</td>
+                            <td>{{ donor.4 }}</td>
+                            <td>{{ donor.5 }}</td>
+                            <td>{{ donor.6 }}</td>
+                            <td><span class="badge badge-active">Active</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No donors found matching your search.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

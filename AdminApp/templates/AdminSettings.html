@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Settings & Logs - Share & Care</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    {% include 'AdminMenu.html' %}
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="header-banner">
+            <div>
+                <h1>System Settings & Audit Log</h1>
+                <p style="color: var(--text-muted); margin: 4px 0 0 0;">Manage your profile and inspect administrator actions.</p>
+            </div>
+        </div>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="alert alert-{% if message.tags == 'error' %}error{% else %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="settings-container">
+            <!-- Left Side: Forms -->
+            <div style="display: flex; flex-direction: column; gap: 32px;">
+                
+                <!-- Profile Form -->
+                <div class="form-box">
+                    <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Update Profile Details</h3>
+                    <form method="post" action="{% url 'admin_settings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action_type" value="update_profile">
+                        
+                        <div class="form-group">
+                            <label>Admin ID (Read Only)</label>
+                            <input type="text" class="form-control" value="{{ profile.id }}" readonly style="opacity: 0.6; cursor: not-allowed;">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address (Read Only)</label>
+                            <input type="email" class="form-control" value="{{ profile.email }}" readonly style="opacity: 0.6; cursor: not-allowed;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="admin_name">Full Name</label>
+                            <input type="text" id="admin_name" name="admin_name" class="form-control" value="{{ profile.name }}" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="admin_phone">Phone Number</label>
+                            <input type="text" id="admin_phone" name="admin_phone" class="form-control" value="{{ profile.phone|default:'' }}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="admin_address">Address</label>
+                            <input type="text" id="admin_address" name="admin_address" class="form-control" value="{{ profile.address|default:'' }}">
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Save Details</button>
+                    </form>
+                </div>
+
+                <!-- Password Form -->
+                <div class="form-box">
+                    <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Change Security Password</h3>
+                    <form method="post" action="{% url 'admin_settings' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action_type" value="change_password">
+                        
+                        <div class="form-group">
+                            <label for="id_old_password">Current Password</label>
+                            {{ form.old_password }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_new_password">New Password</label>
+                            {{ form.new_password }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_confirm_password">Confirm New Password</label>
+                            {{ form.confirm_password }}
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Update Password</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Right Side: Audit Logs -->
+            <div class="form-box" style="height: fit-content;">
+                <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Security Audit Log (Recent Actions)</h3>
+                
+                <div class="audit-list">
+                    {% for log in audit_logs %}
+                    <div class="audit-item">
+                        <div class="audit-header">
+                            <span class="color-cyan">{{ log.1 }}</span>
+                            <span class="audit-time">{{ log.3 }}</span>
+                        </div>
+                        <div class="audit-details">
+                            {{ log.2 }}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div style="text-align: center; color: var(--text-muted); padding: 20px;">
+                        No audit records found.
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

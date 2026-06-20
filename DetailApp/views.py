@@ -1,11 +1,13 @@
 import pymysql
 from django.shortcuts import render
+from auth_system.decorators import admin_required
 
 # Database connection helper
 def get_db_connection():
     return pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
 
 # --- COLLECTION VIEWS ---
+@admin_required
 def Collection(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -27,6 +29,7 @@ def Collection(request):
         conn.close()
     return render(request, 'Collection.html', {'val': val, 'record1': record1, 'msg': msg, 'record': record})
 
+@admin_required
 def CollectionSave(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -60,6 +63,7 @@ def CollectionSave(request):
         conn.close()
     return render(request, 'Collection.html', {'msg': msg, 'val': val, 'record1': record1, 'record': None})
 
+@admin_required
 def CollectionDelete(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -79,6 +83,7 @@ def CollectionDelete(request):
         conn.close()
     return render(request, 'Collection.html', {'msg': msg, 'val': val, 'record1': record1, 'record': None})
 
+@admin_required
 def CollectionSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -113,6 +118,7 @@ def CollectionSearch(request):
         conn.close()
     return render(request, 'Collection.html', {'msg': msg, 'val': val, 'record1': record1, 'record': record})
 
+@admin_required
 def CollectionUpdate(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -146,6 +152,7 @@ def CollectionUpdate(request):
 
 
 # --- STOCK VIEWS ---
+@admin_required
 def Stock(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -164,6 +171,7 @@ def Stock(request):
         conn.close()
     return render(request, 'Stock.html', {'val': val, 'record1': record1, 'msg': msg, 'record': None})
 
+@admin_required
 def StockSave(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -198,6 +206,7 @@ def StockSave(request):
         conn.close()
     return render(request, 'Stock.html', {'msg': msg, 'val': val, 'record1': record1, 'record': None})
 
+@admin_required
 def StockDelete(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -217,6 +226,7 @@ def StockDelete(request):
         conn.close()
     return render(request, 'Stock.html', {'msg': msg, 'val': val, 'record1': record1, 'record': None})
 
+@admin_required
 def StockSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -251,6 +261,7 @@ def StockSearch(request):
         conn.close()
     return render(request, 'Stock.html', {'msg': msg, 'val': val, 'record1': record1, 'record': record})
 
+@admin_required
 def StockUpdate(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -285,6 +296,7 @@ def StockUpdate(request):
 
 
 # --- DISTRIBUTION VIEWS ---
+@admin_required
 def Distribution(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -303,6 +315,7 @@ def Distribution(request):
         conn.close()
     return render(request, 'Distribution.html', {'val': val, 'record1': record1, 'msg': msg, 'record': None})
 
+@admin_required
 def DistributionSave(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -337,6 +350,7 @@ def DistributionSave(request):
         conn.close()
     return render(request, 'Distribution.html', {'msg': msg, 'val': val, 'record1': record1, 'record': None})
 
+@admin_required
 def DistributionDelete(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -356,6 +370,7 @@ def DistributionDelete(request):
         conn.close()
     return render(request, 'Distribution.html', {'msg': msg, 'val': val, 'record1': record1, 'record': None})
 
+@admin_required
 def DistributionSearch(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
@@ -390,6 +405,7 @@ def DistributionSearch(request):
         conn.close()
     return render(request, 'Distribution.html', {'msg': msg, 'val': val, 'record1': record1, 'record': record})
 
+@admin_required
 def DistributionUpdate(request):
     conn = get_db_connection()
     mycursor = conn.cursor()

@@ -2,86 +2,103 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reports Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Dashboard - Share & Care</title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
 </head>
-<body class="teal-bg">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
+<body>
+    <!-- Sidebar Navigation -->
+    {% include 'AdminMenu.html' %}
 
-    <!-- Main Navigation Header -->
-    <header>
-        <div class="header-container">
-            <a href="/" class="brand-logo">
-                <img src="{% static 'images/TLOGO2.png' %}" alt="Logo">
-                <span>Share & Care</span>
-            </a>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/FirstApp/Demo">About</a></li>
-                    <li>
-                        <a href="#">Registration ▾</a>
-                        <ul>
-                            <li><a href="/RegApp/Unused">UnUsed Things Reg</a></li>
-                            <li><a href="/RegApp/Donator">Donator Reg</a></li>
-                            <li><a href="/FirstApp/Login">LogIn</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Details ▾</a>
-                        <ul>
-                            <li><a href="/DetailApp/Collection">Collection Details</a></li>
-                            <li><a href="/DetailApp/Distribution">Distribution Details</a></li>
-                            <li><a href="/DetailApp/Stock">Stock Details</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/ComApp/Complaint">Complaint</a></li>
-                    <li><a href="/ComApp/Contactus">Contact Us</a></li>
-                    <li><a href="/ReportApp/">Report</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <div class="card-container large-card">
-        <fieldset>
-            <h2>Reports Dashboard</h2>
-            <hr>
-            <div class="report-grid">
-                <a href="/ReportApp/DonorReport" class="report-card">
-                    <h3>Donor Registration Report</h3>
-                    <p>View registered donors and their details.</p>
-                </a>
-                <a href="/ReportApp/UnusedReport" class="report-card">
-                    <h3>Unused Things Report</h3>
-                    <p>View and manage unused items registered by donors.</p>
-                </a>
-                <a href="/ReportApp/CollectionReport" class="report-card">
-                    <h3>Collection Details Report</h3>
-                    <p>View items received and collected by working members.</p>
-                </a>
-                <a href="/ReportApp/StockReport" class="report-card">
-                    <h3>Stock Details Report</h3>
-                    <p>Monitor current stock levels and inventory values.</p>
-                </a>
-                <a href="/ReportApp/DistributionReport" class="report-card">
-                    <h3>Distribution Details Report</h3>
-                    <p>Track materials distributed to beneficiaries.</p>
-                </a>
-                <a href="/ReportApp/ComplaintReport" class="report-card">
-                    <h3>Complaint Report</h3>
-                    <p>Review suggestions and complaint tickets.</p>
-                </a>
-                <a href="/ReportApp/ContactUsReport" class="report-card">
-                    <h3>Contact Us Report</h3>
-                    <p>View corporate contacts and inquiries.</p>
-                </a>
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="header-banner">
+            <div>
+                <h1>System Reports Dashboard</h1>
+                <p style="color: var(--text-muted); margin: 4px 0 0 0;">Inspect, filter, and export system activity reports.</p>
             </div>
-        </fieldset>
+        </div>
+
+        <div class="stats-grid">
+            <a href="/ReportApp/DonorReport" class="stat-card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <div>
+                    <div class="card-header">
+                        <span>DONOR REGISTRATION</span>
+                        <span class="card-icon color-teal">👥</span>
+                    </div>
+                    <div class="card-value" style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-main);">Donor Report</div>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted)">View registered donors and contributors.</div>
+            </a>
+
+            <a href="/ReportApp/UnusedReport" class="stat-card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <div>
+                    <div class="card-header">
+                        <span>UNUSED THINGS</span>
+                        <span class="card-icon color-cyan">📦</span>
+                    </div>
+                    <div class="card-value" style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-main);">Unused Things Report</div>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted)">View and manage unused items registered by donors.</div>
+            </a>
+
+            <a href="/ReportApp/CollectionReport" class="stat-card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <div>
+                    <div class="card-header">
+                        <span>COLLECTION DETAILS</span>
+                        <span class="card-icon color-indigo">📥</span>
+                    </div>
+                    <div class="card-value" style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-main);">Collection Report</div>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted)">View items received and collected by working members.</div>
+            </a>
+
+            <a href="/ReportApp/StockReport" class="stat-card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <div>
+                    <div class="card-header">
+                        <span>STOCK DETAILS</span>
+                        <span class="card-icon color-amber">🏢</span>
+                    </div>
+                    <div class="card-value" style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-main);">Stock Report</div>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted)">Monitor current stock levels and inventory values.</div>
+            </a>
+
+            <a href="/ReportApp/DistributionReport" class="stat-card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <div>
+                    <div class="card-header">
+                        <span>DISTRIBUTION DETAILS</span>
+                        <span class="card-icon color-rose">🚚</span>
+                    </div>
+                    <div class="card-value" style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-main);">Distribution Report</div>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted)">Track materials distributed to beneficiaries.</div>
+            </a>
+
+            <a href="/ReportApp/ComplaintReport" class="stat-card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <div>
+                    <div class="card-header">
+                        <span>COMPLAINTS</span>
+                        <span class="card-icon color-amber">⏳</span>
+                    </div>
+                    <div class="card-value" style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-main);">Complaint Report</div>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted)">Review suggestions and complaint tickets.</div>
+            </a>
+
+            <a href="/ReportApp/ContactUsReport" class="stat-card" style="text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                <div>
+                    <div class="card-header">
+                        <span>CONTACT INQUIRIES</span>
+                        <span class="card-icon color-cyan">📞</span>
+                    </div>
+                    <div class="card-value" style="font-size: 1.25rem; font-weight: 700; margin: 12px 0 4px 0; color: var(--text-main);">Contact Us Report</div>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted)">View corporate contacts and messages.</div>
+            </a>
+        </div>
     </div>
 </body>
 </html>

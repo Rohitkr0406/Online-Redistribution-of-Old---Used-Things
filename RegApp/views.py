@@ -1,23 +1,27 @@
 import pymysql
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from auth_system.decorators import admin_required, donor_required
 
 def Donator(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
     msg = ""
     record = None
+    record1 = []
     
-    try:
-        mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
-        record1 = mycursor.fetchall()
-    except Exception as e:
-        msg = "Wrong Data Entry..!!"
-        record1 = []
-        print(msg)
-    finally:
-        mycursor.close()
-        conn.close()
+    # Privacy rule: Only fetch other donors if user is logged in as an administrator
+    if request.session.get('admin_id'):
+        try:
+            mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
+            record1 = mycursor.fetchall()
+        except Exception as e:
+            msg = "Wrong Data Entry..!!"
+            print(msg)
+    
+    mycursor.close()
+    conn.close()
     
     return render(request, 'Donator.html', {'record1': record1, 'msg': msg, 'record': record})
 
@@ -42,7 +46,10 @@ def DonatorSave(request):
     Pin1 = request.POST.get('Pin')
     Remarks1 = request.POST.get('Remarks')
     
-    ps = (Slno1, Donorid1, Dname1, Dpsd1, Dcpsd1, Dob1, Gen1, Dmob1, Demail1, Add11, Add21, State1, City1, Pin1, Remarks1)
+    # Hash password securely before database insertion!
+    hashed_pw = make_password(Dpsd1)
+    
+    ps = (Slno1, Donorid1, Dname1, hashed_pw, hashed_pw, Dob1, Gen1, Dmob1, Demail1, Add11, Add21, State1, City1, Pin1, Remarks1)
     
     try:
         mycursor.execute(
@@ -54,15 +61,26 @@ def DonatorSave(request):
     except Exception as e:
         msg = f"Wrong Data Entry: {str(e)}"
         print(msg)
-    finally:
+    
+    record1 = []
+    # If admin is registering/saving:
+    is_admin = request.session.get('admin_id') is not None
+    if is_admin:
         mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
         record1 = mycursor.fetchall()
-        mycursor.close()
-        conn.close()
+        
+    mycursor.close()
+    conn.close()
     
+    # Redirect public registration to login with success message
+    if "Successfully" in msg and not is_admin:
+        messages.success(request, "Registration successful! Please log in with your credentials.")
+        return redirect('/FirstApp/Login')
+        
     return render(request, 'Donator.html', {'msg': msg, 'record1': record1, 'record': None})
 
 
+@admin_required
 def DonatorDelete(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
@@ -85,6 +103,7 @@ def DonatorDelete(request):
     return render(request, 'Donator.html', {'msg': msg, 'record1': record1, 'record': None})
 
 
+@admin_required
 def DonatorSearch(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
@@ -126,6 +145,7 @@ def DonatorSearch(request):
     return render(request, 'Donator.html', {'msg': msg, 'record1': record1, 'record': record})
 
 
+@admin_required
 def DonatorUpdate(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
@@ -145,10 +165,16 @@ def DonatorUpdate(request):
     Pin1 = request.POST.get('Pin')
     Remarks1 = request.POST.get('Remarks')
     
+    # Hash password if updating it and it's not already hashed
+    if Dpsd1 and not Dpsd1.startswith('pbkdf2_sha256$'):
+        hashed_pw = make_password(Dpsd1)
+    else:
+        hashed_pw = Dpsd1
+        
     try:
         mycursor.execute(
             """UPDATE donorreg SET Dname=%s, Dpsd=%s, Dcpsd=%s, Dob=%s, Gen=%s, Dmob=%s, Demail=%s, Add1=%s, Add2=%s, State=%s, City=%s, Pin=%s, Remarks=%s WHERE Donorid=%s""",
-            (Dname1, Dpsd1, Dcpsd1, Dob1, Gen1, Dmob1, Demail1, Add11, Add21, State1, City1, Pin1, Remarks1, Donorid1))
+            (Dname1, hashed_pw, hashed_pw, Dob1, Gen1, Dmob1, Demail1, Add11, Add21, State1, City1, Pin1, Remarks1, Donorid1))
         conn.commit()
         msg = "Record Updated Successfully..!!"
         print(msg)
@@ -164,6 +190,7 @@ def DonatorUpdate(request):
     return render(request, 'Donator.html', {'msg': msg, 'record1': record1, 'record': None})
 
 
+@donor_required
 def Unused(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
@@ -184,6 +211,7 @@ def Unused(request):
     return render(request, 'UnUsed.html', {'msg': msg, 'record1': record1, 'record': record})
 
 
+@donor_required
 def UnusedSave(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
@@ -220,6 +248,7 @@ def UnusedSave(request):
     return render(request, 'UnUsed.html', {'msg': msg, 'record1': record1, 'record': None})
 
 
+@donor_required
 def UnusedDelete(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
@@ -242,6 +271,7 @@ def UnusedDelete(request):
     return render(request, 'UnUsed.html', {'msg': msg, 'record1': record1, 'record': None})
 
 
+@donor_required
 def UnusedSearch(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
@@ -283,6 +313,7 @@ def UnusedSearch(request):
     return render(request, 'UnUsed.html', {'msg': msg, 'record1': record1, 'record': record})
 
 
+@donor_required
 def UnusedUpdate(request):
     conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
     mycursor = conn.cursor()
