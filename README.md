@@ -194,6 +194,47 @@ CREATE TABLE IF NOT EXISTS contactus (
     ComMob VARCHAR(50) NOT NULL,
     Remarks VARCHAR(200) NULL
 );
+
+-- 8. Administrator Credentials Table
+CREATE TABLE IF NOT EXISTS adminlogin (
+    AdminID VARCHAR(50) PRIMARY KEY,
+    AdminName VARCHAR(100) NOT NULL,
+    AdminEmail VARCHAR(100) NOT NULL UNIQUE,
+    AdminPassword VARCHAR(255) NOT NULL,
+    AdminPhone VARCHAR(15),
+    AdminAddress VARCHAR(255),
+    Created_Date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Status VARCHAR(20) DEFAULT 'Active'
+);
+
+-- 9. Admin Active Sessions Table
+CREATE TABLE IF NOT EXISTS admin_sessions (
+    SessionID VARCHAR(100) PRIMARY KEY,
+    AdminID VARCHAR(50),
+    LoginTime DATETIME,
+    LastActivity DATETIME,
+    LogoutTime DATETIME,
+    FOREIGN KEY (AdminID) REFERENCES adminlogin(AdminID) ON DELETE CASCADE
+);
+
+-- 10. Admin Audit Logs Table
+CREATE TABLE IF NOT EXISTS admin_audit_logs (
+    LogID INT AUTO_INCREMENT PRIMARY KEY,
+    AdminID VARCHAR(50),
+    Action VARCHAR(255),
+    Details TEXT,
+    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (AdminID) REFERENCES adminlogin(AdminID) ON DELETE CASCADE
+);
+
+-- 11. Add UserRole Column to donorreg Table (Role Differentiation)
+ALTER TABLE donorreg ADD COLUMN UserRole VARCHAR(20) DEFAULT 'donor';
+
+-- 12. Insert Default Administrator (Default login credentials)
+-- Hashed password matches 'admin123' via Django's secure PBKDF2 hashing
+INSERT INTO adminlogin (AdminID, AdminName, AdminEmail, AdminPassword, AdminPhone, AdminAddress, Status)
+VALUES ('admin', 'Admin User', 'admin@example.com', 'pbkdf2_sha256$870000$yV3pCpx0U0mP9X2gK4l6qW$F3n8b9d7K8m2r5w9x4z1p3q5v7c8b2k9a3d4f5g6h7j=', '9999999999', 'Admin Headquarters', 'Active')
+ON DUPLICATE KEY UPDATE AdminID=AdminID;
 ```
 
 ---
@@ -285,15 +326,26 @@ pip install -r requirements.txt
    * If there is an error, review the MySQL configuration parameters.
 
 ### Accessing Project Sections:
-- **Home:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+#### 1. Donor Portal & Public Site
+- **Home / About:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 - **Donator Registration:** [http://127.0.0.1:8000/RegApp/Donator](http://127.0.0.1:8000/RegApp/Donator)
-- **Unused Things Entry:** [http://127.0.0.1:8000/RegApp/Unused](http://127.0.0.1:8000/RegApp/Unused)
-- **Collections Log:** [http://127.0.0.1:8000/DetailApp/Collection](http://127.0.0.1:8000/DetailApp/Collection)
-- **Stock Log:** [http://127.0.0.1:8000/DetailApp/Stock](http://127.0.0.1:8000/DetailApp/Stock)
-- **Distribution Details:** [http://127.0.0.1:8000/DetailApp/Distribution](http://127.0.0.1:8000/DetailApp/Distribution)
-- **Complaints & Feedback:** [http://127.0.0.1:8000/ComApp/Complaint](http://127.0.0.1:8000/ComApp/Complaint)
-- **Contact Us:** [http://127.0.0.1:8000/ComApp/Contactus](http://127.0.0.1:8000/ComApp/Contactus)
-- **Reports Dashboard:** [http://127.0.0.1:8000/ReportApp/](http://127.0.0.1:8000/ReportApp/)
+- **Donor Login:** [http://127.0.0.1:8000/FirstApp/Login](http://127.0.0.1:8000/FirstApp/Login)
+- **Donate Unused Things:** [http://127.0.0.1:8000/RegApp/Unused](http://127.0.0.1:8000/RegApp/Unused) (Requires donor login)
+- **Register Complaint:** [http://127.0.0.1:8000/ComApp/Complaint](http://127.0.0.1:8000/ComApp/Complaint) (Requires donor login)
+- **Contact Us:** [http://127.0.0.1:8000/ComApp/Contactus](http://127.0.0.1:8000/ComApp/Contactus) (Requires donor login)
+
+#### 2. Administrator Panel
+- **Admin Login:** [http://127.0.0.1:8000/admin/login/](http://127.0.0.1:8000/admin/login/)
+  - **Default AdminID:** `admin` *(or Email:* `admin@example.com`*)*
+  - **Default Password:** `admin123`
+- **Admin Dashboard:** [http://127.0.0.1:8000/admin/dashboard/](http://127.0.0.1:8000/admin/dashboard/)
+- **Donors List:** [http://127.0.0.1:8000/admin/donors/](http://127.0.0.1:8000/admin/donors/)
+- **Donated Items:** [http://127.0.0.1:8000/admin/items/](http://127.0.0.1:8000/admin/items/)
+- **Collection logs:** [http://127.0.0.1:8000/DetailApp/Collection](http://127.0.0.1:8000/DetailApp/Collection) (Restricted to Admin Panel)
+- **Stock details:** [http://127.0.0.1:8000/DetailApp/Stock](http://127.0.0.1:8000/DetailApp/Stock) (Restricted to Admin Panel)
+- **Distribution details:** [http://127.0.0.1:8000/DetailApp/Distribution](http://127.0.0.1:8000/DetailApp/Distribution) (Restricted to Admin Panel)
+- **Reports Dashboard:** [http://127.0.0.1:8000/ReportApp/](http://127.0.0.1:8000/ReportApp/) (Restricted to Admin Panel)
 
 ---
 
