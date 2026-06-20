@@ -15,11 +15,11 @@ body {
 }
 
 /* Global Form Selectors */
-input[type="text"], 
-input[type="password"], 
-input[type="email"], 
-input[type="date"], 
-select, 
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+select,
 textarea {
     width: 100%;
     padding: 10px 14px;
@@ -30,14 +30,14 @@ textarea {
     background-color: #ffffff;
     transition: all 0.3s ease;
     outline: none;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
-input[type="text"]:focus, 
-input[type="password"]:focus, 
-input[type="email"]:focus, 
-input[type="date"]:focus, 
-select:focus, 
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+select:focus,
 textarea:focus {
     border-color: #11998e;
     box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.15);
@@ -127,7 +127,8 @@ nav a {
     display: block;
 }
 
-nav a:hover, nav li:hover > a {
+nav a:hover,
+nav li:hover>a {
     color: #11998e;
     background-color: #f0fdf4;
 }
@@ -162,14 +163,21 @@ nav ul ul a:hover {
     color: #11998e;
 }
 
-nav li:hover > ul {
+nav li:hover>ul {
     display: block;
     animation: fadeIn 0.2s ease;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Backgrounds */
@@ -210,7 +218,8 @@ nav li:hover > ul {
 
 /* Card Containers */
 .card-container {
-    background: #ffffe0; /* Classic cream/light-yellow from design images */
+    background: #ffffe0;
+    /* Classic cream/light-yellow from design images */
     border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     width: 90%;
@@ -243,7 +252,8 @@ fieldset {
 
 h2 {
     font-family: 'Outfit', sans-serif;
-    color: #8b0000; /* Dark Red from design images */
+    color: #8b0000;
+    /* Dark Red from design images */
     font-size: 26px;
     font-weight: 700;
     text-align: center;
@@ -298,13 +308,13 @@ label {
     font-size: 13px;
     font-weight: 600;
     color: #4f5d75;
-    margin-bottom: 2px;
+    /* margin-bottom: 2px; */
 }
 
 /* Inputs and Selects */
 .form-control {
     width: 100%;
-    padding: 10px 14px;
+    padding: 12px 14px;
     border: 1.5px solid #d1d5db;
     border-radius: 8px;
     font-family: 'Inter', sans-serif;
@@ -312,7 +322,6 @@ label {
     background-color: #ffffff;
     transition: all 0.3s ease;
     outline: none;
-    margin-bottom: 10px;
 }
 
 .form-control:focus {
@@ -340,7 +349,8 @@ textarea.form-control {
 }
 
 .btn-primary {
-    background-color: #8b0000; /* Dark Red */
+    background-color: #8b0000;
+    /* Dark Red */
     color: #ffffff;
 }
 
@@ -450,8 +460,15 @@ textarea.form-control {
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .report-table {
@@ -461,13 +478,15 @@ textarea.form-control {
     font-size: 13.5px;
 }
 
-.report-table th, .report-table td {
+.report-table th,
+.report-table td {
     padding: 14px 16px;
     border-bottom: 1px solid #e2e8f0;
 }
 
 #TitleTr {
-    background-color: #203a43; /* Darker heading for contrast */
+    background-color: #203a43;
+    /* Darker heading for contrast */
     color: #ffffff;
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
