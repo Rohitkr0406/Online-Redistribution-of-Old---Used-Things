@@ -243,7 +243,7 @@ ON DUPLICATE KEY UPDATE AdminID=AdminID;
 ## ⚙️ Installation & Setup Guide
 
 ### Step 1: Install Python & MySQL
-1. Download and install [Python](https://www.python.org/downloads/) (Version 3.7 to 3.12 recommended). Ensure you check **"Add Python to PATH"** during installation.
+1. Download and install [Python](https://www.python.org/downloads/) (Version 3.7 to 3.14.3 recommended). Ensure you check **"Add Python to PATH"** during installation.
 2. Install [MySQL Server](https://dev.mysql.com/downloads/installer/) (Community Edition) and set up the `root` user password.
 
 ### Step 2: Set Up the Database
