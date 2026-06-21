@@ -234,7 +234,7 @@ ALTER TABLE donorreg ADD COLUMN UserRole VARCHAR(20) DEFAULT 'donor';
 -- 12. Insert Default Administrator (Default login credentials)
 -- Hashed password matches 'admin123' via Django's secure PBKDF2 hashing
 INSERT INTO adminlogin (AdminID, AdminName, AdminEmail, AdminPassword, AdminPhone, AdminAddress, Status)
-VALUES ('admin', 'Admin User', 'admin@example.com', 'pbkdf2_sha256$870000$yV3pCpx0U0mP9X2gK4l6qW$F3n8b9d7K8m2r5w9x4z1p3q5v7c8b2k9a3d4f5g6h7j=', '9999999999', 'Admin Headquarters', 'Active')
+VALUES ('admin', 'Admin User', 'admin@example.com', 'admin123', '9999999999', 'Admin Headquarters', 'Active')
 ON DUPLICATE KEY UPDATE AdminID=AdminID;
 ```
 
@@ -243,7 +243,7 @@ ON DUPLICATE KEY UPDATE AdminID=AdminID;
 ## ⚙️ Installation & Setup Guide
 
 ### Step 1: Install Python & MySQL
-1. Download and install [Python](https://www.python.org/downloads/) (Version 3.7 to 3.12 recommended). Ensure you check **"Add Python to PATH"** during installation.
+1. Download and install [Python](https://www.python.org/downloads/) (Version 3.7 to 3.14.3 recommended). Ensure you check **"Add Python to PATH"** during installation.
 2. Install [MySQL Server](https://dev.mysql.com/downloads/installer/) (Community Edition) and set up the `root` user password.
 
 ### Step 2: Set Up the Database
