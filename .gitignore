@@ -78,6 +78,7 @@ id_rsa.pub
 *.sublime-workspace
 .project
 .classpath
+pyrightconfig.json
 
 # OS files
 .DS_Store

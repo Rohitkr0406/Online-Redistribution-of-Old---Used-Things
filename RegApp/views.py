@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from auth_system.decorators import admin_required, donor_required
+from auth_system.db_helper import get_db_connection
 
 def Donator(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     msg = ""
     record = None
@@ -27,7 +28,7 @@ def Donator(request):
 
 
 def DonatorSave(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     
     Slno1 = request.POST.get('Slno')
@@ -82,7 +83,7 @@ def DonatorSave(request):
 
 @admin_required
 def DonatorDelete(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     Donorid1 = request.POST.get('Donorid')
     
@@ -105,7 +106,7 @@ def DonatorDelete(request):
 
 @admin_required
 def DonatorSearch(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     CmbBox1 = request.POST.get('CmbBox')
     record = None
@@ -147,7 +148,7 @@ def DonatorSearch(request):
 
 @admin_required
 def DonatorUpdate(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     
     Donorid1 = request.POST.get('Donorid')
@@ -192,7 +193,7 @@ def DonatorUpdate(request):
 
 @donor_required
 def Unused(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     msg = ""
     record = None
@@ -213,7 +214,7 @@ def Unused(request):
 
 @donor_required
 def UnusedSave(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     
     Slno1 = request.POST.get('Slno')
@@ -250,7 +251,7 @@ def UnusedSave(request):
 
 @donor_required
 def UnusedDelete(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     Proid1 = request.POST.get('Proid')
     
@@ -273,7 +274,7 @@ def UnusedDelete(request):
 
 @donor_required
 def UnusedSearch(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     CmbBox1 = request.POST.get('CmbBox')
     record = None
@@ -315,7 +316,7 @@ def UnusedSearch(request):
 
 @donor_required
 def UnusedUpdate(request):
-    conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+    conn = get_db_connection()
     mycursor = conn.cursor()
     
     Proid1 = request.POST.get('Proid')

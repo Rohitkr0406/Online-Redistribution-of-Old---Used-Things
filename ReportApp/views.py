@@ -1,9 +1,7 @@
 import pymysql
 from django.shortcuts import render
 from auth_system.decorators import admin_required
-
-def get_db_connection():
-    return pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+from auth_system.db_helper import get_db_connection
 
 @admin_required
 def ReportHome(request):

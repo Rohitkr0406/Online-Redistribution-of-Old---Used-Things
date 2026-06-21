@@ -3,6 +3,7 @@ from django.db import connection
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from auth_system.session_manager import start_admin_session, start_donor_session, logout_donor
+from auth_system.db_helper import get_db_connection
 import pymysql
 
 def Home(request):
@@ -10,7 +11,7 @@ def Home(request):
 
 def ConnecivityPage(request):
     try:
-        conn = pymysql.connect(host='localhost', user='root', passwd='destroyer3607', db='stud')
+        conn = get_db_connection()
         mycursor = conn.cursor()
         msg = "Database Connected Successfully..."
         mycursor.close()
