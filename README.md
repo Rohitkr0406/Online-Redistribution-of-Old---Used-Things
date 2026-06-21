@@ -85,9 +85,10 @@ Online Redistribution of Old & Used Things/
 │   └── views.py               # Analytical report queries using LEFT JOINs
 │
 ├── manage.py                  # Django administrative command-line script
-├── myenv/                     # Python Virtual Environment
-├── project.md                 # Detailed project code and documentation
-└── synopsis.md                # Project synopsis overview
+├── myenv/
+├── Project SRS                   # Projct requirements and specifications
+     ├── project.md                 # Detailed project code and documentation
+     └── synopsis.md                # Project synopsis overview
 ```
 
 ---
