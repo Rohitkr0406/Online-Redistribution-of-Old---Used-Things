@@ -34,13 +34,22 @@
                     <input type="text" name="Did" required class="form-control">
                     
                     <label>Complaint Date</label>
-                    <input type="date" name="CompDate" class="form-control">
+                    <input type="date" name="CompDate" required class="form-control">
                     
                     <label>Issue Type</label>
-                    <input type="text" name="IssuType" class="form-control">
+                    <select name="IssuType" required class="form-control">
+                        <option value="">-Select Issue Type-</option>
+                        <option value="Delivery Issue">Delivery Issue</option>
+                        <option value="Quality Issue">Quality Issue</option>
+                        <option value="Delayed Collection">Delayed Collection</option>
+                        <option value="Wrong Item">Wrong Item</option>
+                        <option value="Service Complaint">Service Complaint</option>
+                        <option value="Suggestion">Suggestion</option>
+                        <option value="Other">Other</option>
+                    </select>
                     
                     <label>Complaint Details</label>
-                    <textarea name="CompDetails" rows="4" class="form-control"></textarea>
+                    <textarea name="CompDetails" rows="4" required maxlength="500" class="form-control"></textarea>
                     
                     <label>Remarks</label>
                     <textarea name="Remarks" rows="2" class="form-control"></textarea>

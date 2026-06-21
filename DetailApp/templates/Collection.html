@@ -67,19 +67,26 @@
                     </div>
                     <div class="form-group">
                         <label>Quantity</label>
-                        <input type="text" name="CollQty" value="{{ record.2|default:'' }}" class="form-control">
+                        <input type="text" name="CollQty" value="{{ record.2|default:'' }}" required class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Receiving Date</label>
-                        <input type="date" name="RecDate" value="{{ record.3|default:'' }}" class="form-control">
+                        <input type="date" name="RecDate" value="{{ record.3|default:'' }}" required class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <input type="text" name="Status" value="{{ record.4|default:'' }}" class="form-control">
+                        <select name="Status" class="form-control" required>
+                            <option value="">-Select Status-</option>
+                            <option value="Pending" {% if record.4 == "Pending" %}selected{% endif %}>Pending</option>
+                            <option value="Approved" {% if record.4 == "Approved" %}selected{% endif %}>Approved</option>
+                            <option value="In Transit" {% if record.4 == "In Transit" %}selected{% endif %}>In Transit</option>
+                            <option value="Delivered" {% if record.4 == "Delivered" %}selected{% endif %}>Delivered</option>
+                            <option value="Returned" {% if record.4 == "Returned" %}selected{% endif %}>Returned</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Donated By</label>
-                        <input type="text" name="DonBy" value="{{ record.5|default:'' }}" class="form-control">
+                        <input type="text" name="DonBy" value="{{ record.5|default:'' }}" required maxlength="50" class="form-control">
                     </div>
                     <div class="form-group" style="grid-column: 1 / -1;">
                         <label>Donor Address</label>

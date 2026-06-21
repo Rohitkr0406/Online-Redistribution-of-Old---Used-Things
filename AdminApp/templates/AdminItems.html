@@ -7,6 +7,39 @@
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
     <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+    <style>
+        .action-btn {
+            display: inline-block;
+            padding: 5px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 2px;
+        }
+        .btn-approve {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+        }
+        .btn-approve:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        .btn-reject {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+        }
+        .btn-reject:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .badge-approved { background-color: rgba(16, 185, 129, 0.15); color: #059669; }
+        .badge-rejected { background-color: rgba(239, 68, 68, 0.15); color: #dc2626; }
+        .badge-donated { background-color: rgba(99, 102, 241, 0.15); color: #6366f1; }
+        .badge-distributed { background-color: rgba(14, 165, 233, 0.15); color: #0ea5e9; }
+    </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
@@ -17,9 +50,17 @@
         <div class="header-banner">
             <div>
                 <h1>Donated Items Management</h1>
-                <p style="color: var(--text-muted); margin: 4px 0 0 0;">View, filter, and track all registered donations.</p>
+                <p style="color: var(--text-muted); margin: 4px 0 0 0;">View, filter, approve, or reject registered donations.</p>
             </div>
         </div>
+
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-error{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
 
         <div class="activity-card">
             <!-- Search bar -->
@@ -44,6 +85,7 @@
                             <th>Sub Category</th>
                             <th>Status</th>
                             <th>Remarks</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,12 +96,32 @@
                             <td>{{ item.2 }}</td>
                             <td>{{ item.3 }}</td>
                             <td>{{ item.4 }}</td>
-                            <td><span class="badge badge-{% if item.5 == 'Available' %}available{% else %}inactive{% endif %}">{{ item.5 }}</span></td>
+                            <td>
+                                <span class="badge badge-{% if item.5 == 'Available' %}available{% elif item.5 == 'Approved' %}approved{% elif item.5 == 'Rejected' %}rejected{% elif item.5 == 'Donated' %}donated{% elif item.5 == 'Distributed' %}distributed{% else %}inactive{% endif %}">
+                                    {{ item.5 }}
+                                </span>
+                            </td>
                             <td>{{ item.6|default:"--" }}</td>
+                            <td>
+                                {% if item.5 == 'Available' or item.5 == 'Donated' %}
+                                <form method="post" action="{% url 'admin_approve_item' %}" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="item_id" value="{{ item.1 }}">
+                                    <button type="submit" name="action" value="Approved" class="action-btn btn-approve" title="Approve this donation">✓ Approve</button>
+                                    <button type="submit" name="action" value="Rejected" class="action-btn btn-reject" title="Reject this donation">✗ Reject</button>
+                                </form>
+                                {% elif item.5 == 'Approved' %}
+                                <span style="color: #059669; font-weight: 600; font-size: 12px;">✓ Approved</span>
+                                {% elif item.5 == 'Rejected' %}
+                                <span style="color: #dc2626; font-weight: 600; font-size: 12px;">✗ Rejected</span>
+                                {% else %}
+                                <span style="color: var(--text-muted); font-size: 12px;">--</span>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 24px;">No items found matching your search.</td>
+                            <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 24px;">No items found matching your search.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -69,3 +131,4 @@
     </div>
 </body>
 </html>
+

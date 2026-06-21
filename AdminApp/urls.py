@@ -8,4 +8,5 @@ urlpatterns = [
     path('donors/', views.AdminDonorManagement, name='admin_donors'),
     path('items/', views.AdminItemsManagement, name='admin_items'),
     path('settings/', views.AdminSettings, name='admin_settings'),
+    path('items/approve/', views.AdminApproveItem, name='admin_approve_item'),
 ]

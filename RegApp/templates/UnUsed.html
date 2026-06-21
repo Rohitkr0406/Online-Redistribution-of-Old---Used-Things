@@ -57,11 +57,11 @@
                     </div>
                     <div class="form-field">
                         <label>Product Name</label>
-                        <input type="text" name="ProName" value="{{ record.2|default:'' }}" class="form-control">
+                        <input type="text" name="ProName" value="{{ record.2|default:'' }}" required maxlength="30" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Category</label>
-                        <select name="ProCate" class="form-control">
+                        <select name="ProCate" required class="form-control">
                             <option value="">-Select-</option>
                             <option value="Electronics" {% if record.3 == 'Electronics' %}selected{% endif %}>Electronics</option>
                             <option value="Clothing" {% if record.3 == 'Clothing' %}selected{% endif %}>Clothing</option>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="form-field">
                         <label>Status</label>
-                        <select name="Status" class="form-control">
+                        <select name="Status" required class="form-control">
                             <option value="">-Select-</option>
                             <option value="Available" {% if record.8 == 'Available' %}selected{% endif %}>Available</option>
                             <option value="Donated" {% if record.8 == 'Donated' %}selected{% endif %}>Donated</option>

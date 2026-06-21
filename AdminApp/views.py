@@ -239,3 +239,31 @@ def AdminSettings(request):
         'audit_logs': audit_logs
     }
     return render(request, 'AdminSettings.html', context)
+
+@admin_required
+def AdminApproveItem(request):
+    """
+    Allows admin to approve or reject a donated item.
+    Updates the Status field in the unusedthing table.
+    """
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        action = request.POST.get('action')  # 'Approved' or 'Rejected'
+        admin_id = request.session.get('admin_id')
+        
+        if item_id and action in ['Approved', 'Rejected']:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE unusedthing SET Status = %s WHERE Proid = %s",
+                    [action, item_id]
+                )
+            log_admin_action(
+                admin_id, 
+                f"Item {action}", 
+                f"Item Proid={item_id} has been {action.lower()} by admin."
+            )
+            messages.success(request, f"Item {item_id} has been {action.lower()} successfully.")
+        else:
+            messages.error(request, "Invalid action or item ID.")
+    
+    return redirect('admin_items')

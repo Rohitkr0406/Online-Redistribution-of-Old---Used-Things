@@ -53,19 +53,19 @@
                     </div>
                     <div class="form-field">
                         <label>Donator Name</label>
-                        <input type="text" name="Dname" value="{{ record.2|default:'' }}" class="form-control">
+                        <input type="text" name="Dname" value="{{ record.2|default:'' }}" required maxlength="100" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Donor/User Id</label>
-                        <input type="text" name="Donorid" value="{{ record.1|default:'' }}" class="form-control">
+                        <input type="text" name="Donorid" value="{{ record.1|default:'' }}" required maxlength="50" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Password</label>
-                        <input type="password" name="Dpsd" value="{{ record.3|default:'' }}" class="form-control">
+                        <input type="password" name="Dpsd" value="{{ record.3|default:'' }}" required minlength="6" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Confirm Password</label>
-                        <input type="password" name="Dcpsd" value="{{ record.4|default:'' }}" class="form-control">
+                        <input type="password" name="Dcpsd" value="{{ record.4|default:'' }}" required minlength="6" class="form-control">
                     </div>
                 </div>
                 
@@ -86,11 +86,11 @@
                     </div>
                     <div class="form-field">
                         <label>Mobile No.</label>
-                        <input type="text" name="Dmob" maxlength="10" value="{{ record.7|default:'' }}" class="form-control">
+                        <input type="tel" name="Dmob" maxlength="10" pattern="[0-9]{10}" title="Enter a valid 10-digit mobile number" value="{{ record.7|default:'' }}" required class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Email-Id</label>
-                        <input type="email" name="Demail" value="{{ record.8|default:'' }}" class="form-control">
+                        <input type="email" name="Demail" value="{{ record.8|default:'' }}" required maxlength="100" class="form-control">
                     </div>
                 </div>
                 
@@ -126,7 +126,7 @@
                     </div>
                     <div class="form-field">
                         <label>Pin Code</label>
-                        <input type="text" name="Pin" maxlength="6" value="{{ record.13|default:'' }}" class="form-control">
+                        <input type="text" name="Pin" maxlength="6" pattern="[0-9]{6}" title="Enter a valid 6-digit pin code" value="{{ record.13|default:'' }}" class="form-control">
                     </div>
                     <div class="form-field full-width">
                         <label>Remarks</label>

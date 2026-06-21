@@ -67,11 +67,11 @@
                     </div>
                     <div class="form-group">
                         <label>Distribution Quantity</label>
-                        <input type="text" name="DisQty" value="{{ record.2|default:'' }}" class="form-control">
+                        <input type="text" name="DisQty" value="{{ record.2|default:'' }}" required class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Distribution Date</label>
-                        <input type="date" name="DisDate" value="{{ record.3|default:'' }}" class="form-control">
+                        <input type="date" name="DisDate" value="{{ record.3|default:'' }}" required class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Distribution By</label>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="form-group">
                         <label>Receiver Name</label>
-                        <input type="text" name="RecName" value="{{ record.5|default:'' }}" class="form-control">
+                        <input type="text" name="RecName" value="{{ record.5|default:'' }}" required maxlength="50" class="form-control">
                     </div>
                     <div class="form-group" style="grid-column: 1 / -1;">
                         <label>Receiver Address</label>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="form-group">
                         <label>Receiver Mobile No.</label>
-                        <input type="text" name="RecMob" value="{{ record.7|default:'' }}" class="form-control">
+                        <input type="tel" name="RecMob" value="{{ record.7|default:'' }}" required maxlength="15" pattern="[0-9]{10,15}" title="Enter a valid 10-15 digit phone number" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Received By</label>

@@ -72,15 +72,15 @@
                     </div>
                     <div class="form-field">
                         <label>Company Name</label>
-                        <input type="text" name="ComName" class="form-control">
+                        <input type="text" name="ComName" required maxlength="50" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Email Id</label>
-                        <input type="email" name="ComEmail" class="form-control">
+                        <input type="email" name="ComEmail" required maxlength="50" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Company Mobile No.</label>
-                        <input type="text" name="ComMob" class="form-control">
+                        <input type="tel" name="ComMob" maxlength="15" pattern="[0-9]{10,15}" title="Enter a valid 10-15 digit phone number" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Company Address</label>
