@@ -288,7 +288,18 @@ This project no longer hardcodes secrets in source. It loads configuration from 
 
 ### Step 4: Virtual environment & dependencies
 1. Open a terminal in the project root.
-2. Activate the included virtual environment (the repo contains `myenv`):
+2. Create a virtual environment named `myenv` (since virtual environment folders are gitignored):
+
+     - Windows (PowerShell/CMD):
+         ```bash
+         python -m venv myenv
+         ```
+     - Linux/macOS:
+         ```bash
+         python3 -m venv myenv
+         ```
+
+3. Activate the virtual environment:
 
      - PowerShell:
          ```powershell
@@ -298,12 +309,12 @@ This project no longer hardcodes secrets in source. It loads configuration from 
          ```cmd
          .\myenv\Scripts\activate.bat
          ```
-     - Linux/macOS (if you create your own venv):
+     - Linux/macOS:
          ```bash
          source myenv/bin/activate
          ```
 
-3. Install runtime dependencies from the provided `requirements.txt`:
+4. Install runtime dependencies from the provided `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
