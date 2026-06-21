@@ -197,9 +197,10 @@ def Unused(request):
     mycursor = conn.cursor()
     msg = ""
     record = None
+    donor_id = request.session.get('donor_id')
     
     try:
-        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
         record1 = mycursor.fetchall()
     except Exception as e:
         msg = "Wrong Data Entry..!!"
@@ -216,6 +217,7 @@ def Unused(request):
 def UnusedSave(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
+    donor_id = request.session.get('donor_id')
     
     Slno1 = request.POST.get('Slno')
     Proid1 = request.POST.get('Proid')
@@ -228,12 +230,12 @@ def UnusedSave(request):
     Status1 = request.POST.get('Status')
     Remarks1 = request.POST.get('Remarks')
     
-    ps = (Slno1, Proid1, ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, PurchDate1, Status1, Remarks1)
+    ps = (Slno1, Proid1, ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, PurchDate1, Status1, Remarks1, donor_id)
     
     try:
         mycursor.execute(
-            """INSERT INTO unusedthing(Slno, Proid, ProName, ProCate, ProSubCate, ProSerial, ProBatchno, PurchDate, Status, Remarks) 
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", ps)
+            """INSERT INTO unusedthing(Slno, Proid, ProName, ProCate, ProSubCate, ProSerial, ProBatchno, PurchDate, Status, Remarks, Donorid) 
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", ps)
         conn.commit()
         msg = "Data Saved Successfully..!!"
         print(msg)
@@ -241,7 +243,7 @@ def UnusedSave(request):
         msg = f"Wrong Data Entry: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()
@@ -254,17 +256,23 @@ def UnusedDelete(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
     Proid1 = request.POST.get('Proid')
+    donor_id = request.session.get('donor_id')
     
     try:
-        mycursor.execute("""DELETE FROM unusedthing WHERE Proid = %s""", (Proid1,))
-        conn.commit()
-        msg = "One Record Deleted Successfully..!!"
+        mycursor.execute("""SELECT Donorid FROM unusedthing WHERE Proid = %s""", (Proid1,))
+        row = mycursor.fetchone()
+        if row and row[0] == donor_id:
+            mycursor.execute("""DELETE FROM unusedthing WHERE Proid = %s""", (Proid1,))
+            conn.commit()
+            msg = "One Record Deleted Successfully..!!"
+        else:
+            msg = "Permission Denied: You do not own this item."
         print(msg)
     except Exception as e:
         msg = f"Record Not Found: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()
@@ -278,12 +286,13 @@ def UnusedSearch(request):
     mycursor = conn.cursor()
     CmbBox1 = request.POST.get('CmbBox')
     record = None
+    donor_id = request.session.get('donor_id')
     
     if CmbBox1 == "Select" or CmbBox1 == "-Select-" or CmbBox1 == "":
         record = None
         msg = "Data Not found.....!!"
         try:
-            mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
+            mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
             record1 = mycursor.fetchall()
         except Exception as e:
             msg = "Wrong Data Entry..!!"
@@ -293,7 +302,7 @@ def UnusedSearch(request):
             conn.close()
     else:
         try:
-            mycursor.execute("""SELECT * FROM unusedthing WHERE Slno=%s""", (CmbBox1,))
+            mycursor.execute("""SELECT * FROM unusedthing WHERE Slno=%s AND Donorid=%s""", (CmbBox1, donor_id))
             val = mycursor.fetchall()
             if val:
                 row = val[0]
@@ -306,7 +315,7 @@ def UnusedSearch(request):
             msg = f"Data Not found: {str(e)}"
             record = None
         finally:
-            mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
+            mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
             record1 = mycursor.fetchall()
             mycursor.close()
             conn.close()
@@ -318,6 +327,7 @@ def UnusedSearch(request):
 def UnusedUpdate(request):
     conn = get_db_connection()
     mycursor = conn.cursor()
+    donor_id = request.session.get('donor_id')
     
     Proid1 = request.POST.get('Proid')
     ProName1 = request.POST.get('ProName')
@@ -330,17 +340,22 @@ def UnusedUpdate(request):
     Remarks1 = request.POST.get('Remarks')
     
     try:
-        mycursor.execute(
-            """UPDATE unusedthing SET ProName=%s, ProCate=%s, ProSubCate=%s, ProSerial=%s, ProBatchno=%s, PurchDate=%s, Status=%s, Remarks=%s WHERE Proid=%s""",
-            (ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, PurchDate1, Status1, Remarks1, Proid1))
-        conn.commit()
-        msg = "Record Updated Successfully..!!"
+        mycursor.execute("""SELECT Donorid FROM unusedthing WHERE Proid = %s""", (Proid1,))
+        row = mycursor.fetchone()
+        if row and row[0] == donor_id:
+            mycursor.execute(
+                """UPDATE unusedthing SET ProName=%s, ProCate=%s, ProSubCate=%s, ProSerial=%s, ProBatchno=%s, PurchDate=%s, Status=%s, Remarks=%s WHERE Proid=%s AND Donorid=%s""",
+                (ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, PurchDate1, Status1, Remarks1, Proid1, donor_id))
+            conn.commit()
+            msg = "Record Updated Successfully..!!"
+        else:
+            msg = "Permission Denied: You do not own this item."
         print(msg)
     except Exception as e:
         msg = f"Update Failed: {str(e)}"
         print(msg)
     finally:
-        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing""")
+        mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
         record1 = mycursor.fetchall()
         mycursor.close()
         conn.close()

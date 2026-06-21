@@ -130,7 +130,8 @@ CREATE TABLE IF NOT EXISTS unusedthing (
     ProBatchno VARCHAR(30) NOT NULL,
     PurchDate DATE NOT NULL,
     Status VARCHAR(30) NOT NULL,
-    Remarks VARCHAR(20) NULL
+    Remarks VARCHAR(20) NULL,
+    Donorid VARCHAR(50) DEFAULT NULL
 );
 
 -- 3. Collections Details Table

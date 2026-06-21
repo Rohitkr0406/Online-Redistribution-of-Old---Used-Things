@@ -88,7 +88,7 @@
                     </div>
                     <div class="form-field">
                         <label>Purchase Date</label>
-                        <input type="date" name="PurchDate" value="{{ record.7|default:'' }}" class="form-control">
+                        <input type="date" name="PurchDate" value="{{ record.7|date:'Y-m-d' }}" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Status</label>
