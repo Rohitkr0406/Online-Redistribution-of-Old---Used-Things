@@ -234,7 +234,7 @@ ALTER TABLE donorreg ADD COLUMN UserRole VARCHAR(20) DEFAULT 'donor';
 -- 12. Insert Default Administrator (Default login credentials)
 -- Hashed password matches 'admin123' via Django's secure PBKDF2 hashing
 INSERT INTO adminlogin (AdminID, AdminName, AdminEmail, AdminPassword, AdminPhone, AdminAddress, Status)
-VALUES ('admin', 'Admin User', 'admin@example.com', 'pbkdf2_sha256$870000$yV3pCpx0U0mP9X2gK4l6qW$F3n8b9d7K8m2r5w9x4z1p3q5v7c8b2k9a3d4f5g6h7j=', '9999999999', 'Admin Headquarters', 'Active')
+VALUES ('admin', 'Admin User', 'admin@example.com', 'admin123', '9999999999', 'Admin Headquarters', 'Active')
 ON DUPLICATE KEY UPDATE AdminID=AdminID;
 ```
 
