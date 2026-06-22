@@ -96,6 +96,20 @@ Online Redistribution of Old & Used Things/
 
 The complete MySQL database schema, table definitions, default roles, and default administrator credentials are defined in the [stud.sql](file:///d:/Coding/Online%20Redistribution%20of%20Old%20&%20Used%20Things/stud.sql) file at the root of the project.
 
+### 🔄 Authentication Security Migration Note
+
+The authentication system has been updated to use secure cryptographic hashing via Django's built-in `make_password` and `check_password` utilities. 
+
+If you have an existing local database, you **MUST** run the following SQL command to expand the password fields to support hashed strings and to update the default administrator's password to its hashed value:
+
+```sql
+-- 1. Modify password fields for donorreg table
+ALTER TABLE donorreg MODIFY Dpsd VARCHAR(255) NOT NULL, MODIFY Dcpsd VARCHAR(255) NOT NULL;
+
+-- 2. Update default administrator password to its hashed equivalent (password: admin123)
+UPDATE adminlogin SET AdminPassword = 'pbkdf2_sha256$1200000$yyBlhRpkzjEB636zszzkhg$eoPJGJsH+51PayqQi4yG+BQzrqsxKrR0olF1uaxzfOM=' WHERE AdminID = 'admin';
+```
+
 ---
 
 ## ⚙️ Installation & Setup Guide

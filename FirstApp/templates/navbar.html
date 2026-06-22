@@ -32,7 +32,7 @@
 </header>
 
 <!-- Alert & Message Banner -->
-{% if messages %}
+{% if messages and not skip_global_messages %}
 <div style="max-width: 1200px; margin: 15px auto; padding: 0 20px;">
     {% for message in messages %}
     <div style="padding: 12px 18px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; font-family: 'Inter', sans-serif;

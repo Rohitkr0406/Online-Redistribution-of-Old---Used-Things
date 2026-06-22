@@ -53,15 +53,14 @@ def Login(request):
         else:
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "SELECT Donorid, Dname, Dpsd FROM donorreg WHERE Donorid = %s OR Demail = %s",
+                    "SELECT Dpsd, Donorid, Dname FROM donorreg WHERE Donorid = %s OR Demail = %s",
                     [username, username]
                 )
                 row = cursor.fetchone()
                 
             if row:
-                donor_id, donor_name, db_pw = row
-                # Support plain text or hashed password fallback
-                if db_pw == password or check_password(password, db_pw):
+                stored_hash, donor_id, donor_name = row
+                if check_password(password, stored_hash):
                     start_donor_session(request, donor_id, donor_name)
                     messages.success(request, f"Welcome back, {donor_name}!")
                     return redirect('/')

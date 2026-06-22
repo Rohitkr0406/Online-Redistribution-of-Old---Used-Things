@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS donorreg (
     Slno INT AUTO_INCREMENT UNIQUE KEY,
     Donorid VARCHAR(50) PRIMARY KEY,
     Dname VARCHAR(50) NOT NULL,
-    Dpsd VARCHAR(20) NOT NULL,
-    Dcpsd VARCHAR(20) NOT NULL,
+    Dpsd VARCHAR(255) NOT NULL,
+    Dcpsd VARCHAR(255) NOT NULL,
     Dob VARCHAR(50) NOT NULL,
     Gen VARCHAR(50) NOT NULL,
     Dmob VARCHAR(50) NOT NULL,
@@ -135,5 +135,5 @@ ALTER TABLE donorreg ADD COLUMN UserRole VARCHAR(20) DEFAULT 'donor';
 -- 12. Insert Default Administrator (Default login credentials)
 -- Hashed password matches 'admin123' via Django's secure PBKDF2 hashing
 INSERT INTO adminlogin (AdminID, AdminName, AdminEmail, AdminPassword, AdminPhone, AdminAddress, Status)
-VALUES ('admin', 'Admin User', 'admin@example.com', 'admin123', '9999999999', 'Admin Headquarters', 'Active')
+VALUES ('admin', 'Admin User', 'admin@example.com', 'pbkdf2_sha256$1200000$yyBlhRpkzjEB636zszzkhg$eoPJGJsH+51PayqQi4yG+BQzrqsxKrR0olF1uaxzfOM=', '9999999999', 'Admin Headquarters', 'Active')
 ON DUPLICATE KEY UPDATE AdminID=AdminID;
