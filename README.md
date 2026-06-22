@@ -36,7 +36,7 @@ The application streamlines collection, inventory (stock management), distributi
 This application follows a **Three-Tier Client-Server Architecture**:
 
 1. **Presentation Layer:** Designed using HTML5, CSS3, and JavaScript, rendering clean forms and tables for donors and administrators.
-2. **Business Logic Layer:** Django 3.0 controller views implementing backend permissions, access rights, routing, and processing logic.
+2. **Business Logic Layer:** Django 6.0.6 controller views implementing backend permissions, access rights, routing, and processing logic.
 3. **Data Layer:** A relational MySQL database (`stud`) managing data integrity and validation via the `pymysql` database driver.
 
 ---
@@ -44,7 +44,7 @@ This application follows a **Three-Tier Client-Server Architecture**:
 ## 🛠 Technology Stack
 
 - **Front-end:** HTML5, CSS3, JavaScript
-- **Back-end Web Framework:** Django 3.0 (with Python 3.7+)
+- **Back-end Web Framework:** Django 6.0.6 (with Python 3.7+)
 - **Database Engine:** MySQL 5.0.12 or higher
 - **Database Driver:** `pymysql`
 - **Development IDE:** PyCharm / VS Code
