@@ -95,7 +95,7 @@ def ContactSave(request):
     Slno1 = max_slno + 1
     
     # Default to the primary admin account
-    Admid1 = 'admin'
+    Admid1 = 'all'
     
     ComName1 = request.POST.get('ComName')
     ComEmail1 = request.POST.get('ComEmail')

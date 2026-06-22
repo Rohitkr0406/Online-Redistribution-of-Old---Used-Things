@@ -107,7 +107,7 @@
                 
                 <div class="btn-group">
                     <input type="submit" value="Save" formaction="{% url 'UnusedSave1' %}" class="btn btn-primary">
-                    <input type="reset" value="Reset" class="btn btn-reset">
+                    <input type="button" value="Reset" onclick="window.location.href='{% url 'Unused1' %}';" class="btn btn-reset">
                     <input type="submit" value="Delete" formaction="{% url 'UnusedDelete1' %}" class="btn btn-delete">
                     <input type="submit" value="Update" formaction="{% url 'UnusedUpdate1' %}" class="btn btn-update">
                 </div>

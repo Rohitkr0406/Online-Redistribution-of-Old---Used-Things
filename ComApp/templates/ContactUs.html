@@ -67,10 +67,6 @@
                         <input type="text" name="Slno" readonly placeholder="Auto-generated" class="form-control">
                     </div>
                     <div class="form-field">
-                        <label>Admin Id</label>
-                        <input type="text" name="Admid" value="admin" readonly class="form-control">
-                    </div>
-                    <div class="form-field">
                         <label>Company/Your Name</label>
                         <input type="text" name="ComName" value="{{ donor_name|default:'' }}" required maxlength="50" class="form-control">
                     </div>
@@ -82,7 +78,7 @@
                         <label>Mobile No.</label>
                         <input type="tel" name="ComMob" value="{{ donor_mob|default:'' }}" maxlength="15" pattern="[0-9]{10,15}" title="Enter a valid 10-15 digit phone number" class="form-control">
                     </div>
-                    <div class="form-field">
+                    <div class="form-field full-width">
                         <label>Address</label>
                         <textarea name="ComAdd" rows="2" class="form-control">{{ donor_add|default:'' }}</textarea>
                     </div>
