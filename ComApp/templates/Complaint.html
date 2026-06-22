@@ -28,13 +28,13 @@
                 <hr>
                 <div class="form-group">
                     <label>Serial No.</label>
-                    <input type="text" name="Slno" required class="form-control">
+                    <input type="text" name="Slno" readonly placeholder="Auto-generated" class="form-control">
                     
                     <label>Donor/Receiver Id</label>
-                    <input type="text" name="Did" required class="form-control">
+                    <input type="text" name="Did" value="{{ donor_id }}" readonly class="form-control">
                     
                     <label>Complaint Date</label>
-                    <input type="date" name="CompDate" required class="form-control">
+                    <input type="date" name="CompDate" value="{{ today_date }}" readonly class="form-control">
                     
                     <label>Issue Type</label>
                     <select name="IssuType" required class="form-control">

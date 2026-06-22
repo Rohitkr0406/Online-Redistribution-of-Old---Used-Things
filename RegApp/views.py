@@ -50,12 +50,12 @@ def DonatorSave(request):
     # Hash password securely before database insertion!
     hashed_pw = make_password(Dpsd1)
     
-    ps = (Slno1, Donorid1, Dname1, hashed_pw, hashed_pw, Dob1, Gen1, Dmob1, Demail1, Add11, Add21, State1, City1, Pin1, Remarks1)
+    ps = (Donorid1, Dname1, hashed_pw, hashed_pw, Dob1, Gen1, Dmob1, Demail1, Add11, Add21, State1, City1, Pin1, Remarks1)
     
     try:
         mycursor.execute(
-            """INSERT INTO donorreg(Slno, Donorid, Dname, Dpsd, Dcpsd, Dob, Gen, Dmob, Demail, Add1, Add2, State, City, Pin, Remarks) 
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", ps)
+            """INSERT INTO donorreg(Donorid, Dname, Dpsd, Dcpsd, Dob, Gen, Dmob, Demail, Add1, Add2, State, City, Pin, Remarks) 
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", ps)
         conn.commit()
         msg = "Data Saved Successfully..!!"
         print(msg)
@@ -221,6 +221,17 @@ def UnusedSave(request):
     
     Slno1 = request.POST.get('Slno')
     Proid1 = request.POST.get('Proid')
+    
+    if not Slno1 or not Proid1:
+        mycursor.execute("SELECT COALESCE(MAX(Slno), 0) FROM unusedthing")
+        row = mycursor.fetchone()
+        max_slno = row[0] if row and row[0] is not None else 0
+        next_slno = max_slno + 1
+        if not Slno1:
+            Slno1 = next_slno
+        if not Proid1:
+            Proid1 = f"pro{next_slno}"
+            
     ProName1 = request.POST.get('ProName')
     ProCate1 = request.POST.get('ProCate')
     ProSubCate1 = request.POST.get('ProSubCate')

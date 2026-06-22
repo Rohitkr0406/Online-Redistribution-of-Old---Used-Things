@@ -64,27 +64,27 @@
                 <div class="form-grid">
                     <div class="form-field">
                         <label>Serial No.</label>
-                        <input type="text" name="Slno" required class="form-control">
+                        <input type="text" name="Slno" readonly placeholder="Auto-generated" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Admin Id</label>
-                        <input type="text" name="Admid" required class="form-control">
+                        <input type="text" name="Admid" value="admin" readonly class="form-control">
                     </div>
                     <div class="form-field">
-                        <label>Company Name</label>
-                        <input type="text" name="ComName" required maxlength="50" class="form-control">
+                        <label>Company/Your Name</label>
+                        <input type="text" name="ComName" value="{{ donor_name|default:'' }}" required maxlength="50" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Email Id</label>
-                        <input type="email" name="ComEmail" required maxlength="50" class="form-control">
+                        <input type="email" name="ComEmail" value="{{ donor_email|default:'' }}" required maxlength="50" class="form-control">
                     </div>
                     <div class="form-field">
-                        <label>Company Mobile No.</label>
-                        <input type="tel" name="ComMob" maxlength="15" pattern="[0-9]{10,15}" title="Enter a valid 10-15 digit phone number" class="form-control">
+                        <label>Mobile No.</label>
+                        <input type="tel" name="ComMob" value="{{ donor_mob|default:'' }}" maxlength="15" pattern="[0-9]{10,15}" title="Enter a valid 10-15 digit phone number" class="form-control">
                     </div>
                     <div class="form-field">
-                        <label>Company Address</label>
-                        <textarea name="ComAdd" rows="2" class="form-control"></textarea>
+                        <label>Address</label>
+                        <textarea name="ComAdd" rows="2" class="form-control">{{ donor_add|default:'' }}</textarea>
                     </div>
                     <div class="form-field full-width">
                         <label>Remarks</label>

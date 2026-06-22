@@ -21,12 +21,12 @@ The application streamlines collection, inventory (stock management), distributi
 
 ## ✨ Key Features
 
-- **Donor Registration & Profiles:** Allows individuals to sign up, manage profiles, and list usable old items.
+- **Donor Registration & Profiles:** Allows individuals to sign up, manage profiles, and list usable old items. System-managed auto-incrementing Serial Numbers ensure error-free registrations.
 - **Unused Things Directory:** Admins record new item entries, categorization, sub-categorization, purchase date, and condition status.
 - **Collection Management:** Log donation arrivals, donor addresses, receiver status, and volunteer logs.
 - **Stock & Inventory Control:** Live tracking of available items (stock vs. distributed quantities).
 - **Redistribution & Logistics:** Track the delivery details, location of distribution, receiver names, contact numbers, and quantity distributed.
-- **Support & Communication:** Interactive forms for reporting complaints, registering feedback, and tracking contact requests.
+- **Support & Communication:** Interactive forms for reporting complaints, registering feedback, and tracking contact requests. Smart auto-filling from active sessions and auto-generated serials streamline the process.
 - **Comprehensive Reports:** Separate search-enabled reporting interfaces for donors, collections, distributions, stock, complaints, and contact logs.
 
 ---
@@ -237,10 +237,8 @@ pip install -r requirements.txt
 ## ⚠️ Limitations & Future Scope
 
 ### Current Limitations:
-1. **Direct Password Storage:** Current version stores passwords as plain text in the custom database table.
-2. **Local MySQL Hardcoding:** Database settings are declared directly in Python views instead of centralized configuration files.
-3. **No Financial Transactions:** Does not support shipping fees or monetized donations.
-4. **Manual Logistics:** No automated tracking of delivery routes or courier partners.
+1. **No Financial Transactions:** Does not support shipping fees or monetized donations.
+2. **Manual Logistics:** No automated tracking of delivery routes or courier partners.
 
 ### Future Scope:
 - Integration of Django's default `contrib.auth` for encrypted authentication.

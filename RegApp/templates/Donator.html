@@ -28,6 +28,7 @@
             <hr>
             
             <!-- Search Section -->
+            {% if request.session.admin_id %}
             <form method="post" action="{% url 'DonatorSearch1' %}" class="search-form">
                 {% csrf_token %}
                 <span class="search-container">
@@ -40,6 +41,7 @@
                     <input type="submit" value="Search" class="btn btn-search">
                 </span>
             </form>
+            {% endif %}
             
             <!-- Main Registration Form -->
             <form method="post">
@@ -49,7 +51,7 @@
                 <div class="form-grid">
                     <div class="form-field">
                         <label>Serial No.</label>
-                        <input type="text" name="Slno" value="{{ record.0|default:'' }}" required class="form-control">
+                        <input type="text" name="Slno" value="{{ record.0|default:'' }}" readonly placeholder="Auto-generated" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Donator Name</label>
@@ -161,8 +163,10 @@
                 <div class="btn-group">
                     <input type="submit" value="Save" formaction="{% url 'DonatorSave1' %}" class="btn btn-primary">
                     <input type="reset" value="Reset" class="btn btn-reset">
+                    {% if request.session.admin_id %}
                     <input type="submit" value="Delete" formaction="{% url 'DonatorDelete1' %}" class="btn btn-delete">
                     <input type="submit" value="Update" formaction="{% url 'DonatorUpdate1' %}" class="btn btn-update">
+                    {% endif %}
                 </div>
             </form>
         </fieldset>

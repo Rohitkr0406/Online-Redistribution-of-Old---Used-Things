@@ -49,11 +49,11 @@
                 <div class="form-grid">
                     <div class="form-field">
                         <label>Serial No.</label>
-                        <input type="text" name="Slno" value="{{ record.0|default:'' }}" required class="form-control">
+                        <input type="text" name="Slno" value="{{ record.0|default:'' }}" readonly placeholder="Auto-generated" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Product ID</label>
-                        <input type="text" name="Proid" value="{{ record.1|default:'' }}" required class="form-control">
+                        <input type="text" name="Proid" value="{{ record.1|default:'' }}" readonly placeholder="Auto-generated" class="form-control">
                     </div>
                     <div class="form-field">
                         <label>Product Name</label>
