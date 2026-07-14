@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Suggestion & Complaint</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
-</head>
-<body class="teal-bg">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
+{% extends 'base.html' %}
 
-    <!-- Main Navigation Header & Banners -->
-    {% include 'navbar.html' %}
+{% block title %}Suggestion & Complaint{% endblock %}
+
+{% block content %}
     <div class="card-container">
         <form method="post" action="{% url 'CompSave1' %}">
             {% csrf_token %}
@@ -62,5 +50,4 @@
             </fieldset>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}

@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv_path = BASE_DIR / '.env'
 try:
     from dotenv import load_dotenv
-    load_dotenv(dotenv_path=str(dotenv_path))
+    load_dotenv(dotenv_path=str(dotenv_path), override=True)
 except Exception:
     # Manual fallback loader in case python-dotenv is not installed in the active environment
     if dotenv_path.exists():

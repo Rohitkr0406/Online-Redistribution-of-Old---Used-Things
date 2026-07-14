@@ -1,112 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Details - Share & Care</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
-</head>
-<body>
-    <!-- Sidebar Navigation -->
-    {% include 'AdminMenu.html' %}
+{% extends 'admin_base.html' %}
+{% load static %}
 
-    <!-- Main Content Area -->
-    <div class="main-content">
-        <div class="header-banner">
-            <div>
-                <h1>Stock Details</h1>
-                <p style="color: var(--text-muted); margin: 4px 0 0 0;">Manage warehouse inventory and stock levels.</p>
-            </div>
-        </div>
+{% block title %}Stock Details - Share & Care{% endblock %}
 
-        {% if msg and msg != "pp" and msg != "None" and msg != "" %}
-            <div class="alert {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}alert-success{% else %}alert-error{% endif %}">
-                {{ msg }}
-            </div>
-        {% endif %}
-
-        <!-- Search Section -->
-        <div class="form-box" style="margin-bottom: 32px;">
-            <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Search Stock Record</h3>
-            <form method="post" action="{% url 'StockSearch1' %}">
-                {% csrf_token %}
-                <div class="search-container" style="margin-bottom: 0;">
-                    <select name="CmbBox" class="form-control" style="flex-grow: 1;">
-                        <option value="">-Select Serial-</option>
-                        {% for foo in record1 %}
-                            <option value="{{ foo.0 }}">{{ foo.2 }} (ID: {{ foo.1 }})</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit" class="btn-primary">Search</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Details Form -->
-        <div class="form-box">
-            <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Record Stock Details</h3>
-            <form method="post">
-                {% csrf_token %}
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 28px;">
-                    <div class="form-group">
-                        <label>Serial No.</label>
-                        <input type="text" name="Slno" value="{{ record.0|default:'' }}" required class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Product Id</label>
-                        <select name="Proid" class="form-control">
-                            <option value="">-Select-</option>
-                            {% for val1 in val %}
-                                {% for v1 in val1 %}
-                                    <option value="{{ v1 }}" {% if record.1 == v1 %}selected{% endif %}>{{ v1 }}</option>
-                                {% endfor %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Product Name</label>
-                        <input type="text" name="Pname" value="{{ record.2|default:'' }}" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <input type="text" name="cate" value="{{ record.3|default:'' }}" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Sub-Category</label>
-                        <input type="text" name="SubCate" value="{{ record.4|default:'' }}" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Product Serial no.</label>
-                        <input type="text" name="ProSlno" value="{{ record.5|default:'' }}" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Batch Number</label>
-                        <input type="text" name="BatchNo" value="{{ record.6|default:'' }}" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Distribution Amount</label>
-                        <input type="text" name="DisAmt" value="{{ record.7|default:'' }}" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Stock Amount</label>
-                        <input type="text" name="StockAmt" value="{{ record.8|default:'' }}" class="form-control">
-                    </div>
-                    <div class="form-group" style="grid-column: 1 / -1;">
-                        <label>Remarks</label>
-                        <textarea name="Remarks" rows="2" class="form-control">{{ record.9|default:'' }}</textarea>
-                    </div>
-                </div>
-
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <button type="submit" formaction="{% url 'StockSave1' %}" class="btn-primary">Save</button>
-                    <button type="reset" class="btn-primary" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main);">Reset</button>
-                    <button type="submit" formaction="{% url 'StockDelete1' %}" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-rose), #e11d48);">Delete</button>
-                    <button type="submit" formaction="{% url 'StockUpdate1' %}" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));">Update</button>
-                </div>
-            </form>
+{% block content %}
+    <div class="header-banner">
+        <div>
+            <h1>Stock Details</h1>
+            <p style="color: var(--text-muted); margin: 4px 0 0 0;">Manage warehouse inventory and stock levels.</p>
         </div>
     </div>
-</body>
-</html>
+
+    {% if msg and msg != "pp" and msg != "None" and msg != "" %}
+        <div class="alert {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}alert-success{% else %}alert-error{% endif %}">
+            {{ msg }}
+        </div>
+    {% endif %}
+
+    <!-- Search Section -->
+    <div class="form-box" style="margin-bottom: 32px;">
+        <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Search Stock Record</h3>
+        <form method="post" action="{% url 'StockSearch1' %}">
+            {% csrf_token %}
+            <div class="search-container" style="margin-bottom: 0;">
+                <select name="CmbBox" class="form-control" style="flex-grow: 1;">
+                    <option value="">-Select Serial-</option>
+                    {% for foo in record1 %}
+                        <option value="{{ foo.0 }}">{{ foo.2 }} (ID: {{ foo.1 }})</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn-primary">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Details Form -->
+    <div class="form-box">
+        <h3 style="margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px;">Record Stock Details</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 28px;">
+                <div class="form-group">
+                    <label>Serial No.</label>
+                    <input type="text" name="Slno" value="{{ record.0|default:'' }}" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Product Id</label>
+                    <select name="Proid" class="form-control">
+                        <option value="">-Select-</option>
+                        {% for val1 in val %}
+                            {% for v1 in val1 %}
+                                <option value="{{ v1 }}" {% if record.1 == v1 %}selected{% endif %}>{{ v1 }}</option>
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" name="Pname" value="{{ record.2|default:'' }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" name="cate" value="{{ record.3|default:'' }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Sub-Category</label>
+                    <input type="text" name="SubCate" value="{{ record.4|default:'' }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Product Serial no.</label>
+                    <input type="text" name="ProSlno" value="{{ record.5|default:'' }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Batch Number</label>
+                    <input type="text" name="BatchNo" value="{{ record.6|default:'' }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Distribution Amount</label>
+                    <input type="text" name="DisAmt" value="{{ record.7|default:'' }}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Stock Amount</label>
+                    <input type="text" name="StockAmt" value="{{ record.8|default:'' }}" class="form-control">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>Remarks</label>
+                    <textarea name="Remarks" rows="2" class="form-control">{{ record.9|default:'' }}</textarea>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <button type="submit" formaction="{% url 'StockSave1' %}" class="btn-primary">Save</button>
+                <button type="reset" class="btn-primary" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main);">Reset</button>
+                <button type="submit" formaction="{% url 'StockDelete1' %}" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-rose), #e11d48);">Delete</button>
+                <button type="submit" formaction="{% url 'StockUpdate1' %}" class="btn-primary" style="background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));">Update</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

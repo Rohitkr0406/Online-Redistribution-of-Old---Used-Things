@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Share & Care{% endblock %}</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}teal-bg{% endblock %}">
+    <!-- Top Announcement Bar -->
+    {% block announcement_bar %}
+    <div class="announcement-bar">
+        Welcome! For Queries, Contact No: +91 7992241733
+    </div>
+    {% endblock %}
+
+    <!-- Main Navigation Header & Banners -->
+    {% block navbar %}
+    {% include 'navbar.html' %}
+    {% endblock %}
+
+    <!-- Main Content Block -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer Block -->
+    {% block footer %}
+    {% endblock %}
+
+    <!-- Extra Javascript Block -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

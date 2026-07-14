@@ -1,56 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact Us</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
-    <style>
-        .contact-card {
-            max-width: 750px;
-            margin: 15px auto;
-            padding: 15px 25px;
-        }
-        .contact-card h2 {
-            font-size: 22px;
-            margin-bottom: 5px;
-        }
-        .contact-card hr {
-            margin: 5px 0 15px 0;
-        }
-        .contact-card .form-grid {
-            gap: 10px 20px;
-        }
-        .contact-card input[type="text"],
-        .contact-card input[type="email"],
-        .contact-card textarea {
-            padding: 6px 12px;
-            margin-bottom: 4px;
-        }
-        .contact-card label {
-            margin-bottom: 1px;
-            font-size: 12px;
-        }
-        .contact-card .btn-group {
-            margin-top: 10px;
-        }
-        .contact-card .btn {
-            padding: 8px 18px;
-            font-size: 13px;
-        }
-    </style>
-</head>
-<body class="teal-bg">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
+{% extends 'base.html' %}
 
-    <!-- Main Navigation Header & Banners -->
-    {% include 'navbar.html' %}
+{% block title %}Contact Us{% endblock %}
 
-    <div class="card-container contact-card">
+{% block content %}
+    <div class="card-container compact-card">
         <form method="post" action="{% url 'ContactSave1' %}">
             {% csrf_token %}
             <fieldset>
@@ -88,12 +41,11 @@
                     </div>
                 </div>
                 
-                <div class="btn-group" style="margin-top: 15px;">
+                <div class="btn-group">
                     <input type="submit" value="Save" class="btn btn-primary">
                     <input type="reset" value="Reset" class="btn btn-reset">
                 </div>
             </fieldset>
         </form>
     </div>
-</body>
-</html>
+{% endblock %}

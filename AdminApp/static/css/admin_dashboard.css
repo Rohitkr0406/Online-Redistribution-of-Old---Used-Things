@@ -487,3 +487,95 @@ table.admin-table tr:hover {
     stroke-linecap: round;
     stroke-linejoin: round;
 }
+
+/* Admin Login Panel Specific Styles */
+body.admin-login-body {
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-primary);
+}
+.login-container {
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
+}
+.login-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.login-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.login-header img {
+    height: 60px;
+    width: auto;
+}
+.login-header h1 {
+    font-size: 1.75rem;
+    margin: 0;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+.login-header p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.9rem;
+}
+.switch-link {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.875rem;
+}
+.switch-link a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    font-weight: 600;
+}
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+/* Item Management Badges and Buttons */
+.action-btn {
+    display: inline-block;
+    padding: 5px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 2px;
+}
+.btn-approve {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+}
+.btn-approve:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+.btn-reject {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff;
+}
+.btn-reject:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+.badge-approved { background-color: rgba(16, 185, 129, 0.15); color: #059669; }
+.badge-rejected { background-color: rgba(239, 68, 68, 0.15); color: #dc2626; }
+.badge-donated { background-color: rgba(99, 102, 241, 0.15); color: #6366f1; }
+.badge-distributed { background-color: rgba(14, 165, 233, 0.15); color: #0ea5e9; }

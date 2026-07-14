@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Unused Things Registration</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+{% extends 'base.html' %}
+{% load static %}
 
-</head>
-<body class="teal-bg">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
+{% block title %}Unused Things Registration{% endblock %}
 
-    <!-- Main Navigation Header & Banners -->
-    {% include 'navbar.html' %}
-
+{% block content %}
     <div class="card-container large-card">
         <fieldset>
             <h2>Unused Things Registration</h2>
@@ -114,5 +101,4 @@
             </form>
         </fieldset>
     </div>
-</body>
-</html>
+{% endblock %}

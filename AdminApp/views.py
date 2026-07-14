@@ -8,6 +8,14 @@ from auth_system.session_manager import start_admin_session, logout_admin
 from AdminApp.admin_utils import log_admin_action
 from AdminApp.forms import ChangePasswordForm
 
+def AdminRedirect(request):
+    """
+    Redirects /admin/ to dashboard if logged in, otherwise to login page.
+    """
+    if request.session.get('admin_id'):
+        return redirect('admin_dashboard')
+    return redirect('admin_login')
+
 def AdminLogin(request):
     """
     Renders admin login form and processes credentials.

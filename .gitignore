@@ -1,6 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
+*py[cod]
 *$py.class
 
 # C extensions
@@ -57,7 +57,6 @@ staticfiles/
 
 # Sensitive files
 .env
-.env.*
 secrets.json
 credentials.json
 aws_credentials

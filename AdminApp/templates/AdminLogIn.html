@@ -1,73 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrator Login - Share & Care</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
-    <style>
-        body {
-            justify-content: center;
-            align-items: center;
-            background-color: var(--bg-primary);
-        }
-        .login-container {
-            width: 100%;
-            max-width: 440px;
-            padding: 20px;
-        }
-        .login-card {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-        .login-header {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-        .login-header img {
-            height: 60px;
-            width: auto;
-        }
-        .login-header h1 {
-            font-size: 1.75rem;
-            margin: 0;
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-teal));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-        .login-header p {
-            color: var(--text-muted);
-            margin: 0;
-            font-size: 0.9rem;
-        }
-        .switch-link {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.875rem;
-        }
-        .switch-link a {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .switch-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block title %}Administrator Login - Share & Care{% endblock %}
+
+{% block body_class %}admin-login-body{% endblock %}
+
+{% block admin_layout %}
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
@@ -118,7 +56,9 @@
             </div>
         </div>
     </div>
-    
+{% endblock %}
+
+{% block extra_js %}
     <script>
         document.querySelectorAll('.password-toggle-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -139,5 +79,4 @@
             });
         });
     </script>
-</body>
-</html>
+{% endblock %}

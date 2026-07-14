@@ -1,341 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Redistribution of Old & Used Things for the Needy</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
-    <style>
-        /* Home Page Custom Styles */
-        body {
-            background-color: #f0fdf4;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #1e293b;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        /* Announcement Bar */
-        .announcement-bar {
-            background: linear-gradient(90deg, #11998e, #38ef7d);
-            color: #ffffff;
-            padding: 10px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-            text-align: center;
-        }
+{% block title %}Online Redistribution of Old & Used Things for the Needy{% endblock %}
 
-        /* Header & Navbar */
-        header {
-            background: #ffffff;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+{% block body_class %}home-body{% endblock %}
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px 20px;
-        }
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .brand-logo img {
-            height: 45px;
-            width: auto;
-        }
-
-        .brand-logo span {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 20px;
-            color: #11998e;
-        }
-
-        /* Navigation Menu */
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        nav li {
-            position: relative;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #475569;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            font-size: 15px;
-            padding: 10px 16px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            display: block;
-        }
-
-        nav a:hover, nav li:hover > a {
-            color: #11998e;
-            background-color: #f0fdf4;
-        }
-
-        /* Dropdowns */
-        nav ul ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #ffffff;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            min-width: 200px;
-            padding: 8px 0;
-            border: 1px solid #e2e8f0;
-        }
-
-        nav ul ul li {
-            width: 100%;
-        }
-
-        nav ul ul a {
-            padding: 10px 20px;
-            border-radius: 0;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        nav ul ul a:hover {
-            background-color: #f0fdf4;
-            color: #11998e;
-        }
-
-        nav li:hover > ul {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero Section */
-        .hero-section {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        @media (max-width: 992px) {
-            .hero-section {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-        }
-
-        .hero-content h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 44px;
-            font-weight: 800;
-            line-height: 1.2;
-            color: #0f172a;
-            margin-bottom: 20px;
-        }
-
-        .hero-content h1 span {
-            color: #11998e;
-            background: linear-gradient(90deg, #11998e, #20b2aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-content p {
-            font-size: 16px;
-            color: #475569;
-            margin-bottom: 30px;
-            line-height: 1.7;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: flex-start;
-        }
-
-        @media (max-width: 992px) {
-            .hero-buttons {
-                justify-content: center;
-            }
-        }
-
-        /* Slider */
-        .slider-container {
-            width: 100%;
-            height: 400px;
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .slides {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slide.active {
-            opacity: 1;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .slide-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            color: #ffffff;
-            padding: 30px 20px;
-            text-align: center;
-        }
-
-        .slide-caption h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .slide-caption p {
-            font-size: 14px;
-            opacity: 0.9;
-            margin: 0;
-        }
-
-        /* Brand Welcome Section */
-        .welcome-section {
-            background: #ffffff;
-            padding: 60px 20px;
-            text-align: center;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .welcome-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .welcome-logo {
-            height: 100px;
-            width: auto;
-            margin-bottom: 25px;
-        }
-
-        .welcome-section h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 28px;
-            color: #0f172a;
-            margin-bottom: 15px;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .welcome-section p {
-            font-size: 16px;
-            color: #64748b;
-            line-height: 1.8;
-            margin-bottom: 0;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #0f172a;
-            color: #94a3b8;
-            padding: 40px 20px;
-            text-align: center;
-            font-size: 14px;
-            border-top: 1px solid #1e293b;
-        }
-
-        footer b {
-            color: #f8fafc;
-        }
-
-        footer hr {
-            border-color: #1e293b;
-            margin: 20px 0;
-        }
-
-        .footer-logo {
-            font-family: 'Outfit', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: #38ef7d;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
-    <!-- Top Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
-
-    <!-- Main Navigation Header & Banners -->
-    {% include 'navbar.html' %}
-
+{% block content %}
     <!-- Hero Showcase Section -->
     <div class="hero-section">
         <div class="hero-content">
             <h1>Online Redistribution of <span>Old & Used Things</span> for the Needy</h1>
-            <p>Bridging the gap between waste and need. Donate your unused clothes, books, utensils, furniture, or gadgets, and help us deliver hope and basic necessities directly to the underprivileged.</p>
+            <p>Bridging the gap between waste and need. Donate your unused clothes, books, utensils, furniture, or
+                gadgets, and help us deliver hope and basic necessities directly to the underprivileged.</p>
             <div class="hero-buttons">
-                <a href="/RegApp/Donator" class="btn btn-primary" style="background: linear-gradient(90deg, #11998e, #38ef7d);">Start Donating</a>
-                <a href="/FirstApp/Demo" class="btn btn-reset">Learn More</a>
+                <a href="/RegApp/Donator" class="btn btn-home-primary">Start Donating</a>
+                <a href="/FirstApp/Demo" class="btn btn-home-outline">Learn More</a>
             </div>
         </div>
-        
+
         <!-- Interactive Slideshow -->
         <div class="slider-container">
             <div class="slides">
@@ -371,12 +57,41 @@
         </div>
     </div>
 
-    <!-- Welcome Description -->
+    <!-- Welcome Description Section -->
     <div class="welcome-section">
-        <div class="welcome-container">
-            <img src="{% static 'images/SUTD LOGO.png' %}" alt="SUTD Logo" class="welcome-logo">
-            <h2>Share of Unused Things at Doorstep</h2>
-            <p>Our platform operates on a structured collection, stock verification, and regional distribution workflow. We match donor items directly with needy beneficiaries, ensuring absolute transparency and efficiency in every donation loop.</p>
+        <div class="welcome-card">
+            <div class="welcome-logo-container">
+                <img src="{% static 'images/SUTD LOGO.png' %}" alt="SUTD Logo" class="welcome-logo">
+            </div>
+            <div class="welcome-text">
+                <h2>Share of Unused Things at Doorstep</h2>
+                <p>Our platform operates on a structured collection, stock verification, and regional distribution workflow.
+                    We match donor items directly with needy beneficiaries, ensuring absolute transparency and efficiency in
+                    every donation loop.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Steps/Features Section -->
+    <div class="features-section">
+        <h2>How SUTD Works</h2>
+        <p class="subtitle">A simple, transparent, and direct process to share and care for our regional community.</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">📝</div>
+                <h3>1. Register & List</h3>
+                <p>Register as a contributor and easily list your unused household items (clothes, books, electronics) online.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">🚚</div>
+                <h3>2. Quality Check & Collect</h3>
+                <p>Our dedicated team performs doorstep collection, checks item condition, and updates stock inventory logs.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">🎁</div>
+                <h3>3. Direct Redistribution</h3>
+                <p>We match collected stocks with verified regional beneficiaries, shelter homes, and partner NGOs transparently.</p>
+            </div>
         </div>
     </div>
 
@@ -387,21 +102,22 @@
         <hr>
         <p>All rights reserved &copy; 2026. Designed By: <b>ROHIT KUMAR</b> | Guided by: <b>Prof. R.K. MAHTO</b></p>
     </footer>
+{% endblock %}
 
+{% block extra_js %}
     <!-- Slideshow Javascript Script -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             let slides = document.querySelectorAll(".slide");
             let currentSlide = 0;
-            
+
             function nextSlide() {
                 slides[currentSlide].classList.remove("active");
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add("active");
             }
-            
+
             setInterval(nextSlide, 5000); // Change image every 5 seconds
         });
     </script>
-</body>
-</html>
+{% endblock %}

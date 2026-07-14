@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Donator Registration</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'images/TLOGO2.png' %}">
-    <link rel="stylesheet" href="{% static 'images/style.css' %}">
+{% extends 'base.html' %}
+{% load static %}
 
-</head>
-<body class="teal-bg">
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Welcome! For Queries, Contact No: +91 7992241733
-    </div>
+{% block title %}Donator Registration{% endblock %}
 
-    <!-- Main Navigation Header & Banners -->
-    {% include 'navbar.html' %}
-
+{% block content %}
     <div class="card-container large-card">
         <fieldset>
             <h2>Donator Registration</h2>
@@ -106,7 +93,7 @@
                         <select name="Gen" class="form-control">
                             <option value="">-Select-</option>
                             <option value="Male" {% if record.6 == 'Male' %}selected{% endif %}>Male</option>
-                            <option value="Female" {% if record.6 == 'Female' %}selected{% endif %}>Female</option>
+                            <option value="Female" {% if record.Gen == 'Female' or record.6 == 'Female' %}selected{% endif %}>Female</option>
                             <option value="Transgender" {% if record.6 == 'Transgender' %}selected{% endif %}>Transgender</option>
                         </select>
                     </div>
@@ -171,7 +158,9 @@
             </form>
         </fieldset>
     </div>
-    
+{% endblock %}
+
+{% block extra_js %}
     <script>
         document.querySelectorAll('.password-toggle-btn').forEach(button => {
             button.addEventListener('click', function() {
@@ -192,5 +181,4 @@
             });
         });
     </script>
-</body>
-</html>
+{% endblock %}
