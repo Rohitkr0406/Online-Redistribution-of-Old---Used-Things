@@ -18,14 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from FirstApp import views as firstapp_views
 
+admin.site.site_header = "SUTO Administration"
+admin.site.site_title = "SUTO Admin Portal"
+admin.site.index_title = "Online Redistribution of Old & Used Things for the Needy"
+
 urlpatterns = [
-    path('admin/', include('AdminApp.urls')),
-    path('django-admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', firstapp_views.Home, name='home'),
     path('FirstApp/', include('FirstApp.urls')),
     path('RegApp/', include('RegApp.urls')),
-    path('DetailApp/', include('DetailApp.urls')),
     path('ComApp/', include('ComApp.urls')),
-    path('ReportApp/', include('ReportApp.urls')),
 ]
 

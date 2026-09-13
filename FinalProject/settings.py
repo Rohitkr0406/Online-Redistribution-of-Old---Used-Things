@@ -49,8 +49,13 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '')
 if ALLOWED_HOSTS:
     ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS.split(',')]
+elif DEBUG:
+    ALLOWED_HOSTS = ['*']
 else:
     ALLOWED_HOSTS = []
+
+if DEBUG and 'testserver' not in ALLOWED_HOSTS and '*' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('testserver')
 
 
 # Application definition
@@ -66,8 +71,6 @@ INSTALLED_APPS = [
     'RegApp',
     'DetailApp',
     'ComApp',
-    'ReportApp',
-    'AdminApp',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +81,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'auth_system.middleware.AdminSessionMiddleware',
 ]
 
 ROOT_URLCONF = 'FinalProject.urls'
@@ -86,7 +88,7 @@ ROOT_URLCONF = 'FinalProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

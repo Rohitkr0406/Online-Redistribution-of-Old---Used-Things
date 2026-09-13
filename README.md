@@ -72,17 +72,13 @@ Online Redistribution of Old & Used Things/
 │   ├── templates/             # Donator.html, UnUsed.html
 │   └── views.py               # Donator and Unused things CRUD logic
 │
-├── DetailApp/                 # Core collection, stock, and distribution processes
-│   ├── templates/             # Collection.html, Stock.html, Distribution.html
-│   └── views.py               # Collection, Stock, and Distribution CRUD logic
+├── DetailApp/                 # Collection, stock, and distribution data models & admin
+│   ├── admin.py               # ModelAdmin registrations for collections, stock, and distributions
+│   └── models.py              # CollectionTable, StockDetails, DistributeTable ORM models
 │
 ├── ComApp/                    # Suggestions, complaints, and contact submissions
 │   ├── templates/             # Complaint.html, ContactUs.html
 │   └── views.py               # Complaint & Contact Us data persistence
-│
-├── ReportApp/                 # Administrative search and report generation
-│   ├── templates/             # Report lists, donor/stock/unused report templates
-│   └── views.py               # Analytical report queries using LEFT JOINs
 │
 ├── manage.py                  # Django administrative command-line script
 ├── myenv/
@@ -104,11 +100,8 @@ The authentication system has been updated to use secure cryptographic hashing v
 If you have an existing local database, you **MUST** run the following SQL command to expand the password fields to support hashed strings and to update the default administrator's password to its hashed value:
 
 ```sql
--- 1. Modify password fields for donorreg table
+-- Modify password fields for donorreg table to support cryptographic hashes
 ALTER TABLE donorreg MODIFY Dpsd VARCHAR(255) NOT NULL, MODIFY Dcpsd VARCHAR(255) NOT NULL;
-
--- 2. Update default administrator password to its hashed equivalent (password: admin123)
-UPDATE adminlogin SET AdminPassword = 'pbkdf2_sha256$1200000$yyBlhRpkzjEB636zszzkhg$eoPJGJsH+51PayqQi4yG+BQzrqsxKrR0olF1uaxzfOM=' WHERE AdminID = 'admin';
 ```
 
 ---
@@ -218,19 +211,21 @@ pip install -r requirements.txt
 - **Donor Login:** [http://127.0.0.1:8000/FirstApp/Login](http://127.0.0.1:8000/FirstApp/Login)
 - **Donate Unused Things:** [http://127.0.0.1:8000/RegApp/Unused](http://127.0.0.1:8000/RegApp/Unused) (Requires donor login)
 - **Register Complaint:** [http://127.0.0.1:8000/ComApp/Complaint](http://127.0.0.1:8000/ComApp/Complaint) (Requires donor login)
-- **Contact Us:** [http://127.0.0.1:8000/ComApp/Contactus](http://127.0.0.1:8000/ComApp/Contactus) (Requires donor login)
+- **Contact Us:** [http://127.0.0.1:8000/ComApp/Contactus](http://127.0.0.1:8000/ComApp/Contactus) (Public page; auto-fills contact details if donor is logged in)
 
-#### 2. Administrator Panel
-- **Admin Login:** [http://127.0.0.1:8000/admin/login/](http://127.0.0.1:8000/admin/login/)
-  - **Default AdminID:** `admin` *(or Email:* `admin@example.com`*)*
-  - **Default Password:** `admin123`
-- **Admin Dashboard:** [http://127.0.0.1:8000/admin/dashboard/](http://127.0.0.1:8000/admin/dashboard/)
-- **Donors List:** [http://127.0.0.1:8000/admin/donors/](http://127.0.0.1:8000/admin/donors/)
-- **Donated Items:** [http://127.0.0.1:8000/admin/items/](http://127.0.0.1:8000/admin/items/)
-- **Collection logs:** [http://127.0.0.1:8000/DetailApp/Collection](http://127.0.0.1:8000/DetailApp/Collection) (Restricted to Admin Panel)
-- **Stock details:** [http://127.0.0.1:8000/DetailApp/Stock](http://127.0.0.1:8000/DetailApp/Stock) (Restricted to Admin Panel)
-- **Distribution details:** [http://127.0.0.1:8000/DetailApp/Distribution](http://127.0.0.1:8000/DetailApp/Distribution) (Restricted to Admin Panel)
-- **Reports Dashboard:** [http://127.0.0.1:8000/ReportApp/](http://127.0.0.1:8000/ReportApp/) (Restricted to Admin Panel)
+#### 2. Built-in Django Administration Portal
+- **Admin Portal:** [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+  - Uses Django's native authentication (`django.contrib.auth`) and administration system (`django.contrib.admin`).
+  - Administrator accounts can be managed via standard Django commands: `python manage.py createsuperuser` or `python manage.py changepassword <username>`.
+- **Registered Core Data Models:**
+  - **Donors:** [http://127.0.0.1:8000/admin/RegApp/donorreg/](http://127.0.0.1:8000/admin/RegApp/donorreg/)
+  - **Unused Things:** [http://127.0.0.1:8000/admin/RegApp/unusedthing/](http://127.0.0.1:8000/admin/RegApp/unusedthing/)
+  - **Collection Logs:** [http://127.0.0.1:8000/admin/DetailApp/collectiontable/](http://127.0.0.1:8000/admin/DetailApp/collectiontable/)
+  - **Stock Details:** [http://127.0.0.1:8000/admin/DetailApp/stockdetails/](http://127.0.0.1:8000/admin/DetailApp/stockdetails/)
+  - **Distribution Details:** [http://127.0.0.1:8000/admin/DetailApp/distributetable/](http://127.0.0.1:8000/admin/DetailApp/distributetable/)
+  - **Complaints & Suggestions:** [http://127.0.0.1:8000/admin/ComApp/complainttable/](http://127.0.0.1:8000/admin/ComApp/complainttable/)
+  - **Contact Inquiries:** [http://127.0.0.1:8000/admin/ComApp/contactus/](http://127.0.0.1:8000/admin/ComApp/contactus/)
+- **Administrative Reporting:** Administrative reporting, record inspection, and status filtering are performed directly through Django's built-in administration interface at `/admin/`.
 
 ---
 
@@ -241,7 +236,6 @@ pip install -r requirements.txt
 2. **Manual Logistics:** No automated tracking of delivery routes or courier partners.
 
 ### Future Scope:
-- Integration of Django's default `contrib.auth` for encrypted authentication.
 - Developing native mobile companion apps for Android & iOS.
 - Cloud hosting deployment (AWS RDS/Azure SQL) for automatic backup, failover, and global reach.
 - Integration of SMTP/SMS gateways for live notifications to donors and receivers.

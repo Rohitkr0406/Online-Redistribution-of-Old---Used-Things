@@ -717,13 +717,14 @@ Project (BCA)
 
 ## 5. Report Generation Module
 
-- o Generates reports such as the number of items donated, number of beneficiaries served, and pending requests.
-- o These  reports  help  administrators  evaluate  the  impact  of  the  platform  and  plan improvements.
+- o Administrative reporting, record inspection, searching, and filtering are handled directly through Django's built-in Admin (`/admin/`).
+- o Enables administrators to monitor the number of items donated, track collection and stock status, and inspect donor inquiries and complaints without requiring artificial presentation layers.
 
 ## 6. Administration Module
 
-- o Provides  administrators  with  tools  to  manage  users,  donations,  requests,  and reports.
-- o Ensures smooth functioning of the system and prevents misuse.
+- o Provides administrators with Django's native administrative tools to manage users, donations, collections, stock inventory, and beneficiary distribution.
+- o Ensures smooth functioning, role-based access control, and centralized database administration.
+
 
 Thus, when we divided our project into these modules, it became much easier to work as a team. Each of us could focus on one module at a time-for example, one person worked on the login system while another worked on the donation management module. Later, we combined all the modules to form the complete system.
 
@@ -974,7 +975,7 @@ Project (BCA)
 ## urls Page:
 
 ```
-Project (BCA) from django.contrib import admin from django.urls import path, include from . import views urlpatterns = [ path( 'admin/' , admin.site.urls), path( '' , views.Home), path( 'FirstApp/' , include( 'FirstApp.urls' )), path( 'RegApp/' , include( 'RegApp.urls' )), path( 'DetailApp/' , include( 'DetailApp.urls' )), path( 'ComApp/' , include( 'ComApp.urls' )), path( 'ReportApp/' , include( 'ReportApp.urls' )), ] view Page: from django.shortcuts import render
+Project (BCA) from django.contrib import admin from django.urls import path, include from . import views urlpatterns = [ path( 'admin/' , admin.site.urls), path( '' , views.Home), path( 'FirstApp/' , include( 'FirstApp.urls' )), path( 'RegApp/' , include( 'RegApp.urls' )), path( 'ComApp/' , include( 'ComApp.urls' )), ] view Page: from django.shortcuts import render
 ```
 
 ## Home Page
@@ -1425,7 +1426,11 @@ Project (BCA) < fieldset > < h2 >Contact Us</ h2 > < hr > < fieldset style="marg
 
 ## Report Details Page
 
+> **Architecture Note (Django Built-in Administration):**
+> Administrative record management, searching, filtering, and reporting have been migrated to Django's native administration interface (`/admin/`). Core data models across all application domains (`donorreg`, `unusedthing`, `collectiontable`, `stockdetails`, `distributetable`, `complainttable`, `contactus`) are inspected and managed directly via Django Admin changelists, replacing the redundant custom ReportApp presentation layer.
+
 urls Page:
+
 
 ```
 from django.urls import path from . import views urlpatterns = [ path( '' , views.ReportHome), ] view Page:

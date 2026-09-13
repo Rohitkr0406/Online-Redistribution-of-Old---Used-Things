@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.db import connection
 from django.contrib import messages
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from django.contrib.auth.hashers import check_password
-from auth_system.session_manager import start_admin_session, start_donor_session, logout_donor
+from auth_system.session_manager import start_donor_session, logout_donor
 from auth_system.db_helper import get_db_connection
 import pymysql
 
@@ -55,27 +56,12 @@ def Login(request):
         user_type = request.POST.get('user_type')  # 'admin' or 'donor'
         
         if user_type == 'admin':
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    "SELECT AdminID, AdminName, AdminPassword, Status FROM adminlogin WHERE AdminID = %s OR AdminEmail = %s",
-                    [username, username]
-                )
-                row = cursor.fetchone()
-                
-            if row:
-                admin_id, admin_name, hashed_pw, status = row[0], row[1], row[2], row[3]
-                if status != 'Active':
-                    messages.error(request, "Account Inactive: Your administrator account has been deactivated.")
-                    return render(request, 'LogIn.html')
-                    
-                if check_password(password, hashed_pw):
-                    start_admin_session(request, admin_id, admin_name)
-                    from AdminApp.admin_utils import log_admin_action
-                    log_admin_action(admin_id, "Login", "Admin logged in via unified login page.")
-                    messages.success(request, f"Welcome back, {admin_name}!")
-                    return redirect('admin_dashboard')
-            
-            messages.error(request, "Invalid Admin credentials.")
+            user = authenticate(request, username=username, password=password)
+            if user is not None and user.is_staff:
+                django_login(request, user)
+                messages.success(request, f"Welcome back, {user.get_full_name() or user.username}!")
+                return redirect('/admin/')
+            messages.error(request, "Invalid Admin credentials or unauthorized staff account.")
             
         else:
             with connection.cursor() as cursor:
@@ -97,6 +83,7 @@ def Login(request):
     return render(request, 'LogIn.html')
 
 def Logout(request):
+    django_logout(request)
     logout_donor(request)
     messages.info(request, "You have been logged out.")
     return redirect('/')

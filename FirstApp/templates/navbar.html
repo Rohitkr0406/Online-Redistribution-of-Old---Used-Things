@@ -38,19 +38,8 @@
                     <li>
                         <a href="{% url 'Contactus1' %}" class="suto-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
                     </li>
-                {% elif request.session.admin_id %}
+                {% elif request.user.is_authenticated and request.user.is_staff %}
                     <!-- Admin Navigation -->
-                    <li class="suto-has-dropdown">
-                        <a href="{% url 'Collection1' %}" class="suto-nav-btn">Details &#9662;</a>
-                        <ul class="suto-dropdown-menu">
-                            <li><a href="{% url 'Collection1' %}">Collection Details</a></li>
-                            <li><a href="{% url 'Stock1' %}">Stock Details</a></li>
-                            <li><a href="{% url 'Distribution1' %}">Distribution Details</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="{% url 'report_home' %}" class="suto-nav-btn {% if 'ReportApp' in request.path %}active{% endif %}">Report</a>
-                    </li>
                     <li>
                         <a href="{% url 'Complaint1' %}" class="suto-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
                     </li>
@@ -58,7 +47,7 @@
                         <a href="{% url 'Contactus1' %}" class="suto-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
                     </li>
                     <li>
-                        <a href="{% url 'admin_dashboard' %}" class="suto-nav-btn suto-admin-highlight">Admin</a>
+                        <a href="/admin/" class="suto-nav-btn suto-admin-highlight">Admin</a>
                     </li>
                 {% else %}
                     <!-- Public Visitor Navigation -->

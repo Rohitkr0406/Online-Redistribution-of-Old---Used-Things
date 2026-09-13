@@ -24,7 +24,7 @@
             <hr class="classic-form-hr">
             
             <!-- Search Section (Shown for Admin) -->
-            {% if request.session.admin_id %}
+            {% if request.user.is_staff or request.session.admin_id %}
             <form method="post" action="{% url 'DonatorSearch1' %}" class="classic-search-bar">
                 {% csrf_token %}
                 <select name="CmbBox" class="classic-search-select">
@@ -257,7 +257,7 @@
                 <div class="classic-btn-group">
                     <input type="submit" value="Save" formaction="{% url 'DonatorSave1' %}" class="classic-btn">
                     <input type="reset" value="Reset" class="classic-btn">
-                    {% if request.session.admin_id %}
+                    {% if request.user.is_staff or request.session.admin_id %}
                     <input type="submit" value="Delete" formaction="{% url 'DonatorDelete1' %}" class="classic-btn">
                     <input type="submit" value="Update" formaction="{% url 'DonatorUpdate1' %}" class="classic-btn">
                     {% endif %}

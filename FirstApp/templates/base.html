@@ -22,13 +22,13 @@
         <div class="suto-top-container">
             <div class="suto-top-title">Online Share of Unused Things at Doorstep</div>
             <div class="suto-top-auth">
-                {% if request.session.admin_id %}
+                {% if request.user.is_authenticated and request.user.is_staff %}
                     <span class="suto-top-user">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        Admin ({{ request.session.admin_name }})
+                        Admin ({{ request.user.get_full_name|default:request.user.username }})
                     </span>
-                    <a href="{% url 'admin_dashboard' %}" class="suto-top-link">Dashboard</a>
-                    <a href="{% url 'admin_logout' %}" class="suto-top-link logout">Logout</a>
+                    <a href="/admin/" class="suto-top-link">Admin Portal</a>
+                    <a href="{% url 'donor_logout' %}" class="suto-top-link logout">Logout</a>
                 {% elif request.session.donor_id %}
                     <span class="suto-top-user">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -81,9 +81,6 @@
                     {% else %}
                     <li><a href="{% url 'Donator1' %}">Registration</a></li>
                     {% endif %}
-                    {% if request.session.admin_id %}
-                    <li><a href="{% url 'Collection1' %}">Details</a></li>
-                    {% endif %}
                 </ul>
             </div>
 
@@ -93,9 +90,6 @@
                 <ul>
                     <li><a href="{% url 'Complaint1' %}">Complaint</a></li>
                     <li><a href="{% url 'Contactus1' %}">Contact Us</a></li>
-                    {% if request.session.admin_id %}
-                    <li><a href="{% url 'report_home' %}">Report</a></li>
-                    {% endif %}
                 </ul>
             </div>
 

@@ -13,7 +13,7 @@ def Donator(request):
     record1 = []
     
     # Privacy rule: Only fetch other donors if user is logged in as an administrator
-    if request.session.get('admin_id'):
+    if (request.user.is_authenticated and request.user.is_staff) or request.session.get('admin_id'):
         try:
             mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
             record1 = mycursor.fetchall()
@@ -65,7 +65,7 @@ def DonatorSave(request):
     
     record1 = []
     # If admin is registering/saving:
-    is_admin = request.session.get('admin_id') is not None
+    is_admin = (request.user.is_authenticated and request.user.is_staff) or (request.session.get('admin_id') is not None)
     if is_admin:
         mycursor.execute("""SELECT Slno, Donorid, Dname FROM donorreg""")
         record1 = mycursor.fetchall()

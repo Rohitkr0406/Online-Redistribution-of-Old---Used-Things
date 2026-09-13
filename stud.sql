@@ -97,43 +97,10 @@ CREATE TABLE IF NOT EXISTS contactus (
     Remarks VARCHAR(200) NULL
 );
 
--- 8. Administrator Credentials Table
-CREATE TABLE IF NOT EXISTS adminlogin (
-    AdminID VARCHAR(50) PRIMARY KEY,
-    AdminName VARCHAR(100) NOT NULL,
-    AdminEmail VARCHAR(100) NOT NULL UNIQUE,
-    AdminPassword VARCHAR(255) NOT NULL,
-    AdminPhone VARCHAR(15),
-    AdminAddress VARCHAR(255),
-    Created_Date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Status VARCHAR(20) DEFAULT 'Active'
-);
-
--- 9. Admin Active Sessions Table
-CREATE TABLE IF NOT EXISTS admin_sessions (
-    SessionID VARCHAR(100) PRIMARY KEY,
-    AdminID VARCHAR(50),
-    LoginTime DATETIME,
-    LastActivity DATETIME,
-    LogoutTime DATETIME,
-    FOREIGN KEY (AdminID) REFERENCES adminlogin(AdminID) ON DELETE CASCADE
-);
-
--- 10. Admin Audit Logs Table
-CREATE TABLE IF NOT EXISTS admin_audit_logs (
-    LogID INT AUTO_INCREMENT PRIMARY KEY,
-    AdminID VARCHAR(50),
-    Action VARCHAR(255),
-    Details TEXT,
-    Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (AdminID) REFERENCES adminlogin(AdminID) ON DELETE CASCADE
-);
-
--- 11. Add UserRole Column to donorreg Table (Role Differentiation)
+-- 8. Add UserRole Column to donorreg Table (Role Differentiation)
 ALTER TABLE donorreg ADD COLUMN UserRole VARCHAR(20) DEFAULT 'donor';
 
--- 12. Insert Default Administrator (Default login credentials)
--- Hashed password matches 'admin123' via Django's secure PBKDF2 hashing
-INSERT INTO adminlogin (AdminID, AdminName, AdminEmail, AdminPassword, AdminPhone, AdminAddress, Status)
-VALUES ('admin', 'Admin User', 'admin@example.com', 'pbkdf2_sha256$1200000$yyBlhRpkzjEB636zszzkhg$eoPJGJsH+51PayqQi4yG+BQzrqsxKrR0olF1uaxzfOM=', '9999999999', 'Admin Headquarters', 'Active')
-ON DUPLICATE KEY UPDATE AdminID=AdminID;
+-- Note: Administrator management is natively handled through Django's built-in
+-- authentication and administration framework (django.contrib.auth / django.contrib.admin).
+-- Administrator superusers are created via: python manage.py createsuperuser
+
