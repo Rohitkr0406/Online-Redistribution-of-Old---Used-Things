@@ -21,7 +21,7 @@ from FirstApp import views as firstapp_views
 urlpatterns = [
     path('admin/', include('AdminApp.urls')),
     path('django-admin/', admin.site.urls),
-    path('', firstapp_views.Home),
+    path('', firstapp_views.Home, name='home'),
     path('FirstApp/', include('FirstApp.urls')),
     path('RegApp/', include('RegApp.urls')),
     path('DetailApp/', include('DetailApp.urls')),

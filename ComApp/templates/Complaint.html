@@ -1,53 +1,112 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Suggestion & Complaint{% endblock %}
+{% block title %}Suggestion & Complaint - SUTO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.0">
+{% endblock %}
 
 {% block content %}
-    <div class="card-container">
-        <form method="post" action="{% url 'CompSave1' %}">
-            {% csrf_token %}
-            <fieldset>
-                <h2>Suggestion & Complaint</h2>
-                {% if msg and msg != "pp" and msg != "None" and msg != "" %}
-                    <div class="alert-banner {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
-                        {{ msg }}
-                    </div>
-                {% endif %}
-                <hr>
-                <div class="form-group">
-                    <label>Serial No.</label>
-                    <input type="text" name="Slno" readonly placeholder="Auto-generated" class="form-control">
-                    
-                    <label>Donor/Receiver Id</label>
-                    <input type="text" name="Did" value="{{ donor_id }}" readonly class="form-control">
-                    
-                    <label>Complaint Date</label>
-                    <input type="date" name="CompDate" value="{{ today_date }}" readonly class="form-control">
-                    
-                    <label>Issue Type</label>
-                    <select name="IssuType" required class="form-control">
-                        <option value="">-Select Issue Type-</option>
-                        <option value="Delivery Issue">Delivery Issue</option>
-                        <option value="Quality Issue">Quality Issue</option>
-                        <option value="Delayed Collection">Delayed Collection</option>
-                        <option value="Wrong Item">Wrong Item</option>
-                        <option value="Service Complaint">Service Complaint</option>
-                        <option value="Suggestion">Suggestion</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    
-                    <label>Complaint Details</label>
-                    <textarea name="CompDetails" rows="4" required maxlength="500" class="form-control"></textarea>
-                    
-                    <label>Remarks</label>
-                    <textarea name="Remarks" rows="2" class="form-control"></textarea>
-                    
-                    <div class="btn-group">
-                        <input type="submit" value="Save" class="btn btn-primary">
-                        <input type="reset" value="Reset" class="btn btn-reset">
-                    </div>
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner medium">
+        <a href="javascript:history.back()" class="classic-back-link">Back</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">SUGGESTION & COMPLAINT</h2>
+            
+            {% if msg and msg != "pp" and msg != "None" and msg != "" %}
+                <div class="classic-alert {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
+                    {{ msg }}
                 </div>
-            </fieldset>
-        </form>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+            
+            <form method="post" action="{% url 'CompSave1' %}">
+                {% csrf_token %}
+                
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">Complaint Information</legend>
+                    
+                    <div class="classic-grid">
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Serial No.</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="Slno" readonly placeholder="Auto-generated" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Donor / User Id</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="Did" value="{{ donor_id }}" readonly class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Complaint Date</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="date" name="CompDate" value="{{ today_date }}" readonly class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Issue Type</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <select name="IssuType" required class="classic-control">
+                                    <option value="">-Select Issue Type-</option>
+                                    <option value="Delivery Issue">Delivery Issue</option>
+                                    <option value="Quality Issue">Quality Issue</option>
+                                    <option value="Delayed Collection">Delayed Collection</option>
+                                    <option value="Wrong Item">Wrong Item</option>
+                                    <option value="Service Complaint">Service Complaint</option>
+                                    <option value="Suggestion">Suggestion</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row align-top full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Complaint Details</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <textarea name="CompDetails" rows="3" required maxlength="500" class="classic-control"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row align-top full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Remarks</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <textarea name="Remarks" rows="2" class="classic-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <div class="classic-btn-group">
+                    <input type="submit" value="Save" class="classic-btn">
+                    <input type="reset" value="Reset" class="classic-btn">
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 {% endblock %}

@@ -1,79 +1,416 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Us - Share & Care{% endblock %}
+{% block title %}About Our System - SUTO{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.0">
+<link rel="stylesheet" href="{% static 'css/about.css' %}?v=1.0">
 {% endblock %}
 
 {% block content %}
-    <div class="card-container about-card">
-        <fieldset>
-            <h2>About SUTD System</h2>
-            <hr>
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner about-canvas-inner">
+        <a href="javascript:history.back()" class="classic-back-link">Back</a>
+        
+        <div class="classic-form-card about-card">
+            <!-- Main Title Section -->
+            <h1 class="about-title">ABOUT OUR SYSTEM</h1>
+            <div class="about-subtitle">Online Redistribution of Old &amp; Used Things for the Needy (SUTO)</div>
+            <hr class="classic-form-hr">
             
-            <div class="about-section">
-                <h3>Introduction</h3>
-                <p>
-                    In today's fast-paced world, technology serves as a powerful instrument for social betterment. Many households contain unused items—clothes, books, utensils, furniture, or electronic gadgets—lying neglected. Concurrently, underprivileged communities face severe daily struggles without access to basic necessities. 
-                </p>
-                <p>
-                    <strong>Share of Unused Things at Doorstep (SUTD)</strong>, under the banner of <strong>Share & Care</strong>, bridges the gap between waste and need. We provide a structured, transparent, and digital channel to collect these idle materials directly from donors' homes and redistribute them to the right beneficiaries.
-                </p>
-            </div>
-            
-            <div class="about-section">
-                <h3>Core Objectives</h3>
-                <div class="grid-3">
-                    <div class="feature-box">
-                        <span class="icon">🤝</span>
-                        <h4>Social Bridge</h4>
-                        <p>Connecting generous donors directly with verified regional beneficiaries and local shelter homes.</p>
+            <!-- Section 1: About SUTO -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">About SUTO</legend>
+                <div class="about-intro-wrap">
+                    <div class="about-logo-frame">
+                        <img src="{% static 'images/suto/box_image.png' %}" alt="SUTO Collection Box" class="about-logo-img">
+                        <div class="about-logo-caption">SUTO Doorstep Collection Box</div>
                     </div>
-                    <div class="feature-box">
-                        <span class="icon">♻️</span>
-                        <h4>Eco Sustainability</h4>
-                        <p>Reducing household waste and promoting environmental sustainability by giving useful things a second life.</p>
-                    </div>
-                    <div class="feature-box">
-                        <span class="icon">📊</span>
-                        <h4>Transparent Tracking</h4>
-                        <p>Maintaining clear records of collection, stock checks, and deliveries to ensure integrity.</p>
+                    <div class="about-intro-text">
+                        <p class="about-paragraph">
+                            In today's world, technology is not only an instrument for commercial enterprise and convenience&mdash;it can also serve as a profound medium for social good. In countless households, usable items such as clothes, books, utensils, furniture, and electronic gadgets lie idle and neglected in cupboards and storerooms. Simultaneously, underprivileged individuals and disadvantaged communities struggle daily without access to even the most basic life necessities.
+                        </p>
+                        <p class="about-paragraph">
+                            The platform <strong>Share of Unused Things at Doorstep (SUTO)</strong> was conceived to bridge the stark divide between unused household surplus and genuine humanitarian need. Instead of allowing serviceable goods to gather dust or be discarded into municipal waste streams, SUTO provides an organized, transparent web application to collect, record, manage, and redistribute these items directly to worthy recipients.
+                        </p>
+                        <p class="about-paragraph">
+                            By establishing a digital bridge connecting benevolent donors with registered administrators and field volunteers, the platform ensures that generosity is channeled systematically, responsibly, and directly to the right doorstep.
+                        </p>
                     </div>
                 </div>
-            </div>
-            
-            <div class="about-section">
-                <h3>How It Works</h3>
-                <p>
-                    The platform runs on a streamlined 3-step operational workflow:
+            </fieldset>
+
+            <!-- Section 2: Why This Project? -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Why This Project?</legend>
+                <p class="about-paragraph">
+                    The foundational inspiration behind this project lies in the acute contrast between <em>"what is wasted"</em> and <em>"what is needed"</em> in our surrounding communities. Many families replace functioning clothes, study books, kitchen utensils, or home appliances when upgrading, leaving older items stored away without any practical purpose.
                 </p>
-                <p>
-                    1. <strong>Register & List:</strong> Donors sign up and list their items by category (Electronics, Clothing, Furniture, Books) along with status and batch details.
+                <p class="about-paragraph">
+                    We believe that no useful item should be discarded or left unutilized when another human being could benefit from it. The primary motivation of this initiative is driven by clear social and ethical imperatives:
                 </p>
-                <p>
-                    2. <strong>Collection & Inspection:</strong> Verified working members schedule doorstep pick-ups and log incoming collection items into the central stock database.
+                <ul class="about-bullet-list">
+                    <li><strong>Waste Minimization:</strong> Preventing usable domestic goods from prematurely entering landfills and contributing to urban waste accumulation.</li>
+                    <li><strong>Encouraging Reuse &amp; Sharing:</strong> Fostering a culture of shared responsibility, conservation, and mindful consumption.</li>
+                    <li><strong>Dignified Assistance:</strong> Enabling underprivileged individuals, students, and families to receive essential clothing, educational resources, and household necessities with dignity.</li>
+                    <li><strong>Transparent Distribution:</strong> Replacing informal, unaccountable charity with structured digital records that verify collection and monitor delivery to appropriate beneficiaries.</li>
+                </ul>
+            </fieldset>
+
+            <!-- Section 3: Objectives of the Project -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Objectives of the Project</legend>
+                <p class="about-paragraph">
+                    The system was developed under a concrete set of practical objectives designed to deliver real-world utility:
                 </p>
-                <p>
-                    3. <strong>Redistribution:</strong> Administrators and volunteers coordinate distribution schedules to dispatch materials directly to regional underprivileged families and partner NGOs.
+                <ol class="about-ordered-list">
+                    <li>
+                        <strong>Create a Bridge Between Donors and the Needy:</strong> To provide an organized digital channel where donors can register surplus goods and administrators can match them with genuine needs.
+                    </li>
+                    <li>
+                        <strong>Provide a User-Friendly Online Platform:</strong> To build an intuitive, clean interface that allows non-technical donors and volunteers to navigate, register, and manage donations without hindrance.
+                    </li>
+                    <li>
+                        <strong>Manage Donations Efficiently:</strong> To enable administrators and volunteers to record incoming items, inspect their condition, and catalog them within structured inventory categories.
+                    </li>
+                    <li>
+                        <strong>Maintain a Centralized Database:</strong> To securely store and organize all donor accounts, listed items, warehouse stock, and redistribution records in a centralized MySQL relational database.
+                    </li>
+                    <li>
+                        <strong>Ensure Security of User Data:</strong> To safeguard donor and administrative credentials through encrypted password hashing and controlled role-based access permissions.
+                    </li>
+                    <li>
+                        <strong>Track and Monitor Redistribution:</strong> To maintain clear transaction records from initial donor listing through doorstep collection, stock verification, and final delivery to recipients.
+                    </li>
+                    <li>
+                        <strong>Provide a Practical Learning Experience as Students:</strong> To apply theoretical concepts of relational database management, three-tier software architecture, and web development to a meaningful real-life social problem.
+                    </li>
+                </ol>
+            </fieldset>
+
+            <!-- Section 4: System Stakeholders -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">System Stakeholders</legend>
+                <p class="about-paragraph">
+                    The platform is specifically engineered around two primary user groups with distinct responsibilities and system permissions:
                 </p>
+                <div class="about-stakeholders-grid">
+                    <div class="about-stakeholder-box">
+                        <h4>1. Donors (Contributing Citizens)</h4>
+                        <ul>
+                            <li>Register and maintain individual donor accounts.</li>
+                            <li>Securely log in to the donor portal.</li>
+                            <li>List unused things across categories (Clothes, Books, Utensils, Furniture, Electronics).</li>
+                            <li>Provide item details including purchase dates, product serial numbers, and condition.</li>
+                            <li>Submit suggestions or complaints regarding collection services.</li>
+                        </ul>
+                    </div>
+                    <div class="about-stakeholder-box">
+                        <h4>2. Administrators &amp; Volunteers</h4>
+                        <ul>
+                            <li>Access protected administrative modules via secure authentication.</li>
+                            <li>Verify donor submissions and manage collection schedules.</li>
+                            <li>Maintain current warehouse stock records and inventory levels.</li>
+                            <li>Coordinate redistribution to verified beneficiaries and regional distribution camps.</li>
+                            <li>Inspect complaint records and generate operational status reports.</li>
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Section 5: How the System Works -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">How the System Works</legend>
+                <p class="about-paragraph">
+                    The system operates along a systematic six-stage lifecycle ensuring accountability at every step:
+                </p>
+                
+                <div class="about-workflow-flow">
+                    <div class="workflow-step-box">1. REGISTER</div>
+                    <div class="workflow-arrow">&rarr;</div>
+                    <div class="workflow-step-box">2. LIST ITEMS</div>
+                    <div class="workflow-arrow">&rarr;</div>
+                    <div class="workflow-step-box">3. VERIFY / APPROVE</div>
+                    <div class="workflow-arrow">&rarr;</div>
+                    <div class="workflow-step-box">4. MATCH REQUEST</div>
+                    <div class="workflow-arrow">&rarr;</div>
+                    <div class="workflow-step-box">5. REDISTRIBUTE</div>
+                    <div class="workflow-arrow">&rarr;</div>
+                    <div class="workflow-step-box">6. DELIVER</div>
+                </div>
+
+                <div class="about-workflow-details">
+                    <ol class="about-ordered-list">
+                        <li><strong>Step 1 &mdash; Registration:</strong> The donor creates an account with contact and address details, generating a unique Donor ID.</li>
+                        <li><strong>Step 2 &mdash; Item Listing:</strong> The donor submits details of surplus items (category, sub-category, serial number, batch, and condition).</li>
+                        <li><strong>Step 3 &mdash; Collection &amp; Verification:</strong> Volunteers verify the item details, schedule doorstep collection, and confirm intake into warehouse inventory.</li>
+                        <li><strong>Step 4 &mdash; Matching &amp; Stocking:</strong> Collected items are formally entered into active stock records and mapped against regional distribution requirements.</li>
+                        <li><strong>Step 5 &mdash; Redistribution Coordination:</strong> Administrators log distribution dispatches specifying receiver identification, location, and dispatched quantities.</li>
+                        <li><strong>Step 6 &mdash; Delivery Confirmation:</strong> The redistribution record is completed upon verified handover, updating stock levels and generating an audit trail.</li>
+                    </ol>
+                </div>
+            </fieldset>
+
+            <!-- Section 6: Major Modules of the System -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Major Modules of the System</legend>
+                <p class="about-paragraph">
+                    The project architecture is decomposed into five specialized functional modules, each addressing a critical phase of operation:
+                </p>
+                <div class="table-responsive">
+                    <table class="about-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 32%;">Module Name</th>
+                                <th>Functional Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-key">1. User Authentication &amp; Registration Module</td>
+                                <td>Manages registration and credential verification for both Donors and System Administrators. Controls role validation and initiates authenticated user sessions.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">2. Donation Management Module</td>
+                                <td>Enables donors to catalog unused items with detailed attributes (category, subcategory, product serial number, batch number, purchase date, and remarks) into the donation register.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">3. Request &amp; Redistribution Management Module</td>
+                                <td>Enables administrators to process beneficiary demands, map available stock to specific geographic areas, and allocate materials for targeted redistribution.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">4. Delivery Tracking Module</td>
+                                <td>Maintains detailed records of the distribution pipeline, capturing recipient credentials, dispatch personnel, dates, contact numbers, and delivery locations.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">5. Report Generation Module</td>
+                                <td>Extracts centralized relational data to produce structured administrative reports covering donor listings, collected inventory, stock levels, and distribution summaries.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <!-- Section 7: Technology Used -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Technology Used</legend>
+                <p class="about-paragraph">
+                    The application is engineered using a classic 3-Tier Client-Server Architecture (Presentation Layer, Business Logic Layer, and Relational Data Layer). The implementation relies on the following verified software technologies:
+                </p>
+                <div class="table-responsive">
+                    <table class="about-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 28%;">Technology / Tool</th>
+                                <th>Role and Implementation Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-key">Python 3.14</td>
+                                <td>Core programming language utilized for server-side business logic, session control, request dispatching, and backend data processing.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">Django 6.0</td>
+                                <td>High-level Model-View-Template (MVT) web application framework providing routing, view controllers, templating engine, and core middleware.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">MySQL RDBMS</td>
+                                <td>Centralized relational database engine storing application entities including donor accounts, unused item listings, stock tables, and distribution audits.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">PyMySQL &amp; mysqlclient</td>
+                                <td>High-performance database connector interfaces establishing direct database connectivity and executing SQL transactions between Django and MySQL.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">HTML5</td>
+                                <td>Semantic markup language structuring all user-facing web pages, input forms, fieldsets, and data tables.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">CSS3</td>
+                                <td>Styling framework implementing the traditional academic color palette, responsive grid, fieldset borders, and Times New Roman typography.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <!-- Section 8: Security & Data Management -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Security &amp; Data Management</legend>
+                <p class="about-paragraph">
+                    To maintain data integrity and prevent unauthorized manipulation of records, the system incorporates the following factual security controls implemented in the application codebase:
+                </p>
+                <ul class="about-bullet-list">
+                    <li>
+                        <strong>Credential Authentication:</strong> Donors and administrators authenticate through distinct login workflows verified directly against stored relational credentials.
+                    </li>
+                    <li>
+                        <strong>Cryptographic Password Hashing:</strong> User passwords are never stored in plaintext. Password verification relies on Django's PBKDF2 hashing algorithm (<code>check_password</code>), protecting stored secrets against database exposure.
+                    </li>
+                    <li>
+                        <strong>Role-Based Access Control (RBAC):</strong> Administrative controllers and report generation views are secured via custom decorators (<code>@admin_required</code>), restricting sensitive management operations exclusively to verified administrative sessions.
+                    </li>
+                    <li>
+                        <strong>Session Management &amp; Inactivity Timeout:</strong> Authenticated sessions track unique session identifiers and timestamps. Administrator sessions incorporate an automated 30-minute inactivity timeout mechanism that terminates idle sessions.
+                    </li>
+                    <li>
+                        <strong>Parameterized SQL Queries:</strong> Database interactions employ parameterized SQL queries (e.g., <code>cursor.execute(sql, [params])</code>) across all core view routines, protecting the database layer from SQL injection vulnerabilities.
+                    </li>
+                    <li>
+                        <strong>Centralized Relational Storage:</strong> All system entities&mdash;including donor profiles, items, collection logs, complaints, and delivery receipts&mdash;are maintained with relational integrity in the MySQL <code>stud</code> database.
+                    </li>
+                </ul>
+            </fieldset>
+
+            <!-- Section 9: Reporting & Monitoring -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Reporting &amp; Monitoring</legend>
+                <p class="about-paragraph">
+                    A critical requirement for any social redistribution initiative is complete transparency and managerial accountability. SUTO provides administrators with dedicated reporting tools to extract and inspect operational records:
+                </p>
+                <div class="table-responsive">
+                    <table class="about-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">Report Category</th>
+                                <th>Administrative Purpose &amp; Information Provided</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-key">1. Donation Report</td>
+                                <td>Summarizes incoming donations over specified timeframes, enabling administrators to assess donation volumes and identify active contributors.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">2. Beneficiary Report</td>
+                                <td>Logs details of individuals and community centers that have received assistance, including dates, distributed item types, and delivery locations.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">3. Item-Wise Report</td>
+                                <td>Categorizes records across specific item types (Clothes, Books, Utensils, Furniture, Electronics) to monitor category demand and stock throughput.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">4. Pending Request Report</td>
+                                <td>Highlights donor submissions and collection requests awaiting physical inspection or transportation pickup by field volunteers.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">5. Delivery Status Report</td>
+                                <td>Monitors the progress of dispatched consignments to ensure all allocated goods reach their intended destination without discrepancies.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">6. Overall Summary Report</td>
+                                <td>Provides a consolidated managerial overview of total registered donors, items collected, warehouse stock, and cumulative items distributed.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <!-- Section 10: Social & Environmental Impact -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Social &amp; Environmental Impact</legend>
+                <p class="about-paragraph">
+                    Beyond technical execution, SUTO is designed to generate measurable positive outcomes across three primary dimensions:
+                </p>
+                <div class="table-responsive">
+                    <table class="about-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Impact Area</th>
+                                <th>Core Dimension and Contribution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-key">Social Impact</td>
+                                <td>Directly supports economically disadvantaged families, homeless shelters, and students by supplying warm clothing, textbooks, home utensils, and appliances at zero cost.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">Environmental Impact</td>
+                                <td>Extends the operational lifecycle of manufactured goods, curbing landfill waste and reducing carbon emissions associated with the production and disposal of new consumer items.</td>
+                            </tr>
+                            <tr>
+                                <td class="col-key">Community Impact</td>
+                                <td>Cultivates an ethos of collective empathy, mutual support, and responsible resource utilization across urban neighborhoods and collegiate communities.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <!-- Section 11: Current Limitations -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Current Limitations</legend>
+                <p class="about-paragraph">
+                    As an academic project developed within defined curriculum timeframes and educational scope, the system exhibits several practical constraints:
+                </p>
+                <ul class="about-bullet-list">
+                    <li><strong>Absence of Financial Transactions:</strong> The system does not support monetary donations or online payment processing, focusing strictly on tangible goods redistribution.</li>
+                    <li><strong>Basic Security Implementation:</strong> While password hashing and session access checks are active, advanced enterprise security features (such as two-factor authentication, SSL certificates, or biometric verification) are not incorporated.</li>
+                    <li><strong>No Native Mobile Application:</strong> The platform operates exclusively through web browsers on personal computers and mobile devices without dedicated Android or iOS client apps.</li>
+                    <li><strong>Tabular Reporting Format:</strong> Reports are rendered in standard HTML tabular formats without interactive graphical dashboards, visual charting, or predictive analytics.</li>
+                    <li><strong>Manual Database Backup:</strong> Relational data is backed up through manual database export routines rather than automated cloud replication or continuous snapshotting.</li>
+                    <li><strong>Community-Scale Capacity:</strong> The architectural scope is tailored for small-to-medium municipal or institutional scale rather than high-concurrency national deployments.</li>
+                    <li><strong>Absence of Automated Messaging:</strong> The platform does not currently feature automated SMS gateway or email dispatch for real-time dispatch alerts.</li>
+                </ul>
+            </fieldset>
+
+            <!-- Section 12: Future Scope -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Future Scope</legend>
+                <p class="about-paragraph">
+                    The modular design of SUTO establishes a solid foundation for future technological and operational enhancements:
+                </p>
+                <ol class="about-ordered-list">
+                    <li><strong>Dedicated Mobile Applications:</strong> Developing native Android and iOS mobile apps with camera integration for streamlined doorstep item listing.</li>
+                    <li><strong>Advanced Security Protocols:</strong> Integrating Two-Factor Authentication (2FA), HTTPS/SSL enforcement, and fine-grained role auditing.</li>
+                    <li><strong>Cloud Infrastructure Deployment:</strong> Migrating the web server and database to cloud hosting platforms (e.g., AWS or Azure) with automated backups and elasticity.</li>
+                    <li><strong>Automated Notifications:</strong> Incorporating automated email and SMS notification services to keep donors updated on collection and delivery progress.</li>
+                    <li><strong>Logistics &amp; Courier Integration:</strong> Partnering with local courier and delivery services via APIs to automate doorstep pickup scheduling and routing.</li>
+                    <li><strong>Advanced Visual Analytics:</strong> Enhancing the reporting module with interactive graphical charts, heatmaps, and donation demand forecasting.</li>
+                    <li><strong>Multi-NGO &amp; Multi-Branch Support:</strong> Expanding the schema to support multiple independent NGO organizations and regional branch offices under one portal.</li>
+                    <li><strong>Social Media Sharing:</strong> Allowing donors to share verified donation badges on social media networks to encourage wider community participation.</li>
+                </ol>
+            </fieldset>
+
+            <!-- Section 13: Our Learning -->
+            <fieldset class="about-fieldset">
+                <legend class="about-legend">Our Learning</legend>
+                <p class="about-paragraph">
+                    Developing the <em>Online Redistribution of Old &amp; Used Things for the Needy</em> project provided our student team with invaluable hands-on engineering experience. It bridged the gap between theoretical classroom knowledge and practical software construction in several key areas:
+                </p>
+                <ul class="about-bullet-list">
+                    <li><strong>Database Architecture &amp; Integrity:</strong> Designing normalized relational tables, formulating SQL queries, and handling constraints in MySQL.</li>
+                    <li><strong>Three-Tier System Design:</strong> Structuring application logic across presentation templates, view controllers, and persistent database storage.</li>
+                    <li><strong>Authentication &amp; State Management:</strong> Implementing secure password hashing routines, session lifecycle management, and access-control decorators in Python and Django.</li>
+                    <li><strong>Social Engineering &amp; Problem Solving:</strong> Learning that software development is not merely about writing code or commercial profit&mdash;it is an empowering discipline capable of addressing real societal challenges and bringing dignity to disadvantaged lives.</li>
+                </ul>
+            </fieldset>
+
+            <!-- Academic Project Information Box -->
+            <div class="about-project-infobox">
+                <div class="about-project-infobox-title">Project Technical Summary</div>
+                <div class="about-infobox-grid">
+                    <div class="about-infobox-label">Project Title:</div>
+                    <div class="about-infobox-value">Online Redistribution of Old &amp; Used Things for the Needy (SUTO)</div>
+                    
+                    <div class="about-infobox-label">Project Type:</div>
+                    <div class="about-infobox-value">BCA Final Year Project (Bachelor of Computer Applications)</div>
+                    
+                    <div class="about-infobox-label">Application Domain:</div>
+                    <div class="about-infobox-value">Social Welfare / Web-Based Relational Database Management System</div>
+                    
+                    <div class="about-infobox-label">Primary Stakeholders:</div>
+                    <div class="about-infobox-value">Donors (General Public) and Administrators / NGO Volunteers</div>
+                    
+                    <div class="about-infobox-label">Core Mission:</div>
+                    <div class="about-infobox-value">Digital collection, inventory management, and doorstep redistribution of surplus household goods to underprivileged beneficiaries.</div>
+                </div>
             </div>
 
-            <div class="about-section">
-                <h3>Technical Infrastructure</h3>
-                <p>
-                    SUTD is developed on a robust client-server architecture model structured over three cohesive logical layers:
-                </p>
-                <div class="tech-pills">
-                    <span class="tech-pill">Python 3.14</span>
-                    <span class="tech-pill">Django 6.0</span>
-                    <span class="tech-pill">MySQL RDBMS</span>
-                    <span class="tech-pill">3-Tier Architecture</span>
-                    <span class="tech-pill">HTML5 & CSS3</span>
-                    <span class="tech-pill">Responsive Design</span>
-                </div>
-            </div>
-        </fieldset>
+        </div>
     </div>
+</div>
 {% endblock %}

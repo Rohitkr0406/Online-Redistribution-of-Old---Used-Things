@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}LogIn / SignUp{% endblock %}
+{% block title %}LogIn / SignUp - SUTO{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.0">
 {% endblock %}
 
 {% block navbar %}
@@ -12,84 +12,107 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card-container login-card">
-        <form method="post" action="/FirstApp/Login">
-            {% csrf_token %}
-            <fieldset>
-                <h2>LogIn / SignUp</h2>
-                <hr>
-                
-                {% if messages %}
-                <div class="messages-container" style="margin-bottom: 15px;">
-                    {% for message in messages %}
-                    <div class="alert-banner {% if message.tags == 'error' or 'unauthorized' in message.text|lower %}error{% else %}success{% endif %}" style="padding: 10px 15px; margin-bottom: 10px; font-size: 0.9rem;">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner compact">
+        <a href="javascript:history.back()" class="classic-back-link">Back</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">LOGIN / SIGNUP</h2>
+            
+            {% if messages %}
+            <div class="messages-container" style="margin-bottom: 15px;">
+                {% for message in messages %}
+                <div class="classic-alert {% if message.tags == 'error' or 'unauthorized' in message.text|lower %}error{% else %}success{% endif %}">
+                    {{ message }}
                 </div>
-                {% endif %}
-
-                <div class="form-group">
-                    <label>User Type</label>
-                    <div class="user-type-selector">
-                        <label class="user-type-label">
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+            
+            <form method="post" action="/FirstApp/Login">
+                {% csrf_token %}
+                
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">User Credentials</legend>
+                    
+                    <div class="classic-user-type-selector">
+                        <label class="classic-user-type-label">
                             <input type="radio" name="user_type" value="donor" checked> Donor
                         </label>
-                        <label class="user-type-label">
+                        <label class="classic-user-type-label">
                             <input type="radio" name="user_type" value="admin"> Admin
                         </label>
                     </div>
-
-                    <label>User ID / Email</label>
-                    <input type="text" placeholder="Enter User Id or Email" required name="userid" class="form-control">
                     
-                    <label>Password</label>
-                    <div class="password-wrapper">
-                        <input type="password" placeholder="Enter Password" required name="password" class="form-control">
-                        <button type="button" class="password-toggle-btn" aria-label="Toggle Password Visibility">
-                            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                            </svg>
-                            <svg class="eye-slash-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                                <line x1="1" y1="1" x2="23" y2="23"></line>
-                            </svg>
-                        </button>
+                    <div class="classic-grid single-col">
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">User ID / Email</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" placeholder="Enter User Id or Email" required name="userid" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Password</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper classic-password-wrapper">
+                                <input type="password" placeholder="Enter Password" required name="password" class="classic-control">
+                                <button type="button" class="classic-pw-toggle password-toggle-btn" aria-label="Toggle Password Visibility">
+                                    <svg class="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg class="eye-slash-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     
-                    <input type="submit" value="Login" class="btn btn-primary submit-btn-full">
+                    <div style="margin-top: 20px;">
+                        <input type="submit" value="Login" class="classic-btn" style="width: 100%; padding: 8px 18px; font-size: 16px;">
+                    </div>
                     
-                    <div class="form-links-container">
-                        <a href="/RegApp/Donator" class="form-link">Create Account?</a>
+                    <div class="classic-form-links">
+                        <a href="/RegApp/Donator" class="classic-form-link">Create Account?</a>
                         <br>
-                        <a href="#" class="form-link">Forget Password?</a>
+                        <a href="#" class="classic-form-link" style="margin-top: 6px; display: inline-block;">Forget Password?</a>
                     </div>
-                </div>
-            </fieldset>
-        </form>
+                </fieldset>
+            </form>
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-        document.querySelectorAll('.password-toggle-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const wrapper = this.closest('.password-wrapper');
-                const input = wrapper.querySelector('input');
-                const eyeIcon = this.querySelector('.eye-icon');
-                const eyeSlashIcon = this.querySelector('.eye-slash-icon');
-                
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    eyeIcon.style.display = 'none';
-                    eyeSlashIcon.style.display = 'block';
-                } else {
-                    input.type = 'password';
-                    eyeIcon.style.display = 'block';
-                    eyeSlashIcon.style.display = 'none';
-                }
-            });
+<script>
+    document.querySelectorAll('.password-toggle-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const wrapper = this.closest('.classic-password-wrapper');
+            const input = wrapper.querySelector('input');
+            const eyeIcon = this.querySelector('.eye-icon');
+            const eyeSlashIcon = this.querySelector('.eye-slash-icon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.style.display = 'none';
+                eyeSlashIcon.style.display = 'block';
+            } else {
+                input.type = 'password';
+                eyeIcon.style.display = 'block';
+                eyeSlashIcon.style.display = 'none';
+            }
         });
-    </script>
+    });
+</script>
 {% endblock %}

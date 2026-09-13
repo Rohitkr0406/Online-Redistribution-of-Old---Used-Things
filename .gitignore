@@ -88,6 +88,7 @@ Thumbs.db
 *.log.*
 *.sqlite
 *.db
+.local_db/
 
 # Python virtualenv and cache
 *.py[cod]

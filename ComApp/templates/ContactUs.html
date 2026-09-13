@@ -1,51 +1,103 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Contact Us{% endblock %}
+{% block title %}Contact Us - SUTO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.0">
+{% endblock %}
 
 {% block content %}
-    <div class="card-container compact-card">
-        <form method="post" action="{% url 'ContactSave1' %}">
-            {% csrf_token %}
-            <fieldset>
-                <h2>Contact Us</h2>
-                {% if msg and msg != "pp" and msg != "None" and msg != "" %}
-                    <div class="alert-banner {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
-                        {{ msg }}
-                    </div>
-                {% endif %}
-                <hr>
-                <div class="form-grid">
-                    <div class="form-field">
-                        <label>Serial No.</label>
-                        <input type="text" name="Slno" readonly placeholder="Auto-generated" class="form-control">
-                    </div>
-                    <div class="form-field">
-                        <label>Company/Your Name</label>
-                        <input type="text" name="ComName" value="{{ donor_name|default:'' }}" required maxlength="50" class="form-control">
-                    </div>
-                    <div class="form-field">
-                        <label>Email Id</label>
-                        <input type="email" name="ComEmail" value="{{ donor_email|default:'' }}" required maxlength="50" class="form-control">
-                    </div>
-                    <div class="form-field">
-                        <label>Mobile No.</label>
-                        <input type="tel" name="ComMob" value="{{ donor_mob|default:'' }}" maxlength="15" pattern="[0-9]{10,15}" title="Enter a valid 10-15 digit phone number" class="form-control">
-                    </div>
-                    <div class="form-field full-width">
-                        <label>Address</label>
-                        <textarea name="ComAdd" rows="2" class="form-control">{{ donor_add|default:'' }}</textarea>
-                    </div>
-                    <div class="form-field full-width">
-                        <label>Remarks</label>
-                        <textarea name="Remarks" rows="2" class="form-control"></textarea>
-                    </div>
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner medium">
+        <a href="javascript:history.back()" class="classic-back-link">Back</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">CONTACT US</h2>
+            
+            {% if msg and msg != "pp" and msg != "None" and msg != "" %}
+                <div class="classic-alert {% if 'Successfully' in msg or 'Saved' in msg or 'Updated' in msg %}success{% else %}error{% endif %}">
+                    {{ msg }}
                 </div>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+            
+            <form method="post" action="{% url 'ContactSave1' %}">
+                {% csrf_token %}
                 
-                <div class="btn-group">
-                    <input type="submit" value="Save" class="btn btn-primary">
-                    <input type="reset" value="Reset" class="btn btn-reset">
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">Contact Details</legend>
+                    
+                    <div class="classic-grid">
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Serial No.</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="Slno" readonly placeholder="Auto-generated" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Your Name</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="ComName" value="{{ donor_name|default:'' }}" required maxlength="50" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Email Id</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="email" name="ComEmail" value="{{ donor_email|default:'' }}" required maxlength="50" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Mobile No.</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="tel" name="ComMob" value="{{ donor_mob|default:'' }}" maxlength="15" pattern="[0-9]{10,15}" title="Enter a valid 10-15 digit phone number" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row align-top full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Address</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <textarea name="ComAdd" rows="2" class="classic-control">{{ donor_add|default:'' }}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row align-top full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Remarks</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <textarea name="Remarks" rows="2" class="classic-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <div class="classic-btn-group">
+                    <input type="submit" value="Save" class="classic-btn">
+                    <input type="reset" value="Reset" class="classic-btn">
                 </div>
-            </fieldset>
-        </form>
+            </form>
+        </div>
     </div>
+</div>
 {% endblock %}

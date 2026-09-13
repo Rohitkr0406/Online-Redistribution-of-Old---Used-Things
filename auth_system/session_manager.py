@@ -1,6 +1,5 @@
 from django.db import connection
 from django.utils import timezone
-import datetime
 
 def start_admin_session(request, admin_id, admin_name):
     """

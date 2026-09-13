@@ -7,7 +7,34 @@ from auth_system.db_helper import get_db_connection
 import pymysql
 
 def Home(request):
-    return render(request, 'Home.html')
+    total_donors = 0
+    total_items = 0
+    total_distributions = 0
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT COUNT(*) FROM donorreg")
+            row = cursor.fetchone()
+            if row:
+                total_donors = row[0]
+                
+            cursor.execute("SELECT COUNT(*) FROM unusedthing")
+            row = cursor.fetchone()
+            if row:
+                total_items = row[0]
+                
+            cursor.execute("SELECT COUNT(*) FROM distributetable")
+            row = cursor.fetchone()
+            if row:
+                total_distributions = row[0]
+    except Exception:
+        pass
+
+    stats = {
+        'registered_users': total_donors,
+        'items_donated': total_items,
+        'items_redistributed': total_distributions,
+    }
+    return render(request, 'Home.html', {'stats': stats})
 
 def ConnecivityPage(request):
     try:

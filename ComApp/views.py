@@ -21,9 +21,12 @@ def CompSave(request):
     msg = ""
     
     # Auto-generate Slno
-    mycursor.execute("SELECT COALESCE(MAX(Slno), 0) FROM complainttable")
+    mycursor.execute("SELECT COALESCE(MAX(CAST(Slno AS UNSIGNED)), 0) FROM complainttable")
     row = mycursor.fetchone()
-    max_slno = row[0] if row and row[0] is not None else 0
+    try:
+        max_slno = int(row[0]) if row and row[0] is not None else 0
+    except (ValueError, TypeError):
+        max_slno = 0
     Slno1 = max_slno + 1
     
     Did1 = request.session.get('donor_id')
@@ -89,9 +92,12 @@ def ContactSave(request):
     msg = ""
     
     # Auto-generate Slno
-    mycursor.execute("SELECT COALESCE(MAX(Slno), 0) FROM contactus")
+    mycursor.execute("SELECT COALESCE(MAX(CAST(Slno AS UNSIGNED)), 0) FROM contactus")
     row = mycursor.fetchone()
-    max_slno = row[0] if row and row[0] is not None else 0
+    try:
+        max_slno = int(row[0]) if row and row[0] is not None else 0
+    except (ValueError, TypeError):
+        max_slno = 0
     Slno1 = max_slno + 1
     
     # Default to the primary admin account
