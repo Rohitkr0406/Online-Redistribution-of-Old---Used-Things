@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
+from django.contrib.auth.models import User
+from django.db.models import Q
 from django.contrib.auth.hashers import check_password
 from auth_system.session_manager import start_donor_session, logout_donor
 from auth_system.db_helper import get_db_connection
@@ -51,40 +53,51 @@ def ConnecivityPage(request):
 
 def Login(request):
     if request.method == 'POST':
-        username = request.POST.get('userid') or request.POST.get('username')
-        password = request.POST.get('password')
-        user_type = request.POST.get('user_type')  # 'admin' or 'donor'
+        login_id = (request.POST.get('userid') or request.POST.get('username') or '').strip()
+        password = request.POST.get('password') or ''
         
-        if user_type == 'admin':
-            user = authenticate(request, username=username, password=password)
-            if user is not None and user.is_staff:
+        # 1. Automatic Admin Detection: Check if username/email belongs to a staff/admin user
+        admin_candidate = User.objects.filter(
+            Q(username__iexact=login_id) | Q(email__iexact=login_id)
+        ).first()
+        
+        if admin_candidate and (admin_candidate.is_staff or admin_candidate.is_superuser):
+            user = authenticate(request, username=admin_candidate.username, password=password)
+            if user is not None and (user.is_staff or user.is_superuser):
                 django_login(request, user)
+                request.session['admin_id'] = user.username
                 messages.success(request, f"Welcome back, {user.get_full_name() or user.username}!")
                 return redirect('/admin/')
-            messages.error(request, "Invalid Admin credentials or unauthorized staff account.")
+            else:
+                messages.error(request, "Invalid password for Administrator account.")
+                return render(request, 'LogIn.html')
+        
+        # 2. Donor Authentication: Check donorreg table by Donorid or Demail
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT Dpsd, Donorid, Dname FROM donorreg WHERE Donorid = %s OR Demail = %s",
+                [login_id, login_id]
+            )
+            row = cursor.fetchone()
             
-        else:
-            with connection.cursor() as cursor:
-                cursor.execute(
-                    "SELECT Dpsd, Donorid, Dname FROM donorreg WHERE Donorid = %s OR Demail = %s",
-                    [username, username]
-                )
-                row = cursor.fetchone()
+        if row:
+            stored_hash, donor_id, donor_name = row
+            if check_password(password, stored_hash):
+                start_donor_session(request, donor_id, donor_name)
+                messages.success(request, f"Welcome back, {donor_name}!")
+                return redirect('/')
+            else:
+                messages.error(request, "Invalid password for Donor account.")
+                return render(request, 'LogIn.html')
                 
-            if row:
-                stored_hash, donor_id, donor_name = row
-                if check_password(password, stored_hash):
-                    start_donor_session(request, donor_id, donor_name)
-                    messages.success(request, f"Welcome back, {donor_name}!")
-                    return redirect('/')
-                    
-            messages.error(request, "Invalid Donor ID or Password.")
-            
+        messages.error(request, "Invalid User ID/Email or Password.")
+        
     return render(request, 'LogIn.html')
 
 def Logout(request):
     django_logout(request)
     logout_donor(request)
+    request.session.pop('admin_id', None)
     messages.info(request, "You have been logged out.")
     return redirect('/')
 
