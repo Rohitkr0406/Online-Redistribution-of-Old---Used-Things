@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUTD Operational Reports</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/sutd/box_image.png' %}">
+    <style>
+        body {
+            background-color: #8EBC8D; /* darkseagreen matching SRS */
+            font-family: "Monotype Corsiva", "Alberta", "Times New Roman", cursive, serif;
+            margin: 0;
+            padding: 15px 25px 40px 25px;
+            color: #000000;
+        }
+
+        .back-nav {
+            margin: 5px 0 15px 0;
+        }
+
+        .back-link {
+            color: #4B0082;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: underline;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            color: #000080;
+        }
+
+        .marquee-banner {
+            background-color: #ffffff;
+            color: #b22222;
+            font-family: "Monotype Corsiva", "Alberta", serif;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1.main-title {
+            text-align: center;
+            text-decoration: underline;
+            font-family: "Monotype Corsiva", "Alberta", "Times New Roman", cursive, serif;
+            font-weight: bolder;
+            font-size: 34px;
+            margin: 5px 0 15px 0;
+            color: #000000;
+        }
+
+        .white-divider {
+            border: 0;
+            border-top: 2px solid #ffffff;
+            margin: 15px auto 25px auto;
+            width: 80%;
+        }
+
+        /* 3 Core SRS Metrics */
+        .metrics-strip {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 850px;
+            margin: 0 auto 25px auto;
+            flex-wrap: wrap;
+        }
+
+        .metric-card {
+            background: #ffffff;
+            border: 2px solid #333333;
+            border-radius: 8px;
+            padding: 12px 20px;
+            text-align: center;
+            min-width: 210px;
+            flex: 1;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .metric-value {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1a4b60;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #333333;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Report Links Container (SRS Fieldset) */
+        .report-panel {
+            background-color: #FFFFF0; /* Ivory / light yellow matching SRS fieldset */
+            border: 2px solid #333333;
+            border-radius: 12px;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 25px 35px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .panel-heading {
+            font-family: "Monotype Corsiva", "Alberta", "Times New Roman", cursive, serif;
+            font-size: 28px;
+            text-decoration: underline;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #000000;
+        }
+
+        .report-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .report-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #444444;
+            border-radius: 6px;
+            padding: 11px 18px;
+            color: #000080;
+            text-decoration: none;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .report-btn:hover {
+            background-color: #f0f7fb;
+            color: #000040;
+            border-color: #000080;
+            transform: translateX(4px);
+        }
+
+        .report-count-badge {
+            background-color: #417690;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: normal;
+            padding: 3px 9px;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-nav">
+        <a href="{% url 'admin:index' %}" class="back-link">&larr; Back to Admin Dashboard</a>
+    </div>
+
+    <div class="marquee-banner">
+        Online Redistribution of Old &amp; Used Things for the Needy (SUTD)
+    </div>
+
+    <h1 class="main-title">SUTD Operational Reports</h1>
+
+    <hr class="white-divider">
+
+    <!-- 3 Core SRS Metrics -->
+    <div class="metrics-strip">
+        <div class="metric-card">
+            <div class="metric-value">{{ total_donations }}</div>
+            <div class="metric-label">📦 Items Donated</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{ beneficiaries_served }}</div>
+            <div class="metric-label">🤝 Beneficiaries Served</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">{{ pending_requests }}</div>
+            <div class="metric-label">⏳ Pending Requests</div>
+        </div>
+    </div>
+
+    <!-- SRS 7 Reports Navigation -->
+    <div class="report-panel">
+        <h2 class="panel-heading">Operational Reports Menu</h2>
+        <ul class="report-list">
+            <li>
+                <a href="{% url 'DonorReport' %}" class="report-btn">
+                    <span>1. Donor Registration Report</span>
+                    <span class="report-count-badge">{{ count_donor }} records</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'UnusedReport' %}" class="report-btn">
+                    <span>2. Unused Things Report</span>
+                    <span class="report-count-badge">{{ count_unused }} records</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'CollectionReport' %}" class="report-btn">
+                    <span>3. Collection Report</span>
+                    <span class="report-count-badge">{{ count_collection }} records</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'StockReport' %}" class="report-btn">
+                    <span>4. Stock Report</span>
+                    <span class="report-count-badge">{{ count_stock }} records</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'DistributionReport' %}" class="report-btn">
+                    <span>5. Distribution Report</span>
+                    <span class="report-count-badge">{{ count_distribute }} records</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'ComplaintReport' %}" class="report-btn">
+                    <span>6. Complaint &amp; Suggestions Report</span>
+                    <span class="report-count-badge">{{ count_complaint }} records</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'ContactUsReport' %}" class="report-btn">
+                    <span>7. Contact Us Report</span>
+                    <span class="report-count-badge">{{ count_contact }} records</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recipient Registration - SUTD{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.0">
+{% endblock %}
+
+{% block content %}
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner">
+        <a href="javascript:history.back()" class="classic-back-link">&larr; Back</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">RECIPIENT / NEEDY PERSON REGISTRATION</h2>
+            <p style="text-align: center; color: #64748b; font-size: 14px; margin-top: -8px; margin-bottom: 12px;">
+                Register to view and request old and used items donated by our generous community.
+            </p>
+            
+            {% if messages %}
+            <div class="messages-container" style="margin-bottom: 15px;">
+                {% for message in messages %}
+                <div class="classic-alert {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+            
+            <form method="post" action="{% url 'RecipientRegister' %}">
+                {% csrf_token %}
+                
+                <!-- Section 1: Account Credentials -->
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">Account Credentials</legend>
+                    <div class="classic-grid">
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Recipient ID</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="Recipientid" value="{{ suggested_id }}" required maxlength="50" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Full Name</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="Name" required maxlength="100" placeholder="Enter Full Name" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Password</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper classic-password-wrapper">
+                                <input type="password" name="Password" required minlength="6" placeholder="At least 6 characters" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Confirm Password</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper classic-password-wrapper">
+                                <input type="password" name="CPassword" required minlength="6" placeholder="Re-enter password" class="classic-control">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!-- Section 2: Contact & Address Details -->
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">Contact &amp; Delivery Information</legend>
+                    <div class="classic-grid">
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Email Address</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="email" name="Email" required maxlength="100" placeholder="example@domain.com" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Mobile Number</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="tel" name="Mobile" required maxlength="15" placeholder="10-digit mobile number" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Residential Address</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="Address" required maxlength="200" placeholder="Street, colony, or house details" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">City</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="City" required maxlength="50" placeholder="City" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">State</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="State" required maxlength="50" placeholder="State" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">PIN Code</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" name="Pin" maxlength="10" placeholder="6-digit PIN" class="classic-control">
+                            </div>
+                        </div>
+                        
+                        <div class="classic-field-row align-top full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Remarks / Notes</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <textarea name="Remarks" rows="2" placeholder="Optional notes or background information" class="classic-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <!-- Submit Buttons -->
+                <div class="classic-btn-group" style="justify-content: center; margin-top: 15px;">
+                    <input type="submit" value="Register Now" class="classic-btn" style="padding: 10px 28px; font-size: 15px; font-weight: 600;">
+                    <input type="button" value="Reset" onclick="window.location.href='{% url 'RecipientRegister' %}';" class="classic-btn" style="padding: 10px 20px;">
+                </div>
+                
+                <div class="classic-form-links" style="margin-top: 15px; text-align: center;">
+                    Already have a recipient account? <a href="{% url 'RecipientLogin' %}" class="classic-form-link" style="font-weight: 600;">Login Here &rarr;</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Submitted Requests - SUTD{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.1">
+{% endblock %}
+
+{% block content %}
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner" style="max-width: 960px;">
+        <a href="javascript:history.back()" class="classic-back-link">&larr; Back</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">MY SUBMITTED REQUESTS</h2>
+            <p style="text-align: center; color: #555555; font-size: 15px; margin-top: -8px; margin-bottom: 14px; font-style: italic;">
+                Track your requested items through verification, admin approval, and distribution delivery.
+            </p>
+            
+            {% if messages %}
+            <div class="messages-container" style="margin-bottom: 15px;">
+                {% for message in messages %}
+                <div class="classic-alert {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+
+            <!-- Beneficiary Information Summary Banner -->
+            <div style="background-color: #FFFFFF; border: 1.5px solid #777777; border-radius: 6px; padding: 10px 18px; margin-bottom: 16px; font-family: 'Times New Roman', Times, serif; font-size: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <div>
+                    <strong>Beneficiary:</strong> {{ request.session.recipient_name }}
+                    <span style="color: #666666; margin-left: 8px;">(ID: {{ request.session.recipient_id }})</span>
+                </div>
+                <div style="font-style: italic; color: #444444;">
+                    Total Requests: <strong>{{ requests_list|length }}</strong>
+                </div>
+            </div>
+
+            <!-- Requests Table -->
+            {% if requests_list %}
+            <div class="classic-table-wrapper">
+                <table class="classic-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center;">Sl No.</th>
+                            <th style="width: 90px;">Request ID</th>
+                            <th style="width: 90px;">Item Code</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th style="width: 105px;">Request Date</th>
+                            <th>Remarks / Reason</th>
+                            <th style="text-align: center; width: 120px;">Current Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for req in requests_list %}
+                        <tr>
+                            <td style="text-align: center;">{{ forloop.counter }}</td>
+                            <td><strong>{{ req.req_id }}</strong></td>
+                            <td>{{ req.item_id }}</td>
+                            <td><strong style="color: #800000;">{{ req.item.proname|default:req.item_id }}</strong></td>
+                            <td>{{ req.item.procate|default:"General" }}</td>
+                            <td>{{ req.req_date|date:"d-m-Y" }}</td>
+                            <td>{{ req.remarks|default:"&mdash;" }}</td>
+                            <td style="text-align: center;">
+                                {% if req.status == 'Pending' %}
+                                <span class="classic-badge badge-pending">Pending Approval</span>
+                                {% elif req.status == 'Approved' %}
+                                <span class="classic-badge badge-approved">Approved</span>
+                                {% elif req.status == 'Distributed' %}
+                                <span class="classic-badge badge-distributed">&check; Distributed</span>
+                                {% elif req.status == 'Rejected' %}
+                                <span class="classic-badge badge-rejected">&cross; Rejected</span>
+                                {% else %}
+                                <span class="classic-badge">{{ req.status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="classic-btn-group" style="justify-content: flex-end; margin-top: 18px;">
+                <a href="{% url 'AvailableItems' %}" class="classic-btn" style="text-decoration: none; padding: 6px 18px;">
+                    + Request Another Available Item
+                </a>
+            </div>
+
+            {% else %}
+            <div style="text-align: center; padding: 36px 16px; background-color: #FFFFFF; border: 1.5px dashed #888888; border-radius: 8px; margin: 16px 0;">
+                <h3 style="font-family: 'Times New Roman', Times, serif; color: #800000; margin-bottom: 6px;">No Requests Submitted</h3>
+                <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px; color: #555555; margin-bottom: 14px;">
+                    You have not submitted any requests for old or used items yet.
+                </p>
+                <a href="{% url 'AvailableItems' %}" class="classic-btn" style="text-decoration: none; padding: 6px 18px;">
+                    Browse Available Items &rarr;
+                </a>
+            </div>
+            {% endif %}
+
+            <div class="classic-form-links" style="margin-top: 20px; text-align: center;">
+                <a href="{% url 'AvailableItems' %}" class="classic-form-link" style="font-weight: bold; font-size: 15px;">
+                    &larr; Back to Available Items Directory
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

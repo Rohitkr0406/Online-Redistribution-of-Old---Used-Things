@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SUTD Operational Report{% endblock %}</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/sutd/box_image.png' %}">
+    <style>
+        body {
+            background-color: #8EBC8D; /* darkseagreen matching SRS */
+            font-family: "Monotype Corsiva", "Alberta", "Times New Roman", cursive, serif;
+            margin: 0;
+            padding: 15px 25px 40px 25px;
+            color: #000000;
+        }
+
+        .back-nav {
+            margin: 5px 0 15px 0;
+        }
+
+        .back-link {
+            color: #4B0082; /* purple/blue classic browser link */
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: underline;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            color: #000080;
+        }
+
+        h1.report-heading {
+            text-align: center;
+            text-decoration: underline;
+            font-family: "Monotype Corsiva", "Alberta", "Times New Roman", cursive, serif;
+            font-weight: bolder;
+            font-size: 32px;
+            margin: 10px 0 15px 0;
+            color: #000000;
+            letter-spacing: 0.5px;
+        }
+
+        .white-divider {
+            border: 0;
+            border-top: 2px solid #ffffff;
+            margin: 15px auto 25px auto;
+            width: 96%;
+        }
+
+        .filter-container {
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        .filter-label {
+            font-weight: bold;
+            color: #000000;
+            margin-right: 8px;
+        }
+
+        .filter-select {
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid #000000;
+            background-color: #ffffff;
+            font-family: inherit;
+            font-size: 13px;
+            min-width: 140px;
+        }
+
+        .filter-submit {
+            padding: 6px 16px;
+            border-radius: 4px;
+            border: 1px solid #000000;
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .filter-submit:hover {
+            background-color: #f0f0f0;
+        }
+
+        .table-responsive {
+            width: 98%;
+            margin: 0 auto;
+            overflow-x: auto;
+            background-color: #FBF9D3;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
+        }
+
+        table.report-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #333333;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        table.report-table th {
+            background-color: #666666; /* SRS dark header */
+            color: #ffffff;
+            font-weight: bold;
+            padding: 10px 8px;
+            border: 1px solid #333333;
+            text-align: center;
+            white-space: nowrap;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+        }
+
+        table.report-table td {
+            background-color: #FBF9D3; /* light goldenrod / cream */
+            color: #000000;
+            padding: 9px 8px;
+            border: 1px solid #444444;
+            vertical-align: middle;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+        }
+
+        table.report-table tr:hover td {
+            background-color: #f5f1bd;
+        }
+
+        .empty-row {
+            text-align: center;
+            font-style: italic;
+            padding: 25px !important;
+            font-size: 15px;
+            color: #555555;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge-available { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .badge-distributed { background: #cce5ff; color: #004085; border: 1px solid #b8daff; }
+        .badge-requested { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="back-nav">
+        {% block back_link %}
+        <a href="{% url 'ReportHome' %}" class="back-link">&larr; Back to Reports Menu</a>
+        {% endblock %}
+    </div>
+
+    <center>
+        <h1 class="report-heading">{% block heading %}Operational Report{% endblock %}</h1>
+    </center>
+
+    <hr class="white-divider">
+
+    {% block filter_section %}
+    {% if filter_options %}
+    <div class="filter-container">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <span class="filter-label">Select - {{ filter_label }}:</span>
+            <select name="filter_val" class="filter-select">
+                <option value="All" {% if selected_filter == 'All' %}selected{% endif %}>All</option>
+                {% for opt in filter_options %}
+                <option value="{{ opt.value }}" {% if selected_filter == opt.value %}selected{% endif %}>{{ opt.label }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit" class="filter-submit">
+        </form>
+    </div>
+    {% endif %}
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

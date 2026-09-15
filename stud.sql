@@ -100,6 +100,33 @@ CREATE TABLE IF NOT EXISTS contactus (
 -- 8. Add UserRole Column to donorreg Table (Role Differentiation)
 ALTER TABLE donorreg ADD COLUMN UserRole VARCHAR(20) DEFAULT 'donor';
 
+-- 9. Recipient / Needy Person Registration Table
+CREATE TABLE IF NOT EXISTS recipient (
+    Slno INT AUTO_INCREMENT UNIQUE KEY,
+    Recipientid VARCHAR(50) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Mobile VARCHAR(20) NOT NULL,
+    Address VARCHAR(200) NOT NULL,
+    City VARCHAR(50) NOT NULL,
+    State VARCHAR(50) NOT NULL,
+    Pin VARCHAR(10) NULL,
+    Password VARCHAR(255) NOT NULL,
+    Remarks VARCHAR(200) NULL,
+    UserRole VARCHAR(20) DEFAULT 'recipient',
+    DateJoined DATE NULL
+);
+
+-- 10. Donation Requests Table
+CREATE TABLE IF NOT EXISTS donationrequest (
+    ReqId VARCHAR(50) PRIMARY KEY,
+    Recipientid VARCHAR(50) NOT NULL,
+    Proid VARCHAR(50) NOT NULL,
+    ReqDate DATE NOT NULL,
+    Status VARCHAR(30) NOT NULL DEFAULT 'Pending',
+    Remarks VARCHAR(200) NULL
+);
+
 -- Note: Administrator management is natively handled through Django's built-in
 -- authentication and administration framework (django.contrib.auth / django.contrib.admin).
 -- Administrator superusers are created via: python manage.py createsuperuser

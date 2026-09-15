@@ -18,8 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from FirstApp import views as firstapp_views
 
-admin.site.site_header = "SUTO Administration"
-admin.site.site_title = "SUTO Admin Portal"
+admin.site.site_header = "SUTD Administration"
+admin.site.site_title = "SUTD Admin Portal"
 admin.site.index_title = "Online Redistribution of Old & Used Things for the Needy"
 
 urlpatterns = [
@@ -28,5 +28,6 @@ urlpatterns = [
     path('FirstApp/', include('FirstApp.urls')),
     path('RegApp/', include('RegApp.urls')),
     path('ComApp/', include('ComApp.urls')),
+    path('DetailApp/', include('DetailApp.urls')),
 ]
 

@@ -1,5 +1,862 @@
 /* ==========================================================================
-   SUTO HOMEPAGE STYLES
+   SUTD HOMEPAGE STYLES
+   Fonts: Playfair Display (headings, quotes), Lora (body, buttons, cards),
+          Dancing Script (handwritten phrases), Great Vibes (Welcome script)
+   ========================================================================== */
+
+/* Main Homepage Container */
+.sutd-home {
+    width: 100%;
+    overflow-x: hidden;
+    font-family: 'Lora', Georgia, serif;
+    color: #334155;
+}
+
+/* Shared Underline Accent */
+.sutd-section-underline {
+    height: 3.5px;
+    background-color: #dc2626;
+    border-radius: 2px;
+    margin-top: 8px;
+    margin-bottom: 18px;
+}
+
+.sutd-section-underline.center {
+    width: 54px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sutd-section-underline.left {
+    width: 50px;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Primary and Outline Buttons */
+.sutd-btn-primary {
+    background-color: #dc2626;
+    color: #ffffff;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 11px 28px;
+    border-radius: 9999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+    transition: all 0.25s ease;
+    border: 2px solid #dc2626;
+}
+
+.sutd-btn-primary:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+.sutd-btn-outline {
+    background-color: #ffffff;
+    color: #dc2626;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 11px 28px;
+    border-radius: 9999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid #dc2626;
+    transition: all 0.25s ease;
+}
+
+.sutd-btn-outline:hover {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   1. HERO SHOWCASE SECTION & SLIDESHOW
+   ========================================================================== */
+.sutd-hero {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.sutd-hero-slideshow {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.sutd-hero-bg-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out, transform 6s ease-out;
+    transform: scale(1.05);
+}
+
+.sutd-hero-bg-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+}
+
+.sutd-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.75) 0%,
+        rgba(0, 0, 0, 0.45) 50%,
+        rgba(0, 0, 0, 0.25) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.sutd-hero-container {
+    position: relative;
+    z-index: 3;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.sutd-hero-left {
+    max-width: 580px;
+    color: #ffffff;
+}
+
+.sutd-hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(38px, 5.2vw, 56px);
+    font-weight: 800;
+    line-height: 1.12;
+    margin-bottom: 12px;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.sutd-hero-subtitle {
+    font-family: 'Lora', Georgia, serif;
+    font-size: clamp(18px, 2.4vw, 24px);
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: #ffffff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.sutd-hero-desc {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 28px;
+    max-width: 480px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Right Quote Card */
+.sutd-hero-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sutd-hero-quote-card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 32px 34px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    max-width: 330px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    text-align: center;
+}
+
+.sutd-quote-rule {
+    width: 44px;
+    height: 2px;
+    background-color: #64748b;
+    margin: 0 auto 16px auto;
+}
+
+.sutd-quote-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.45;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+.sutd-quote-author {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    text-align: right;
+}
+
+/* Hero Carousel Indicator Dots */
+.sutd-hero-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    display: flex;
+    gap: 10px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+}
+
+.sutd-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1.5px solid rgba(255, 255, 255, 0.85);
+}
+
+.sutd-dot:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: scale(1.15);
+}
+
+.sutd-dot.active {
+    background-color: #dc2626;
+    border-color: #ffffff;
+    transform: scale(1.3);
+    box-shadow: 0 0 8px rgba(220, 38, 38, 0.6);
+}
+
+/* ==========================================================================
+   2. ABOUT OUR PROJECT SECTION
+   ========================================================================== */
+.sutd-about-section {
+    background-color: #f8fafc;
+    padding: 70px 0;
+    width: 100%;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.sutd-about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1.3fr 1.1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.sutd-about-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.sutd-about-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #334155;
+    margin-bottom: 24px;
+}
+
+/* Center Column: SUTD Box Graphic */
+.sutd-about-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sutd-box-wrapper {
+    position: relative;
+    max-width: 300px;
+    width: 100%;
+    text-align: center;
+}
+
+.sutd-box-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.08));
+}
+
+.sutd-box-banner {
+    background-color: #0f172a;
+    color: #ffffff;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: -6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Right Column: Soft Pink Quote Card */
+.sutd-about-quote-card {
+    background-color: #fff1f2;
+    border: 1px solid #ffe4e6;
+    border-radius: 14px;
+    padding: 40px 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 220px;
+    box-shadow: 0 4px 20px rgba(225, 29, 72, 0.04);
+}
+
+.sutd-pink-quote-mark {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 38px;
+    line-height: 1;
+    color: #e11d48;
+    font-weight: 800;
+}
+
+.sutd-pink-line {
+    width: 50px;
+    height: 2px;
+    background-color: #e11d48;
+    margin: 8px auto 16px auto;
+}
+
+.sutd-pink-quote-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #1e293b;
+}
+
+/* ==========================================================================
+   3. HOW IT WORKS SECTION
+   ========================================================================== */
+.sutd-how-section {
+    background-color: #ffffff;
+    padding: 70px 0;
+    width: 100%;
+}
+
+.sutd-how-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.sutd-section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 32px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.sutd-steps-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 50px;
+    position: relative;
+}
+
+.sutd-step-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.sutd-step-icon-circle {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sutd-step-card:hover .sutd-step-icon-circle {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.sutd-step-icon-circle.blue {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.sutd-step-icon-circle.green {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.sutd-step-icon-circle.orange {
+    background-color: #ffedd5;
+    color: #c2410c;
+}
+
+.sutd-step-icon-circle.red {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.sutd-step-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 19px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.sutd-step-desc {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #475569;
+    max-width: 220px;
+    margin: 0 auto;
+}
+
+.sutd-step-arrow {
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+/* ==========================================================================
+   4. POPULAR CATEGORIES SECTION
+   ========================================================================== */
+.sutd-categories-section {
+    background-color: #ffffff;
+    padding: 40px 0 70px 0;
+    width: 100%;
+}
+
+.sutd-categories-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.sutd-categories-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-top: 45px;
+}
+
+.sutd-category-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.sutd-category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
+}
+
+.sutd-category-img-wrap {
+    width: 100%;
+    height: 100px;
+    background-color: #f8fafc;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.sutd-category-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.sutd-category-card:hover .sutd-category-img-wrap img {
+    transform: scale(1.05);
+}
+
+.sutd-category-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 10px 0 4px 0;
+}
+
+.sutd-category-desc {
+    font-size: 12px;
+    color: #64748b;
+    padding: 0 8px;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   5. IMPACT / STATISTICS SECTION
+   ========================================================================== */
+.sutd-stats-strip {
+    background-color: #fff1f2;
+    border-top: 1px solid #ffe4e6;
+    border-bottom: 1px solid #ffe4e6;
+    padding: 38px 0;
+    width: 100%;
+}
+
+.sutd-stats-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.sutd-stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: left;
+    position: relative;
+}
+
+.sutd-stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: #fecdd3;
+}
+
+.sutd-stat-icon {
+    color: #dc2626;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sutd-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.sutd-stat-number {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #dc2626;
+    line-height: 1.15;
+}
+
+.sutd-stat-label {
+    font-size: 13.5px;
+    color: #475569;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+/* ==========================================================================
+   6. CALL TO ACTION SECTION
+   ========================================================================== */
+.sutd-cta-section {
+    background-color: #ffffff;
+    padding: 70px 0;
+    width: 100%;
+}
+
+.sutd-cta-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+/* Left illustration: botanical branch */
+.sutd-cta-side-left {
+    flex: 0 0 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sutd-cta-side-left img {
+    max-width: 180px;
+    height: auto;
+    display: block;
+}
+
+/* Center CTA Box */
+.sutd-cta-center {
+    flex: 1;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.sutd-cta-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 34px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+.sutd-cta-desc {
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.sutd-cta-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Right illustration: watercolor splash */
+.sutd-cta-side-right {
+    flex: 0 0 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sutd-cta-side-right img {
+    max-width: 190px;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .sutd-hero-container {
+        gap: 25px;
+    }
+
+    .sutd-categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .sutd-about-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .sutd-about-center {
+        grid-column: span 2;
+        order: 3;
+    }
+}
+
+@media (max-width: 860px) {
+    .sutd-hero-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .sutd-hero-left {
+        max-width: 100%;
+    }
+
+    .sutd-hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .sutd-hero-right {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .sutd-hero-quote-card {
+        max-width: 360px;
+        margin: 0 auto;
+    }
+
+    .sutd-about-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .sutd-about-center {
+        grid-column: span 1;
+        order: 2;
+        margin: 20px 0;
+    }
+
+    .sutd-section-underline.left {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* How It Works Stack */
+    .sutd-steps-row {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .sutd-step-arrow {
+        transform: rotate(90deg);
+        padding: 5px 0;
+    }
+
+    /* Statistics 2x2 */
+    .sutd-stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 24px;
+    }
+
+    .sutd-stat-item:nth-child(2)::after {
+        display: none;
+    }
+
+    /* CTA Section */
+    .sutd-cta-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .sutd-cta-side-left,
+    .sutd-cta-side-right {
+        flex: 0 0 auto;
+    }
+}
+
+@media (max-width: 580px) {
+    .sutd-hero {
+        min-height: 420px;
+    }
+
+    .sutd-hero-title {
+        font-size: 34px;
+    }
+
+    .sutd-hero-subtitle {
+        font-size: 18px;
+    }
+
+    .sutd-categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .sutd-stats-container {
+        grid-template-columns: 1fr;
+        row-gap: 18px;
+    }
+
+    .sutd-stat-item::after {
+        display: none !important;
+    }
+
+    .sutd-stat-item {
+        justify-content: flex-start;
+        padding-left: 20px;
+    }
+
+    .sutd-cta-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .sutd-btn-primary,
+    .sutd-btn-outline {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .sutd-cta-side-left img,
+    .sutd-cta-side-right img {
+        max-width: 140px;
+    }
+}
+
+/* ==========================================================================
+   BACKWARDS COMPATIBILITY FOR SUTO SELECTORS
+   ========================================================================== */
+/* ==========================================================================
+   SUTD HOMEPAGE STYLES
    Fonts: Playfair Display (headings, quotes), Lora (body, buttons, cards),
           Dancing Script (handwritten phrases), Great Vibes (Welcome script)
    ========================================================================== */
@@ -297,7 +1154,7 @@
     margin-bottom: 24px;
 }
 
-/* Center Column: SUTO Box Graphic */
+/* Center Column: SUTD Box Graphic */
 .suto-about-center {
     display: flex;
     flex-direction: column;

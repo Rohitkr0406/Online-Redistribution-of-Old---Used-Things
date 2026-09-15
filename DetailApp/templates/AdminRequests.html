@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Requests - SUTD Administration{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.1">
+{% endblock %}
+
+{% block content %}
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner" style="max-width: 1040px;">
+        <a href="javascript:history.back()" class="classic-back-link">&larr; Back</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">RECIPIENT REQUESTS MANAGEMENT</h2>
+            <p style="text-align: center; color: #555555; font-size: 15px; margin-top: -8px; margin-bottom: 14px; font-style: italic;">
+                Review incoming requests from beneficiaries, verify details, approve, and mark as distributed.
+            </p>
+            
+            {% if messages %}
+            <div class="messages-container" style="margin-bottom: 15px;">
+                {% for message in messages %}
+                <div class="classic-alert {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+
+            <!-- Filter Tabs Bar -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <a href="{% url 'AdminRequests' %}" class="classic-btn classic-btn-sm" style="{% if status_filter == 'All' or not status_filter %}background-color: #000000; border-color: #000000;{% else %}background-color: #555555; border-color: #333333;{% endif %} text-decoration: none;">
+                        All Requests ({{ requests_list|length }})
+                    </a>
+                    <a href="{% url 'AdminRequests' %}?status=Pending" class="classic-btn classic-btn-sm" style="{% if status_filter == 'Pending' %}background-color: #b45309; border-color: #92400e;{% else %}background-color: #555555; border-color: #333333;{% endif %} text-decoration: none;">
+                        Pending ({{ pending_count }})
+                    </a>
+                    <a href="{% url 'AdminRequests' %}?status=Approved" class="classic-btn classic-btn-sm" style="{% if status_filter == 'Approved' %}background-color: #1d4ed8; border-color: #1e40af;{% else %}background-color: #555555; border-color: #333333;{% endif %} text-decoration: none;">
+                        Approved ({{ approved_count }})
+                    </a>
+                    <a href="{% url 'AdminRequests' %}?status=Distributed" class="classic-btn classic-btn-sm" style="{% if status_filter == 'Distributed' %}background-color: #15803d; border-color: #166534;{% else %}background-color: #555555; border-color: #333333;{% endif %} text-decoration: none;">
+                        Distributed ({{ distributed_count }})
+                    </a>
+                    <a href="{% url 'AdminRequests' %}?status=Rejected" class="classic-btn classic-btn-sm" style="{% if status_filter == 'Rejected' %}background-color: #b91c1c; border-color: #991b1b;{% else %}background-color: #555555; border-color: #333333;{% endif %} text-decoration: none;">
+                        Rejected ({{ rejected_count }})
+                    </a>
+                </div>
+
+                <div>
+                    <a href="/admin/" class="classic-btn classic-btn-sm" style="background-color: #111111; text-decoration: none;" target="_blank">
+                        Django Admin Portal &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <!-- Requests Table -->
+            {% if requests_list %}
+            <div class="classic-table-wrapper">
+                <table class="classic-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 75px;">Req ID</th>
+                            <th style="width: 90px;">Date</th>
+                            <th>Recipient Details</th>
+                            <th>Contact / City</th>
+                            <th>Requested Item</th>
+                            <th style="text-align: center; width: 95px;">Status</th>
+                            <th style="text-align: center; width: 175px;">Administrative Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for req in requests_list %}
+                        <tr>
+                            <td><strong>{{ req.req_id }}</strong></td>
+                            <td>{{ req.req_date|date:"d-m-Y" }}</td>
+                            <td>
+                                <strong>{{ req.recipient.name }}</strong>
+                                <div style="font-size: 12px; color: #555555;">ID: {{ req.recipient.recipient_id }}</div>
+                            </td>
+                            <td>
+                                <div>{{ req.recipient.mobile }}</div>
+                                <div style="font-size: 12px; color: #555555;">{{ req.recipient.city }}, {{ req.recipient.state }}</div>
+                            </td>
+                            <td>
+                                <strong style="color: #800000;">{{ req.item.proname|default:req.item_id }}</strong>
+                                <div style="font-size: 12px; color: #555555;">Code: {{ req.item_id }} ({{ req.item.procate|default:"General" }})</div>
+                                {% if req.remarks %}
+                                <div style="font-size: 11px; font-style: italic; color: #444444; margin-top: 2px;">Note: "{{ req.remarks }}"</div>
+                                {% endif %}
+                            </td>
+                            <td style="text-align: center;">
+                                {% if req.status == 'Pending' %}
+                                <span class="classic-badge badge-pending">Pending</span>
+                                {% elif req.status == 'Approved' %}
+                                <span class="classic-badge badge-approved">Approved</span>
+                                {% elif req.status == 'Distributed' %}
+                                <span class="classic-badge badge-distributed">&check; Distributed</span>
+                                {% elif req.status == 'Rejected' %}
+                                <span class="classic-badge badge-rejected">&cross; Rejected</span>
+                                {% else %}
+                                <span class="classic-badge">{{ req.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td style="text-align: center;">
+                                {% if req.status == 'Pending' %}
+                                <a href="{% url 'ApproveRequest' req_id=req.req_id %}" class="classic-btn classic-btn-sm classic-btn-blue" style="text-decoration: none; margin-right: 4px;" onclick="return confirm('Approve request {{ req.req_id }}?');">
+                                    &check; Approve
+                                </a>
+                                <a href="{% url 'RejectRequest' req_id=req.req_id %}" class="classic-btn classic-btn-sm" style="text-decoration: none; background-color: #a00000;" onclick="return confirm('Reject request {{ req.req_id }}? The item will be returned to Available stock.');">
+                                    &cross; Reject
+                                </a>
+                                {% elif req.status == 'Approved' %}
+                                <a href="{% url 'DistributeRequest' req_id=req.req_id %}" class="classic-btn classic-btn-sm classic-btn-green" style="text-decoration: none; margin-right: 4px;" onclick="return confirm('Mark request {{ req.req_id }} as Distributed? This will log delivery into the official distribution register.');">
+                                    &check; Distribute
+                                </a>
+                                <a href="{% url 'RejectRequest' req_id=req.req_id %}" class="classic-btn classic-btn-sm" style="text-decoration: none; background-color: #a00000;" onclick="return confirm('Cancel approval and reject request {{ req.req_id }}?');">
+                                    &cross; Reject
+                                </a>
+                                {% elif req.status == 'Distributed' %}
+                                <span style="font-size: 13px; color: #155724; font-weight: bold;">&check; Logged &amp; Delivered</span>
+                                {% elif req.status == 'Rejected' %}
+                                <span style="font-size: 13px; color: #721c24; font-weight: bold;">&cross; Closed</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            {% else %}
+            <div style="text-align: center; padding: 36px 16px; background-color: #FFFFFF; border: 1.5px dashed #888888; border-radius: 8px; margin: 16px 0;">
+                <h3 style="font-family: 'Times New Roman', Times, serif; color: #800000; margin-bottom: 6px;">No Requests Found</h3>
+                <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px; color: #555555;">
+                    {% if status_filter and status_filter != 'All' %}
+                    No recipient requests match the status filter "{{ status_filter }}".
+                    {% else %}
+                    No recipient requests have been submitted yet.
+                    {% endif %}
+                </p>
+            </div>
+            {% endif %}
+
+            <div class="classic-form-links" style="margin-top: 18px; text-align: center;">
+                <a href="{% url 'AvailableItems' %}" class="classic-form-link" style="font-weight: bold; font-size: 15px;">
+                    &larr; View Available Items Stock
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

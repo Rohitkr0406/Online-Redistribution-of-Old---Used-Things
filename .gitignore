@@ -44,6 +44,7 @@ coverage/
 .coverage
 .pytest_cache/
 .cache/
+scratch/
 
 # Django stuff:
 *.log

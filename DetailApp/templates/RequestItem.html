@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Request Item: {{ item.proname }} - SUTD{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.1">
+{% endblock %}
+
+{% block content %}
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner medium">
+        <a href="{% url 'AvailableItems' %}" class="classic-back-link">&larr; Back to Available Items</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">CONFIRM ITEM REQUEST</h2>
+            <p style="text-align: center; color: #555555; font-size: 15px; margin-top: -8px; margin-bottom: 14px; font-style: italic;">
+                Verify the item details and your contact information before submitting your redistribution request.
+            </p>
+            
+            {% if messages %}
+            <div class="messages-container" style="margin-bottom: 15px;">
+                {% for message in messages %}
+                <div class="classic-alert {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+
+            <form method="post" action="{% url 'RequestItem' proid=item.proid %}">
+                {% csrf_token %}
+                
+                <!-- Section 1: Item Information -->
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">Item Information</legend>
+                    <div class="classic-grid">
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Product Code</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ item.proid }}" readonly class="classic-control">
+                            </div>
+                        </div>
+
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Product Name</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ item.proname }}" readonly class="classic-control" style="font-weight: bold; color: #800000;">
+                            </div>
+                        </div>
+
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Category</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ item.procate }}{% if item.prosubcate %} ({{ item.prosubcate }}){% endif %}" readonly class="classic-control">
+                            </div>
+                        </div>
+
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Availability</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="Available for Redistribution" readonly class="classic-control" style="color: #155724; font-weight: bold;">
+                            </div>
+                        </div>
+
+                        {% if item.remarks %}
+                        <div class="classic-field-row full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Item Condition</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ item.remarks }}" readonly class="classic-control">
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </fieldset>
+
+                <!-- Section 2: Beneficiary Details -->
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">Beneficiary / Delivery Information</legend>
+                    <div class="classic-grid">
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Recipient ID</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ recipient.recipient_id }}" readonly class="classic-control">
+                            </div>
+                        </div>
+
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Full Name</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ recipient.name }}" readonly class="classic-control">
+                            </div>
+                        </div>
+
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Contact Mobile</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ recipient.mobile }}" readonly class="classic-control">
+                            </div>
+                        </div>
+
+                        <div class="classic-field-row">
+                            <label class="classic-label">
+                                <span class="classic-label-text">City / State</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ recipient.city }}, {{ recipient.state }}" readonly class="classic-control">
+                            </div>
+                        </div>
+
+                        <div class="classic-field-row full-width">
+                            <label class="classic-label">
+                                <span class="classic-label-text">Address</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <div class="classic-control-wrapper">
+                                <input type="text" value="{{ recipient.address }} {% if recipient.pin %}(PIN: {{ recipient.pin }}){% endif %}" readonly class="classic-control">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 3: Reason / Remarks -->
+                <fieldset class="classic-fieldset">
+                    <legend class="classic-legend">Reason for Request</legend>
+                    <div class="classic-field-row align-top full-width">
+                        <label class="classic-label">
+                            <span class="classic-label-text">Remarks / Need</span>
+                            <span class="classic-colon">:</span>
+                        </label>
+                        <div class="classic-control-wrapper">
+                            <textarea name="remarks" rows="3" placeholder="Briefly state your requirement or purpose for this item (optional)" class="classic-control"></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Action Buttons -->
+                <div class="classic-btn-group" style="justify-content: center; margin-top: 20px;">
+                    <input type="submit" value="Confirm & Submit Request" class="classic-btn" style="padding: 8px 24px; font-size: 16px;">
+                    <a href="{% url 'AvailableItems' %}" class="classic-btn" style="background-color: #555555; border-color: #333333; text-decoration: none; padding: 8px 20px;">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

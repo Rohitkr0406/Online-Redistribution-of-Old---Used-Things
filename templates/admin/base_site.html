@@ -5,8 +5,8 @@
 
 {% block extrahead %}
 {{ block.super }}
-<link rel="shortcut icon" type="image/png" href="{% static 'images/suto/box_image.png' %}">
-<link rel="icon" type="image/png" href="{% static 'images/suto/box_image.png' %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'images/sutd/box_image.png' %}">
+<link rel="icon" type="image/png" href="{% static 'images/sutd/box_image.png' %}">
 {% endblock %}
 
 {% block branding %}
@@ -16,4 +16,9 @@
 {% if user.is_anonymous %}
   {% include "admin/color_theme_toggle.html" %}
 {% endif %}
+{% endblock %}
+
+{% block userlinks %}
+  <a href="{% url 'ReportHome' %}" style="color: #fff; font-weight: bold; margin-right: 10px; text-decoration: underline;">📊 View Reports</a> /
+  {{ block.super }}
 {% endblock %}

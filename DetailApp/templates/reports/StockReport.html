@@ -1,0 +1,46 @@
+{% extends "reports/base_report.html" %}
+
+{% block title %}Stock Report | SUTD{% endblock %}
+
+{% block heading %}Stock Details Report{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Serial No.</th>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Sub-Category</th>
+                <th>Product Serial No.</th>
+                <th>Batch No.</th>
+                <th>Distributed Amount</th>
+                <th>Available Stock</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in records %}
+            <tr>
+                <td class="text-center">{{ r.slno }}</td>
+                <td class="text-center"><strong>{{ r.proid }}</strong></td>
+                <td>{{ r.pname|default:"-" }}</td>
+                <td>{{ r.cate|default:"-" }}</td>
+                <td>{{ r.subcate|default:"-" }}</td>
+                <td class="text-center">{{ r.proslno|default:"-" }}</td>
+                <td class="text-center">{{ r.batchno|default:"-" }}</td>
+                <td class="text-center">{{ r.disamt|default:"0" }}</td>
+                <td class="text-center"><strong>{{ r.stockamt|default:"0" }}</strong></td>
+                <td>{{ r.remarks|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="10" class="empty-row">No stock records found matching criteria.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

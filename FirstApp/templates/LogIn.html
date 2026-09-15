@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}LogIn / SignUp - SUTO{% endblock %}
+{% block title %}LogIn / SignUp - SUTD{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.0">
@@ -74,9 +74,15 @@
                     </div>
                     
                     <div class="classic-form-links">
-                        <a href="/RegApp/Donator" class="classic-form-link">Create Account?</a>
+                        <a href="/RegApp/Donator" class="classic-form-link">Create Donor Account?</a>
                         <br>
-                        <a href="#" class="classic-form-link" style="margin-top: 6px; display: inline-block;">Forget Password?</a>
+                        <a href="{% url 'RecipientLogin' %}" class="classic-form-link" style="margin-top: 6px; display: inline-block; font-weight: 600; color: #c92a2a;">
+                            Recipient Login &rarr;
+                        </a>
+                        <br>
+                        <a href="{% url 'RecipientRegister' %}" class="classic-form-link" style="margin-top: 4px; display: inline-block;">
+                            Register as Recipient
+                        </a>
                     </div>
                 </fieldset>
             </form>

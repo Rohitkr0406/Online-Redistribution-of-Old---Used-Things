@@ -1,68 +1,95 @@
 {% load static %}
 <!-- Main Red Navigation Header -->
-<header class="suto-header">
-    <div class="suto-header-container">
+<header class="sutd-header">
+    <div class="sutd-header-container">
         <!-- Left: Welcome Script & Contact -->
-        <div class="suto-brand-block">
-            <a href="{% url 'home' %}" class="suto-welcome-link">
-                <span class="suto-welcome-script">Welcome</span>
+        <div class="sutd-brand-block">
+            <a href="{% url 'home' %}" class="sutd-welcome-link">
+                <span class="sutd-welcome-script">Welcome</span>
             </a>
-            <div class="suto-header-contact">Contact No: {{ contact_phone }}</div>
+            <div class="sutd-header-contact">Contact No: {{ contact_phone }}</div>
         </div>
 
         <!-- Mobile Hamburger Toggle -->
-        <button class="suto-nav-toggle" id="sutoNavToggle" aria-label="Toggle navigation" type="button">
+        <button class="sutd-nav-toggle" id="sutdNavToggle" aria-label="Toggle navigation" type="button">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
 
         <!-- Right: Bordered Navigation Items -->
-        <nav class="suto-nav-menu" id="sutoNavMenu">
-            <ul class="suto-nav-list">
+        <nav class="sutd-nav-menu" id="sutdNavMenu">
+            <ul class="sutd-nav-list">
                 <li>
-                    <a href="{% url 'home' %}" class="suto-nav-btn {% if request.path == '/' %}active{% endif %}">Home</a>
+                    <a href="{% url 'home' %}" class="sutd-nav-btn {% if request.path == '/' %}active{% endif %}">Home</a>
                 </li>
                 <li>
-                    <a href="{% url 'about' %}" class="suto-nav-btn {% if 'Demo' in request.path %}active{% endif %}">About</a>
+                    <a href="{% url 'about' %}" class="sutd-nav-btn {% if 'Demo' in request.path %}active{% endif %}">About</a>
                 </li>
                 
                 {% if request.session.donor_id %}
                     <!-- Donor Links -->
                     <li>
-                        <a href="{% url 'Unused1' %}" class="suto-nav-btn {% if 'Unused' in request.path %}active{% endif %}">Donate Items</a>
+                        <a href="{% url 'Unused1' %}" class="sutd-nav-btn {% if 'Unused' in request.path %}active{% endif %}">Donate Items</a>
                     </li>
                     <li>
-                        <a href="{% url 'Complaint1' %}" class="suto-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
+                        <a href="{% url 'AvailableItems' %}" class="sutd-nav-btn {% if 'AvailableItems' in request.path %}active{% endif %}">Available Items</a>
                     </li>
                     <li>
-                        <a href="{% url 'Contactus1' %}" class="suto-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
+                        <a href="{% url 'Complaint1' %}" class="sutd-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'Contactus1' %}" class="sutd-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
+                    </li>
+                {% elif request.session.recipient_id %}
+                    <!-- Recipient Links -->
+                    <li>
+                        <a href="{% url 'AvailableItems' %}" class="sutd-nav-btn {% if 'AvailableItems' in request.path %}active{% endif %}">Available Items</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'MyRequests' %}" class="sutd-nav-btn {% if 'MyRequests' in request.path %}active{% endif %}">My Requests</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'Complaint1' %}" class="sutd-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'Contactus1' %}" class="sutd-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
                     </li>
                 {% elif request.user.is_authenticated and request.user.is_staff %}
                     <!-- Admin Navigation -->
                     <li>
-                        <a href="{% url 'Complaint1' %}" class="suto-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
+                        <a href="{% url 'AvailableItems' %}" class="sutd-nav-btn {% if 'AvailableItems' in request.path %}active{% endif %}">Available Items</a>
                     </li>
                     <li>
-                        <a href="{% url 'Contactus1' %}" class="suto-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
+                        <a href="{% url 'AdminRequests' %}" class="sutd-nav-btn {% if 'AdminRequests' in request.path %}active{% endif %}" style="color: #facc15;">Manage Requests</a>
                     </li>
                     <li>
-                        <a href="/admin/" class="suto-nav-btn suto-admin-highlight">Admin</a>
+                        <a href="{% url 'Complaint1' %}" class="sutd-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'Contactus1' %}" class="sutd-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
+                    </li>
+                    <li>
+                        <a href="/admin/" class="sutd-nav-btn sutd-admin-highlight">Admin Portal</a>
                     </li>
                 {% else %}
                     <!-- Public Visitor Navigation -->
-                    <li class="suto-has-dropdown">
-                        <a href="{% url 'Donator1' %}" class="suto-nav-btn {% if 'RegApp' in request.path %}active{% endif %}">Registration &#9662;</a>
-                        <ul class="suto-dropdown-menu">
+                    <li>
+                        <a href="{% url 'AvailableItems' %}" class="sutd-nav-btn {% if 'AvailableItems' in request.path %}active{% endif %}">Available Items</a>
+                    </li>
+                    <li class="sutd-has-dropdown">
+                        <a href="{% url 'Donator1' %}" class="sutd-nav-btn {% if 'RegApp' in request.path or 'RecipientRegister' in request.path %}active{% endif %}">Registration &#9662;</a>
+                        <ul class="sutd-dropdown-menu">
                             <li><a href="{% url 'Donator1' %}">Donator Registration</a></li>
+                            <li><a href="{% url 'RecipientRegister' %}">Recipient Registration</a></li>
                             <li><a href="{% url 'Unused1' %}">Unused Things Reg</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="{% url 'Complaint1' %}" class="suto-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
+                        <a href="{% url 'Complaint1' %}" class="sutd-nav-btn {% if 'Complaint' in request.path %}active{% endif %}">Complaint</a>
                     </li>
                     <li>
-                        <a href="{% url 'Contactus1' %}" class="suto-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
+                        <a href="{% url 'Contactus1' %}" class="sutd-nav-btn {% if 'Contactus' in request.path %}active{% endif %}">Contact Us</a>
                     </li>
                 {% endif %}
             </ul>
@@ -72,9 +99,9 @@
 
 <!-- Alert & Message Banner -->
 {% if messages and not skip_global_messages %}
-<div class="suto-messages-wrapper">
+<div class="sutd-messages-wrapper">
     {% for message in messages %}
-        <div class="suto-message-alert {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+        <div class="sutd-message-alert {% if message.tags == 'success' %}success{% else %}error{% endif %}">
             {{ message }}
         </div>
     {% endfor %}
@@ -83,8 +110,8 @@
 
 <script>
     (function() {
-        var toggle = document.getElementById('sutoNavToggle');
-        var menu = document.getElementById('sutoNavMenu');
+        var toggle = document.getElementById('sutdNavToggle');
+        var menu = document.getElementById('sutdNavMenu');
         if (toggle && menu) {
             toggle.addEventListener('click', function(e) {
                 e.stopPropagation();

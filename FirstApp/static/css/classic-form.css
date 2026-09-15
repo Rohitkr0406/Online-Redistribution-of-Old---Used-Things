@@ -4,7 +4,7 @@
    Canvas: #10B9AD (Teal) | Card: #FEFDE0 (Cream) | Typography: Times New Roman
    ========================================================================== */
 
-/* 1. Canvas Container (Scoped to form pages between SUTO header and footer) */
+/* 1. Canvas Container (Scoped to form pages between SUTD header and footer) */
 .classic-form-canvas {
     background-color: #10B9AD;
     min-height: calc(100vh - 160px);
@@ -411,4 +411,116 @@ textarea.classic-control {
 .classic-form-link:hover {
     color: #0000aa;
     opacity: 0.85;
+}
+
+/* 14. Classic Data Tables & Badges */
+.classic-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 16px 0 20px 0;
+    border: 1.5px solid #666666;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.classic-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 15px;
+    color: #000000;
+    text-align: left;
+}
+
+.classic-table th {
+    background-color: #800000;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 9px 12px;
+    border: 1px solid #5a0000;
+    white-space: nowrap;
+}
+
+.classic-table td {
+    padding: 8px 12px;
+    border: 1px solid #cccccc;
+    vertical-align: middle;
+    background-color: #FFFFFF;
+}
+
+.classic-table tr:nth-child(even) td {
+    background-color: #fcfcf2;
+}
+
+.classic-table tr:hover td {
+    background-color: #f5f5dc;
+}
+
+/* Classic Status Badges */
+.classic-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.classic-badge.badge-pending {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+.classic-badge.badge-approved {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.classic-badge.badge-distributed {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.classic-badge.badge-rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+.classic-badge.badge-available {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.classic-btn-sm {
+    padding: 3px 10px;
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+.classic-btn-green {
+    background-color: #1e7e34 !important;
+    border-color: #155724 !important;
+}
+
+.classic-btn-green:hover {
+    background-color: #218838 !important;
+}
+
+.classic-btn-blue {
+    background-color: #0056b3 !important;
+    border-color: #004085 !important;
+}
+
+.classic-btn-blue:hover {
+    background-color: #0069d9 !important;
 }

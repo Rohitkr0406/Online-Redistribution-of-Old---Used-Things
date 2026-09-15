@@ -66,3 +66,53 @@ class DistributeTable(models.Model):
 
     def __str__(self):
         return f"Distribution {self.proid} -> {self.recname}"
+
+
+class Recipient(models.Model):
+    slno = models.IntegerField(null=True, blank=True, db_column='Slno')
+    recipient_id = models.CharField(max_length=50, primary_key=True, db_column='Recipientid')
+    name = models.CharField(max_length=100, db_column='Name')
+    email = models.CharField(max_length=100, db_column='Email')
+    mobile = models.CharField(max_length=20, db_column='Mobile')
+    address = models.CharField(max_length=200, db_column='Address')
+    city = models.CharField(max_length=50, db_column='City')
+    state = models.CharField(max_length=50, db_column='State')
+    pin = models.CharField(max_length=10, db_column='Pin', null=True, blank=True)
+    password = models.CharField(max_length=255, db_column='Password')
+    remarks = models.CharField(max_length=200, db_column='Remarks', null=True, blank=True)
+    userrole = models.CharField(max_length=20, db_column='UserRole', default='recipient')
+    date_joined = models.DateField(auto_now_add=True, db_column='DateJoined')
+
+    class Meta:
+        db_table = 'recipient'
+        verbose_name = 'Recipient / Needy Person'
+        verbose_name_plural = 'Recipients / Needy Persons'
+        ordering = ['recipient_id']
+
+    def __str__(self):
+        return f"{self.name} ({self.recipient_id})"
+
+
+class DonationRequest(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+        ('Distributed', 'Distributed'),
+    ]
+
+    req_id = models.CharField(max_length=50, primary_key=True, db_column='ReqId')
+    recipient = models.ForeignKey(Recipient, on_delete=models.CASCADE, db_column='Recipientid', related_name='requests')
+    item = models.ForeignKey('RegApp.UnusedThing', on_delete=models.CASCADE, db_column='Proid', db_constraint=False, related_name='requests')
+    req_date = models.DateField(auto_now_add=True, db_column='ReqDate')
+    status = models.CharField(max_length=30, default='Pending', choices=STATUS_CHOICES, db_column='Status')
+    remarks = models.CharField(max_length=200, null=True, blank=True, db_column='Remarks')
+
+    class Meta:
+        db_table = 'donationrequest'
+        verbose_name = 'Donation Request'
+        verbose_name_plural = 'Donation Requests'
+        ordering = ['-req_date', 'req_id']
+
+    def __str__(self):
+        return f"Request {self.req_id} [{self.status}]"

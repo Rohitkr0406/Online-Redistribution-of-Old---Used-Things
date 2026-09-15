@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login as django_login, logout as d
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib.auth.hashers import check_password
-from auth_system.session_manager import start_donor_session, logout_donor
+from auth_system.session_manager import start_donor_session, logout_donor, logout_recipient
 from auth_system.db_helper import get_db_connection
 import pymysql
 
@@ -97,6 +97,7 @@ def Login(request):
 def Logout(request):
     django_logout(request)
     logout_donor(request)
+    logout_recipient(request)
     request.session.pop('admin_id', None)
     messages.info(request, "You have been logged out.")
     return redirect('/')

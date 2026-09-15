@@ -1,0 +1,38 @@
+{% extends "reports/base_report.html" %}
+
+{% block title %}Complaint Report | SUTD{% endblock %}
+
+{% block heading %}Complaint & Suggestions Report{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Serial No.</th>
+                <th>User / Donor ID</th>
+                <th>Complaint Date</th>
+                <th>Issue Type</th>
+                <th>Complaint Details</th>
+                <th>Remarks / Resolution</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in records %}
+            <tr>
+                <td class="text-center">{{ r.slno }}</td>
+                <td class="text-center"><strong>{{ r.did }}</strong></td>
+                <td class="text-center">{{ r.compdate|date:"Y-m-d"|default:"-" }}</td>
+                <td class="text-center"><strong>{{ r.issutype|default:"-" }}</strong></td>
+                <td>{{ r.compdetails|default:"-" }}</td>
+                <td>{{ r.remarks|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="empty-row">No complaint records found matching criteria.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

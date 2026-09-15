@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Available Old & Used Things - SUTD{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/classic-form.css' %}?v=1.1">
+{% endblock %}
+
+{% block content %}
+<div class="classic-form-canvas">
+    <div class="classic-canvas-inner" style="max-width: 960px;">
+        <a href="javascript:history.back()" class="classic-back-link">&larr; Back</a>
+        
+        <div class="classic-form-card">
+            <h2 class="classic-form-title">AVAILABLE OLD &amp; USED THINGS</h2>
+            <p style="text-align: center; color: #555555; font-size: 15px; margin-top: -8px; margin-bottom: 14px; font-style: italic;">
+                Donated items currently in stock and eligible for redistribution to needy individuals.
+            </p>
+            
+            {% if messages %}
+            <div class="messages-container" style="margin-bottom: 15px;">
+                {% for message in messages %}
+                <div class="classic-alert {% if message.tags == 'error' %}error{% else %}success{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <hr class="classic-form-hr">
+
+            <!-- Filter & Search Section -->
+            <form method="get" action="{% url 'AvailableItems' %}">
+                <fieldset class="classic-fieldset" style="padding: 14px 20px; margin-bottom: 18px;">
+                    <legend class="classic-legend">Search &amp; Filter Stock</legend>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <label class="classic-label" style="min-width: auto;">
+                                <span class="classic-label-text">Category</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <select name="category" class="classic-control" style="width: 160px;">
+                                <option value="">- All Categories -</option>
+                                {% for cat in categories %}
+                                <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 8px; flex: 1; max-width: 380px;">
+                            <label class="classic-label" style="min-width: auto;">
+                                <span class="classic-label-text">Keyword</span>
+                                <span class="classic-colon">:</span>
+                            </label>
+                            <input type="text" name="q" value="{{ search_query }}" placeholder="Search by item name or category..." class="classic-control">
+                        </div>
+
+                        <div style="display: flex; gap: 8px;">
+                            <input type="submit" value="Search" class="classic-btn" style="padding: 4px 14px;">
+                            <a href="{% url 'AvailableItems' %}" class="classic-btn" style="padding: 4px 12px; background-color: #555555; border-color: #333333;">Reset</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+            <!-- Available Items Table -->
+            {% if items %}
+            <div class="classic-table-wrapper">
+                <table class="classic-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px; text-align: center;">Sl No.</th>
+                            <th style="width: 90px;">Item Code</th>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Sub-Category</th>
+                            <th>Condition / Remarks</th>
+                            <th style="text-align: center; width: 90px;">Status</th>
+                            <th style="text-align: center; width: 130px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td style="text-align: center;">{{ forloop.counter }}</td>
+                            <td><strong>{{ item.proid }}</strong></td>
+                            <td><strong style="color: #800000;">{{ item.proname }}</strong></td>
+                            <td>{{ item.procate|default:"General" }}</td>
+                            <td>{{ item.prosubcate|default:"&mdash;" }}</td>
+                            <td>{{ item.remarks|default:"Good condition" }}</td>
+                            <td style="text-align: center;">
+                                <span class="classic-badge badge-available">Available</span>
+                            </td>
+                            <td style="text-align: center;">
+                                {% if is_recipient %}
+                                <a href="{% url 'RequestItem' proid=item.proid %}" class="classic-btn classic-btn-sm" style="text-decoration: none;">
+                                    Request Item &rarr;
+                                </a>
+                                {% else %}
+                                <a href="{% url 'RecipientLogin' %}?next={% url 'RequestItem' proid=item.proid %}" class="classic-btn classic-btn-sm" style="text-decoration: none;" title="Login as Recipient to Request">
+                                    Request Item &rarr;
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="text-align: right; margin-top: 10px; font-size: 14px; font-style: italic; color: #444;">
+                Total Available Items in Stock: <strong>{{ items|length }}</strong>
+            </div>
+
+            {% else %}
+            <div style="text-align: center; padding: 36px 16px; background-color: #FFFFFF; border: 1.5px dashed #888888; border-radius: 8px; margin: 16px 0;">
+                <h3 style="font-family: 'Times New Roman', Times, serif; color: #800000; margin-bottom: 6px;">No Available Items Found</h3>
+                <p style="font-family: 'Times New Roman', Times, serif; font-size: 15px; color: #555555; margin-bottom: 12px;">
+                    {% if selected_category or search_query %}
+                    No available items match the selected filter criteria.
+                    <br><br>
+                    <a href="{% url 'AvailableItems' %}" class="classic-btn" style="padding: 4px 14px;">Show All Available Items</a>
+                    {% else %}
+                    There are currently no items marked as available for redistribution.
+                    {% endif %}
+                </p>
+            </div>
+            {% endif %}
+
+            <div class="classic-form-links" style="margin-top: 22px; text-align: center;">
+                {% if is_recipient %}
+                <a href="{% url 'MyRequests' %}" class="classic-form-link" style="font-weight: bold; font-size: 16px;">
+                    &larr; View My Submitted Requests
+                </a>
+                {% else %}
+                <span style="font-style: italic; color: #333;">Are you a needy person or organization?</span>
+                <a href="{% url 'RecipientRegister' %}" class="classic-form-link" style="font-weight: bold; margin-left: 6px;">
+                    Register as a Recipient Here &rarr;
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

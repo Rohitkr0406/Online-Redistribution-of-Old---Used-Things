@@ -31,3 +31,19 @@ def donor_required(view_func):
         return view_func(request, *args, **kwargs)
     
     return _wrapped_view
+
+
+def recipient_required(view_func):
+    """
+    Decorator for views that checks if the user is a logged-in recipient.
+    """
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        recipient_id = request.session.get('recipient_id')
+        if not recipient_id:
+            messages.warning(request, "Access Denied: Please log in to your recipient account.")
+            return redirect('/DetailApp/RecipientLogin')
+        
+        return view_func(request, *args, **kwargs)
+    
+    return _wrapped_view

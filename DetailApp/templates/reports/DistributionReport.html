@@ -1,0 +1,46 @@
+{% extends "reports/base_report.html" %}
+
+{% block title %}Distribution Report | SUTD{% endblock %}
+
+{% block heading %}Distribution Details Report{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Serial No.</th>
+                <th>Product ID</th>
+                <th>Quantity Distributed</th>
+                <th>Distribution Date</th>
+                <th>Distributed By</th>
+                <th>Recipient (Beneficiary)</th>
+                <th>Recipient Address</th>
+                <th>Recipient Mobile</th>
+                <th>Received By</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in records %}
+            <tr>
+                <td class="text-center">{{ r.slno }}</td>
+                <td class="text-center"><strong>{{ r.proid }}</strong></td>
+                <td class="text-center">{{ r.disqty|default:"1" }}</td>
+                <td class="text-center">{{ r.disdate|date:"Y-m-d"|default:"-" }}</td>
+                <td class="text-center">{{ r.disby|default:"Admin" }}</td>
+                <td><strong>{{ r.recname|default:"-" }}</strong></td>
+                <td>{{ r.recadd|default:"-" }}</td>
+                <td class="text-center">{{ r.recmob|default:"-" }}</td>
+                <td>{{ r.recby|default:"-" }}</td>
+                <td>{{ r.remarks|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="10" class="empty-row">No distribution records found matching criteria.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

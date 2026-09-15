@@ -1,0 +1,50 @@
+{% extends "reports/base_report.html" %}
+
+{% block title %}Donor Registration Report | SUTD{% endblock %}
+
+{% block heading %}Donor Registration Report{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="report-table">
+        <thead>
+            <tr>
+                <th>Serial No.</th>
+                <th>Donor ID</th>
+                <th>Donor Name</th>
+                <th>Date of Birth</th>
+                <th>Gender</th>
+                <th>Mobile No.</th>
+                <th>Email ID</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>PIN Code</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in records %}
+            <tr>
+                <td class="text-center">{{ r.slno }}</td>
+                <td class="text-center"><strong>{{ r.donorid }}</strong></td>
+                <td>{{ r.dname|default:"-" }}</td>
+                <td class="text-center">{{ r.dob|date:"Y-m-d"|default:"-" }}</td>
+                <td class="text-center">{{ r.gen|default:"-" }}</td>
+                <td class="text-center">{{ r.dmob|default:"-" }}</td>
+                <td>{{ r.demail|default:"-" }}</td>
+                <td>{{ r.add1|default:"" }}{% if r.add2 %}, {{ r.add2 }}{% endif %}</td>
+                <td>{{ r.city|default:"-" }}</td>
+                <td>{{ r.state|default:"-" }}</td>
+                <td class="text-center">{{ r.pin|default:"-" }}</td>
+                <td>{{ r.remarks|default:"-" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="12" class="empty-row">No donor records found matching criteria.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
