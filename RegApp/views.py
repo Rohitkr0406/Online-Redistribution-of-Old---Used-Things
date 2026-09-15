@@ -221,25 +221,74 @@ def UnusedSave(request):
     
     Slno1 = request.POST.get('Slno')
     Proid1 = request.POST.get('Proid')
-    
-    if not Slno1 or not Proid1:
-        mycursor.execute("SELECT COALESCE(MAX(Slno), 0) FROM unusedthing")
-        row = mycursor.fetchone()
-        max_slno = row[0] if row and row[0] is not None else 0
-        next_slno = max_slno + 1
-        if not Slno1:
-            Slno1 = next_slno
-        if not Proid1:
-            Proid1 = f"pro{next_slno}"
-            
     ProName1 = request.POST.get('ProName')
     ProCate1 = request.POST.get('ProCate')
     ProSubCate1 = request.POST.get('ProSubCate')
     ProSerial1 = request.POST.get('ProSerial')
     ProBatchno1 = request.POST.get('ProBatchno')
     PurchDate1 = request.POST.get('PurchDate')
-    Status1 = request.POST.get('Status')
+    Status1 = request.POST.get('Status') or 'Available'
     Remarks1 = request.POST.get('Remarks')
+
+    # If Proid1 was already populated in the form (e.g. searched or re-submitted), check if it already exists
+    if Proid1:
+        mycursor.execute("SELECT Donorid FROM unusedthing WHERE Proid = %s", (Proid1,))
+        existing = mycursor.fetchone()
+        if existing:
+            # If it already belongs to this donor, update it smoothly to avoid duplicate key crash
+            if existing[0] == donor_id:
+                try:
+                    mycursor.execute(
+                        """UPDATE unusedthing SET ProName=%s, ProCate=%s, ProSubCate=%s, ProSerial=%s, ProBatchno=%s, PurchDate=%s, Status=%s, Remarks=%s WHERE Proid=%s AND Donorid=%s""",
+                        (ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, PurchDate1, Status1, Remarks1, Proid1, donor_id))
+                    
+                    # Synchronize into stockdetails
+                    mycursor.execute("SELECT Proid FROM stockdetails WHERE Proid = %s", (Proid1,))
+                    if mycursor.fetchone():
+                        mycursor.execute(
+                            """UPDATE stockdetails SET Pname=%s, Cate=%s, SubCate=%s, ProSlno=%s, BatchNo=%s, Remarks=%s WHERE Proid=%s""",
+                            (ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, Remarks1, Proid1))
+                    else:
+                        stock_amt = '0' if Status1 in ['Distributed', 'Requested'] else '1'
+                        dis_amt = '1' if Status1 == 'Distributed' else '0'
+                        mycursor.execute(
+                            """INSERT INTO stockdetails(Slno, Proid, Pname, Cate, SubCate, ProSlno, BatchNo, DisAmt, StockAmt, Remarks) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+                            (Slno1 or 1, Proid1, ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, dis_amt, stock_amt, Remarks1))
+                    
+                    conn.commit()
+                    msg = "Record Updated Successfully..!!"
+                except Exception as e:
+                    msg = f"Update Failed: {str(e)}"
+                finally:
+                    mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
+                    record1 = mycursor.fetchall()
+                    mycursor.close()
+                    conn.close()
+                return render(request, 'UnUsed.html', {'msg': msg, 'record1': record1, 'record': None})
+            else:
+                msg = "Permission Denied: This Product ID belongs to another donor."
+                mycursor.execute("""SELECT Slno, Proid, ProName FROM unusedthing WHERE Donorid = %s""", (donor_id,))
+                record1 = mycursor.fetchall()
+                mycursor.close()
+                conn.close()
+                return render(request, 'UnUsed.html', {'msg': msg, 'record1': record1, 'record': None})
+
+    # New item: auto-generate guaranteed unique Slno and Proid
+    mycursor.execute("SELECT COALESCE(MAX(Slno), 0) FROM unusedthing")
+    row = mycursor.fetchone()
+    max_slno = row[0] if row and row[0] is not None else 0
+    next_slno = max_slno + 1
+    Slno1 = next_slno
+    Proid1 = f"pro{next_slno}"
+
+    # Loop to ensure Proid1 does not collide with any existing record
+    while True:
+        mycursor.execute("SELECT Proid FROM unusedthing WHERE Proid = %s", (Proid1,))
+        if not mycursor.fetchone():
+            break
+        next_slno += 1
+        Slno1 = next_slno
+        Proid1 = f"pro{next_slno}"
     
     ps = (Slno1, Proid1, ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, PurchDate1, Status1, Remarks1, donor_id)
     
@@ -247,6 +296,17 @@ def UnusedSave(request):
         mycursor.execute(
             """INSERT INTO unusedthing(Slno, Proid, ProName, ProCate, ProSubCate, ProSerial, ProBatchno, PurchDate, Status, Remarks, Donorid) 
             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""", ps)
+        
+        # Synchronize into stockdetails so it appears in Stock Details in admin and reports
+        stock_amt = '0' if Status1 in ['Distributed', 'Requested'] else '1'
+        dis_amt = '1' if Status1 == 'Distributed' else '0'
+        mycursor.execute("SELECT Proid FROM stockdetails WHERE Proid = %s", (Proid1,))
+        if not mycursor.fetchone():
+            mycursor.execute(
+                """INSERT INTO stockdetails(Slno, Proid, Pname, Cate, SubCate, ProSlno, BatchNo, DisAmt, StockAmt, Remarks) 
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+                (Slno1, Proid1, ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, dis_amt, stock_amt, Remarks1))
+
         conn.commit()
         msg = "Data Saved Successfully..!!"
         print(msg)
@@ -274,6 +334,7 @@ def UnusedDelete(request):
         row = mycursor.fetchone()
         if row and row[0] == donor_id:
             mycursor.execute("""DELETE FROM unusedthing WHERE Proid = %s""", (Proid1,))
+            mycursor.execute("""DELETE FROM stockdetails WHERE Proid = %s""", (Proid1,))
             conn.commit()
             msg = "One Record Deleted Successfully..!!"
         else:
@@ -351,12 +412,27 @@ def UnusedUpdate(request):
     Remarks1 = request.POST.get('Remarks')
     
     try:
-        mycursor.execute("""SELECT Donorid FROM unusedthing WHERE Proid = %s""", (Proid1,))
+        mycursor.execute("""SELECT Donorid, Slno FROM unusedthing WHERE Proid = %s""", (Proid1,))
         row = mycursor.fetchone()
         if row and row[0] == donor_id:
+            slno_val = row[1]
             mycursor.execute(
                 """UPDATE unusedthing SET ProName=%s, ProCate=%s, ProSubCate=%s, ProSerial=%s, ProBatchno=%s, PurchDate=%s, Status=%s, Remarks=%s WHERE Proid=%s AND Donorid=%s""",
                 (ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, PurchDate1, Status1, Remarks1, Proid1, donor_id))
+            
+            # Synchronize into stockdetails
+            mycursor.execute("SELECT Proid FROM stockdetails WHERE Proid = %s", (Proid1,))
+            if mycursor.fetchone():
+                mycursor.execute(
+                    """UPDATE stockdetails SET Pname=%s, Cate=%s, SubCate=%s, ProSlno=%s, BatchNo=%s, Remarks=%s WHERE Proid=%s""",
+                    (ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, Remarks1, Proid1))
+            else:
+                stock_amt = '0' if Status1 in ['Distributed', 'Requested'] else '1'
+                dis_amt = '1' if Status1 == 'Distributed' else '0'
+                mycursor.execute(
+                    """INSERT INTO stockdetails(Slno, Proid, Pname, Cate, SubCate, ProSlno, BatchNo, DisAmt, StockAmt, Remarks) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)""",
+                    (slno_val, Proid1, ProName1, ProCate1, ProSubCate1, ProSerial1, ProBatchno1, dis_amt, stock_amt, Remarks1))
+
             conn.commit()
             msg = "Record Updated Successfully..!!"
         else:
