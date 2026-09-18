@@ -296,10 +296,11 @@ def RejectRequest(request, req_id):
         donation_request.save()
 
         # Restore item to Available so others can request it
+        proid = donation_request.item.proid
         with connection.cursor() as cursor:
-            cursor.execute("UPDATE unusedthing SET Status = 'Available' WHERE Proid = %s", [donation_request.item_id])
+            cursor.execute("UPDATE unusedthing SET Status = 'Available' WHERE Proid = %s", [proid])
 
-        messages.info(request, f"Request {req_id} has been Rejected. Item {donation_request.item_id} is now Available again.")
+        messages.info(request, f"Request {req_id} has been Rejected. Item {proid} is now Available again.")
     else:
         messages.warning(request, f"Request {req_id} cannot be rejected from status {donation_request.status}.")
 
@@ -321,7 +322,7 @@ def DistributeRequest(request, req_id):
         messages.warning(request, f"Only Approved requests can be marked as Distributed (current status: {donation_request.status}).")
         return redirect('AdminRequests')
 
-    proid = donation_request.item_id
+    proid = donation_request.item.proid
     recipient = donation_request.recipient
     admin_name = request.user.username if request.user.is_authenticated else 'Admin'
     today = timezone.now().date()
